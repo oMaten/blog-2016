@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		title Blog
+		base(href='/')
+		link(rel='stylesheet' type='text/css' href='css/main.css')
+	body(ng-app='blog')
+		div(ui-view='header')
+		div(ui-view='main')
+		script(src='js/angular.js')
+		script(src='js/angular-ui-router.min.js')
+		script(src='js/angular-resource.js')
+		script(src='js/server.js')
+		script(src='js/controller.js')

@@ -1,0 +1,12 @@
+
+<div class="main-home">
+  <h1>This is my blog home page.</h1>
+  <ul>
+    <li ng-repeat="post in posts"><a ui-sref="posts({ id: post.id })">Title: {{post.title}}</br></a>
+      <p>
+        Date: {{post.created}}</br>
+        Tag: {{post.tag}}
+      </p>
+    </li>
+  </ul>
+</div>
