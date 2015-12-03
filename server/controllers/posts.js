@@ -1,50 +1,62 @@
-module.exports = function(Router){
-	var parse = require('co-body');
+var parse = require('co-body');
 
-	Router
-		.get('/api/posts', listPosts)
-		.post('/api/posts', createPost)
-		.get('/api/posts/:postId', showPost)
-		.get('/api/posts/:postId/comments', listComments)
-		.post('/api/posts/:postId/comments', createComment);
+module.exports.listPosts = function* listPosts(){
+	var posts = [
+		{
+			title: 'first article',
+			created: '15-12-01',
+			tag: 'css',
+			id: 0
+		},
+		{
+			title: 'second article',
+			created: '15-12-01',
+			tag: 'javascript',
+			id: 1
+		},
+		{
+			title: 'third article',
+			created: '15-12-01',
+			tag: 'nodejs',
+			id: 2
+		}
+	];
+	this.body = posts;
+}
 
-	function* listPosts(next){
-		var posts = [
-			{
-				title: 'first article',
-				created: '15-12-01',
-				tag: 'css',
-				id: 1
-			},
-			{
-				title: 'second article',
-				created: '15-12-01',
-				tag: 'javascript',
-				id: 2
-			},
-			{
-				title: 'third article',
-				created: '15-12-01',
-				tag: 'nodejs',
-				id: 3
-			}
-		];
-		this.body = posts;
-	}
+module.exports.createPost = function* createPost(){
 
-	function* createPost(next){
+}
 
-	}
+module.exports.showPost = function* showPost(){
+	var posts = [
+		{
+			title: 'first article',
+			created: '15-12-01',
+			tag: 'css',
+			id: 0
+		},
+		{
+			title: 'second article',
+			created: '15-12-01',
+			tag: 'javascript',
+			id: 1
+		},
+		{
+			title: 'third article',
+			created: '15-12-01',
+			tag: 'nodejs',
+			id: 2
+		}
+	];
+	var post = posts[this.params.postId];
+	this.body = post;
+}
 
-	function* showPost(next){
+module.exports.listComments = function* listComments(){
+	
+}
 
-	}
-
-	function* listComments(next){
-
-	}
-
-	function* createComment(next){
-
-	}
-};
+module.exports.createComment = function* createComment(){
+	
+}

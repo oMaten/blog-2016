@@ -1,11 +1,10 @@
 angular.module('blog.server', ['ngResource'])
 	.factory('Posts', ['$resource', function($resource){
-		return $resource('/api/posts', null, {
-				query: {method: 'GET', isArray: true}
-			});
+		return $resource('/api/posts');
+	}])
+	.factory('Post', ['$resource', function($resource){
+		return $resource('/api/posts/:postId');
 	}])
 	.factory('Comments', ['$resource', function($resource){
-		return $resource('/api/posts/:postId/comments', {postsId: '@postId'}, {
-			query: {method: 'GET', isArray: true}
-		});
+		return $resource('/api/posts/:postId/comments');
 	}]);

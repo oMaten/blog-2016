@@ -1,20 +1,13 @@
-module.exports = function(Router){
-	var parse = require('co-body');
+var parse = require('co-body');
 
-	Router
-		.get('/', index)
-		.post('/signin', signin)
-		.post('/signup', signup);
+module.exports.index = function* index(){
+	yield this.render('index.jade');
+}
 
-	function* index(next){
-		yield this.render('index.jade');
-	}
+module.exports.signin = function* signin(){
+	var body = yield parse.json(this);
+}
 
-	function* signin(next){
-		var body = yield parse.json(this);
-	}
-
-	function* signup(next){
-		var body = yield parse.json(this);
-	}
-};
+module.exports.signup = function* signup(){
+	var body = yield parse.json(this);
+}

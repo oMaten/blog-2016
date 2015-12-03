@@ -43,9 +43,23 @@ var app = angular.module('blog', ['ui.router', 'blog.server'])
 	}]);
 
 app.controller('PostsListCtrl', ['$scope', '$rootScope', 'Posts', function($scope, $rootScope, Posts){
-	$scope.posts = Posts.query();
+	Posts
+		.query()
+		.$promise
+		.then(function(posts){
+			$scope.posts = posts;
+		}, function(error){
+			console.log(error);
+		});
 }]);
 
-app.controller('PostCtrl', ['$scope', '$rootScope', '$stateParams', function($scope, $rootScope, $stateParams){
-	$scope.postId = $stateParams.id;
+app.controller('PostCtrl', ['$scope', '$rootScope', '$stateParams', 'Post', function($scope, $rootScope, $stateParams, Post){
+	Post
+		.get({postId: $stateParams.id})
+		.$promise
+		.then(function(post){
+			$scope.post = post;
+		}, function(error){
+			console.log(error);
+		});
 }]);

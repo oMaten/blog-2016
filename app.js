@@ -16,8 +16,8 @@ app
 	.use(Router.routes())
 	.use(Router.allowedMethods());
 
-require('./server/controllers/signin')(Router);
-require('./server/controllers/posts')(Router);
+require('./server/routers/signin')(Router);
+require('./server/routers/posts')(Router);
 
 app.listen(4010, function(){
 	console.log('Server is connecting...');
