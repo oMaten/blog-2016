@@ -1,10 +1,16 @@
 var koa = require('koa'),
+	co = require('co'),
 	server = require('koa-static'),
 	view = require('koa-views'),
-	router = require('koa-router');
+	router = require('koa-router'),
+	db = require('./server/model/mongo');
 
 var app = module.exports = koa();
 var Router = module.exports = router();
+
+co(function* (){
+	yield db.connectDB();
+});
 
 app
 	.use(view('./views', {
