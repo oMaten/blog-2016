@@ -1,55 +1,23 @@
-var parse = require('co-body');
+var parse = require('co-body'),
+	model = require('../model/posts');
 
 module.exports.listPosts = function* listPosts(){
-	var posts = [
-		{
-			title: 'first article',
-			created: '15-12-01',
-			tag: 'css',
-			id: 0
-		},
-		{
-			title: 'second article',
-			created: '15-12-01',
-			tag: 'javascript',
-			id: 1
-		},
-		{
-			title: 'third article',
-			created: '15-12-01',
-			tag: 'nodejs',
-			id: 2
-		}
-	];
+	var posts = yield model.listPosts();
 	this.body = posts;
 }
 
 module.exports.createPost = function* createPost(){
-
+	var body = yield parse.json(this);
+	if(body){
+		var done = yield model.createPost(body);
+		if(done){
+			this.status = 200;
+		}
+	}
 }
 
 module.exports.showPost = function* showPost(){
-	var posts = [
-		{
-			title: 'first article',
-			created: '15-12-01',
-			tag: 'css',
-			id: 0
-		},
-		{
-			title: 'second article',
-			created: '15-12-01',
-			tag: 'javascript',
-			id: 1
-		},
-		{
-			title: 'third article',
-			created: '15-12-01',
-			tag: 'nodejs',
-			id: 2
-		}
-	];
-	var post = posts[this.params.postId];
+	var post = yield model.getPost(this.params.postId);
 	this.body = post;
 }
 

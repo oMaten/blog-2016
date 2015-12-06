@@ -8,5 +8,4 @@ module.exports = function(Router){
 		.get('/api/posts/:postId', Controller.showPost)
 		.get('/api/posts/:postId/comments', Controller.listComments)
 		.post('/api/posts/:postId/comments', Controller.createComment);
-
 };
