@@ -28,6 +28,18 @@ angular.module('blog', ['ui.router', 'blog.server', 'blog.controller'])
 					}
 				}
 			})
+			.state('signup', {
+				url: '/signup',
+				views: {
+					'header': {
+						templateUrl: '../html/_header.html'
+					},
+					'main': {
+						templateUrl: '../html/signup.html',
+						controller: 'Signup'
+					}
+				}
+			})
 			.state('posts', {
 				url: '/posts/:id',
 				views: {
