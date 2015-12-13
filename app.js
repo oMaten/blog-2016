@@ -22,8 +22,9 @@ app
 	.use(Router.routes())
 	.use(Router.allowedMethods());
 
-require('./server/routers/signin')(Router);
+require('./server/routers/index')(Router);
 require('./server/routers/posts')(Router);
+require('./server/routers/users')(Router);
 
 app.listen(4010, function(){
 	console.log('Server is connecting...');
