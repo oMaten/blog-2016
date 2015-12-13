@@ -1,0 +1,13 @@
+
+<div class="main-signin">
+  <h1>Hei!This is signup page.</h1>
+  <form id="form-signup" name="signupForm" ng-submit="signupValidate()">
+    <label for="form-signup--username">用户名</label>
+    <input id="form-signup--username" name="username" type="text" ng-model="signupAccount.username" required="required"/>
+    <label for="form-signup--password">密码</label>
+    <input id="form-signup--password" name="password" type="password" ng-model="signupAccount.password" required="required"/>
+    <label for="form-signup--repassword">再次确认密码</label>
+    <input id="form-signup--repassword" name="repassword" type="password" ng-model="signupAccount.repassword" required="required"/>
+    <input id="form-signup--submit" type="submit"/>
+  </form><span ng-show="signupForm.username.$error.required || signupForm.password.$error.required || signupForm.repassword.$error.required" class="alert-error">请填写完整!</span>
+</div>
