@@ -22,9 +22,9 @@ module.exports.showPost = function* showPost(){
 }
 
 module.exports.listComments = function* listComments(){
-	
+
 }
 
 module.exports.createComment = function* createComment(){
-	
+
 }
