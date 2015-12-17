@@ -24,7 +24,8 @@ angular.module('blog', ['ui.router', 'blog.server', 'blog.controller'])
 						templateUrl: '../html/_header.html'
 					},
 					'main': {
-						templateUrl: '../html/signin.html'
+						templateUrl: '../html/signin.html',
+						controller: 'SigninCtrl'
 					}
 				}
 			})
@@ -36,7 +37,7 @@ angular.module('blog', ['ui.router', 'blog.server', 'blog.controller'])
 					},
 					'main': {
 						templateUrl: '../html/signup.html',
-						controller: 'Signup'
+						controller: 'SignupCtrl'
 					}
 				}
 			})

@@ -11,9 +11,15 @@ angular.module('blog.controller', [])
 		$scope.newPost = {};
 		$scope.createPost = function(){
 			if($scope.newPost.title){
-				Posts.save($scope.newPost);
-				$scope.newPost = {};
-				$location.path('/');
+				Posts
+					.save($scope.newPost)
+					.$promise
+					.then(function(post){
+						console.log(post);
+						$scope.newPost = {};
+					}, function(error){
+						console.log(error);
+					});
 			}
 		};
 	}])
@@ -24,18 +30,16 @@ angular.module('blog.controller', [])
 			.then(function(post){
 				$scope.post = post;
 			}, function(error){
-				console.log(error);
+				console.log(error.data.error);
 			});
 	}])
-	.controller('Signup', ['$scope', '$rootScope', 'Users', function($scope, $rootScope, Users){
+	.controller('SignupCtrl', ['$scope', '$rootScope', 'Users', function($scope, $rootScope, Users){
 		$scope.signupAccount = {};
 		$scope.signupValidate = function(){
 			if(!$scope.signupAccount.username || !$scope.signupAccount.password || !$scope.signupAccount.repassword){
-				console.log('1111');
 				return false;
 			}
 			if($scope.signupAccount.password !== $scope.signupAccount.repassword){
-				console.log('2222');
 				return false;
 			}
 			Users
@@ -45,7 +49,27 @@ angular.module('blog.controller', [])
 					delete $scope.signupAccount.username;
 					delete $scope.signupAccount.password;
 					delete $scope.signupAccount.repassword;
-					console.log(data);
+					console.log(data)
+				}, function(error){
+					console.log(error.data.error);
 				});
 		};
-	}]);
+	}])
+	.controller('SigninCtrl', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http){
+		$scope.signinAccount = {};
+		$scope.signinValidate = function(){
+			if(!$scope.signinAccount.username || !$scope.signinAccount.password){
+				return false;
+			}
+
+			$http({
+				method: 'POST',
+				url: '/signin',
+				data: $scope.signinAccount
+			}).then(function(data){
+				console.log(data);
+			}, function(error){
+				console.log(error.data.error);
+			})
+		}
+	}])

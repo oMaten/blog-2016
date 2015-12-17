@@ -7,5 +7,5 @@
     <label for="form-signin--password">密码</label>
     <input id="form-signin--password" name="password" type="password" ng-model="signinAccount.password" required="required"/>
     <input id="form-signin--submit" type="submit"/>
-  </form>
+  </form><span ng-show="signinForm.username.$error.required || signinForm.password.$error.required" class="alert-error">请填写完整!</span>
 </div>
