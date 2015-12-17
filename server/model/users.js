@@ -10,17 +10,18 @@ function User(){
 
 module.exports.addUser = function* (u){
   var user = new User();
+  // 查询User对象下的实例是否存在
   for(var i in u){
     if(!u[i]){
       return false;
     }
     user[i] = u[i];
   }
-  isExist = yield findUser(user.username);
-  if(isExist){
-    return false;
-  }
+
+  // 将用户的密码hash加密
   user = yield passwordSalt(user);
+
+  // 往数据库中添加User
   try{
     var result = yield mongo.users.insert(user);
   }catch(error){
@@ -30,7 +31,7 @@ module.exports.addUser = function* (u){
   return result;
 }
 
-module.exports.findUser = function* (name){
+module.exports.findUserByName = function* (name){
   try{
     var user = yield mongo.users.findOne({username: name});
   }catch(error){
@@ -40,14 +41,14 @@ module.exports.findUser = function* (name){
   return user;
 }
 
+module.exports.passwordCompare = function* (user, hash){
+  var result = bcrypt.compareSync(user.password, hash);
+  return result;
+}
 
 var passwordSalt = function* (user){
   var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(user.password, salt);
   user.password = hash;
   return user;
-}
-
-var passwordCompare = function* (user, hash){
-
 }
