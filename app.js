@@ -1,6 +1,7 @@
 var koa = require('koa'),
 	co = require('co'),
 	server = require('koa-static'),
+	session = require('koa-session'),
 	view = require('koa-views'),
 	router = require('koa-router'),
 	db = require('./server/model/mongo');
@@ -12,12 +13,14 @@ co(function* (){
 	yield db.connectDB();
 });
 
+app.keys = ['omatex']
 app
 	.use(view('./views', {
 		map: {
 			html: 'jade'
 		}
 	}))
+	.use(session(app))
 	.use(server('./app'))
 	.use(Router.routes())
 	.use(Router.allowedMethods());

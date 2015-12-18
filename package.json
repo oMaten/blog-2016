@@ -21,14 +21,17 @@
     "angular-resource": "^1.4.8",
     "angular-ui-router": "^0.2.15",
     "bcrypt": "^0.8.5",
-    "bson": "^0.4.20",
     "co": "^4.6.0",
     "co-body": "^4.0.0",
     "co-mongo": "0.0.2",
+    "gulp-connect": "^2.3.1",
+    "gulp-sass": "^2.1.1",
     "jade": "^1.11.0",
     "koa": "^1.1.2",
     "koa-router": "^5.3.0",
+    "koa-session": "^3.3.1",
     "koa-static": "^1.5.2",
-    "koa-views": "^3.1.0"
+    "koa-views": "^3.1.0",
+    "uid-safe": "^2.0.0"
   }
 }

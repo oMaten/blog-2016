@@ -6,7 +6,7 @@ angular.module('blog.controller', [])
 			.then(function(posts){
 				$scope.posts = posts;
 			}, function(error){
-				console.log(error);
+				console.log(error.data);
 			});
 		$scope.newPost = {};
 		$scope.createPost = function(){
@@ -18,7 +18,7 @@ angular.module('blog.controller', [])
 						console.log(post);
 						$scope.newPost = {};
 					}, function(error){
-						console.log(error);
+						console.log(error.data);
 					});
 			}
 		};
@@ -30,7 +30,7 @@ angular.module('blog.controller', [])
 			.then(function(post){
 				$scope.post = post;
 			}, function(error){
-				console.log(error.data.error);
+				console.log(error.data);
 			});
 	}])
 	.controller('SignupCtrl', ['$scope', '$rootScope', 'Users', function($scope, $rootScope, Users){
@@ -51,7 +51,7 @@ angular.module('blog.controller', [])
 					delete $scope.signupAccount.repassword;
 					console.log(data)
 				}, function(error){
-					console.log(error.data.error);
+					console.log(error.data);
 				});
 		};
 	}])
@@ -69,7 +69,7 @@ angular.module('blog.controller', [])
 			}).then(function(data){
 				console.log(data);
 			}, function(error){
-				console.log(error.data.error);
-			})
+				console.log(error.data);
+			});
 		}
 	}])
