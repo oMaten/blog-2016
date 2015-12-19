@@ -33,7 +33,24 @@ module.exports.addUser = function* (u){
 
 module.exports.findUserByName = function* (name){
   try{
-    var user = yield mongo.users.findOne({username: name});
+    var user = yield mongo.users.findOne({ username: name });
+  }catch(error){
+    console.log(error);
+    return false;
+  }
+  return user;
+}
+
+module.exports.updateUser = function* (user, arg){
+  try{
+    var user = yield mongo.users.update(
+      { _id: ObjectID(user._id) },
+      {
+        $set: {
+          token: arg
+        }
+      }
+    );
   }catch(error){
     console.log(error);
     return false;

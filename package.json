@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "angular": "^1.4.8",
+    "angular-jwt": "0.0.9",
     "angular-resource": "^1.4.8",
     "angular-ui-router": "^0.2.15",
     "bcrypt": "^0.8.5",
@@ -27,11 +28,13 @@
     "gulp-connect": "^2.3.1",
     "gulp-sass": "^2.1.1",
     "jade": "^1.11.0",
+    "jsonwebtoken": "^5.4.1",
     "koa": "^1.1.2",
     "koa-router": "^5.3.0",
-    "koa-session": "^3.3.1",
     "koa-static": "^1.5.2",
     "koa-views": "^3.1.0",
+    "lodash": "^3.10.1",
+    "node-uuid": "^1.4.7",
     "uid-safe": "^2.0.0"
   }
 }

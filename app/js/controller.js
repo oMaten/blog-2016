@@ -1,4 +1,4 @@
-angular.module('blog.controller', [])
+angular.module('blog.controller', ['angular-jwt'])
 	.controller('PostsListCtrl', ['$scope', '$rootScope', '$location', 'Posts', function($scope, $rootScope, $location, Posts){
 		Posts
 			.query()
@@ -33,7 +33,7 @@ angular.module('blog.controller', [])
 				console.log(error.data);
 			});
 	}])
-	.controller('SignupCtrl', ['$scope', '$rootScope', 'Users', function($scope, $rootScope, Users){
+	.controller('SignupCtrl', ['$scope', '$rootScope', '$window', 'Users', 'jwtHelper', function($scope, $rootScope, $window, Users, jwtHelper){
 		$scope.signupAccount = {};
 		$scope.signupValidate = function(){
 			if(!$scope.signupAccount.username || !$scope.signupAccount.password || !$scope.signupAccount.repassword){
@@ -46,16 +46,17 @@ angular.module('blog.controller', [])
 				.save($scope.signupAccount)
 				.$promise
 				.then(function(data){
-					delete $scope.signupAccount.username;
-					delete $scope.signupAccount.password;
-					delete $scope.signupAccount.repassword;
-					console.log(data)
+					// jwt解密取得username&userid
+					var token = jwtHelper.decodeToken(data.accessToken);
+					$window.localStorage.token = data.accessToken;
+					$window.localStorage.username = token.username;
+					$window.localStorage.id = token.id;
 				}, function(error){
 					console.log(error.data);
 				});
 		};
 	}])
-	.controller('SigninCtrl', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http){
+	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', 'jwtHelper', function($scope, $rootScope, $http, $window, jwtHelper){
 		$scope.signinAccount = {};
 		$scope.signinValidate = function(){
 			if(!$scope.signinAccount.username || !$scope.signinAccount.password){
@@ -67,7 +68,10 @@ angular.module('blog.controller', [])
 				url: '/signin',
 				data: $scope.signinAccount
 			}).then(function(data){
-				console.log(data);
+				var token = jwtHelper.decodeToken(data.accessToken);
+				$window.localStorage.token = data.accessToken;
+				$window.localStorage.username = token.username;
+				$window.localStorage.id = token.id;
 			}, function(error){
 				console.log(error.data);
 			});

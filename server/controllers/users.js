@@ -1,6 +1,6 @@
 var parse = require('co-body'),
 	model = require('../model/users'),
-  uid = require('uid-safe');
+  auth = require('./auth');
 
 module.exports.listUsers = function* listUsers(){
 	var users = yield model.listUsers();
@@ -12,29 +12,31 @@ module.exports.addUser = function* addUser(){
 
   // 检查信息是否完整
   if(!body.username || !body.password || !body.repassword){
-    this.throw('缺少用户名或密码', 401);
-    return false;
+    return this.throw('缺少用户名或密码', 401);
   }
 
   // 检查两次密码输入是否相同
   if(body.password !== body.repassword){
-    this.throw('输入的密码不相同', 401);
-    return false;
+    return this.throw('输入的密码不相同', 401);
   }
   delete body.repassword;
 
   // 查询用户名是否已经存在
   var isExist = yield model.findUserByName(body.username);
   if(isExist){
-    this.throw('用户已经存在', 401);
-    return false;
+    return this.throw('用户已经存在', 401);
   }
   // 将用户添加进数据库
   var user = yield model.addUser(body);
 
-  var session_id = uid.sync(18);
-  this.session.user = session_id;
-  this.status = 200;
+  var accessToken = yield auth.encryptFliter(user[0]);
+  // 为用户添加token
+  this.user = yield model.updateUser(user[0], accessToken);
+  this.body = {
+    accessToken: accessToken
+  };
+  this.status = 201;
+
 }
 
 module.exports.signinUser = function* signinUser(){
@@ -42,25 +44,28 @@ module.exports.signinUser = function* signinUser(){
 
   // 判断用户名密码是否存在
   if(!body.password || !body.username){
-    this.throw('缺少用户名或密码', 401);
-    return false;
+    return this.throw('缺少用户名或密码', 401);
   }
 
   // 通过用户名查询用户信息
   var user = yield model.findUserByName(body.username);
   if(!user){
-    this.throw('用户不存在', 401);
-    return false;
+    return this.throw('用户不存在', 401);
   }
 
   // 验证用户密码是否正确
   var isValidate = yield model.passwordCompare(body, user.password);
   if(!isValidate){
-    this.throw('密码错误', 401);
-    return false;
+    return this.throw('密码错误', 401);
   }
 
-  this.status = 200;
+  // 为登陆的用户更新token
+  var accessToken = yield auth.encryptFliter(user);
+  this.user = yield model.updateUser(user， accessToken);
+  this.body = {
+    accessToken: accessToken;
+  }
+  this.status = 201;
 }
 
 module.exports.showUser = function* showUser(){
