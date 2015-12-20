@@ -6,17 +6,13 @@ function User(){
   this.username = '';
   this.password;
   this.created = new Date;
+  this.admin = false;
 }
 
 module.exports.addUser = function* (u){
   var user = new User();
-  // 查询User对象下的实例是否存在
-  for(var i in u){
-    if(!u[i]){
-      return false;
-    }
-    user[i] = u[i];
-  }
+  user.username = u.username;
+  user.password = u.password;
 
   // 将用户的密码hash加密
   user = yield passwordSalt(user);

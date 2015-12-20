@@ -1,4 +1,4 @@
-angular.module('blog', ['ui.router', 'blog.server', 'blog.controller', 'angular-jwt'])
+angular.module('blog', ['ui.router', 'blog.server', 'blog.controller.signin', 'blog.controller.user', 'blog.controller.post', 'angular-jwt'])
 	.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider){
 
 		$locationProvider.html5Mode(true);
@@ -52,7 +52,19 @@ angular.module('blog', ['ui.router', 'blog.server', 'blog.controller', 'angular-
 						controller: 'PostCtrl'
 					}
 				}
-			});
+			})
+			.state('users', {
+				url: '/users/:id',
+				views: {
+					'header': {
+						templateUrl: '../html/_header.html'
+					},
+					'main': {
+						templateUrl: '../html/user.html',
+						controller: 'UserCtrl'
+					}
+				}
+			})
 	}])
 	.config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider){
 		$httpProvider.interceptors.push(function(){
@@ -60,6 +72,12 @@ angular.module('blog', ['ui.router', 'blog.server', 'blog.controller', 'angular-
 				'response': function(response){
 					console.log(response);
 					return response;
+				},
+				'request': function(request){
+					if(window.localStorage.token){
+						request.headers.accessToken = window.localStorage.getItem('token');
+					}
+					return request;
 				}
 			}
 		});

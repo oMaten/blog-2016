@@ -2,13 +2,14 @@ var jwt = require('jsonwebtoken'),
   _ = require('lodash'),
   uuid = require('node-uuid');
 
-module.exports.authFilter = function* (body){
+module.exports.authFilter = function* (accessToken){
   try{
-    var decoded = jwt.verify(body.accessToken, 'hmjmf');
+    var decoded = jwt.verify(accessToken, 'hmjmf');
   }catch(error){
-    return this.throw(401, 'token错误');
+    return this.throw('token错误', 401);
   }
   console.log(decoded);
+  return decoded;
 }
 
 module.exports.encryptFliter = function* (user){

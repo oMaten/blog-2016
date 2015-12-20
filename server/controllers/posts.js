@@ -1,9 +1,19 @@
 var parse = require('co-body'),
-	model = require('../model/posts');
+	model = require('../model/posts'),
+	auth = require('./auth');
 
 module.exports.listPosts = function* listPosts(){
 	var posts = yield model.listPosts();
-	this.body = posts;
+	if(this.request.header.accesstoken){
+		var decoded = yield auth.authFilter(this.request.header.accesstoken);
+		return this.body = {
+			posts: posts,
+			username: decoded.username
+		}
+	}
+	return this.body = {
+		posts: posts
+	};
 }
 
 module.exports.createPost = function* createPost(){

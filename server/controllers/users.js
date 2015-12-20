@@ -31,7 +31,7 @@ module.exports.addUser = function* addUser(){
 
   var accessToken = yield auth.encryptFliter(user[0]);
   // 为用户添加token
-  this.user = yield model.updateUser(user[0], accessToken);
+  user = yield model.updateUser(user[0], accessToken);
   this.body = {
     accessToken: accessToken
   };
@@ -59,11 +59,8 @@ module.exports.signinUser = function* signinUser(){
     return this.throw('密码错误', 401);
   }
 
-  // 为登陆的用户更新token
-  var accessToken = yield auth.encryptFliter(user);
-  this.user = yield model.updateUser(user， accessToken);
   this.body = {
-    accessToken: accessToken;
+    accessToken: user.token
   }
   this.status = 201;
 }
