@@ -20,6 +20,7 @@
     "angular": "^1.4.8",
     "angular-jwt": "0.0.9",
     "angular-resource": "^1.4.8",
+    "angular-storage": "0.0.13",
     "angular-ui-router": "^0.2.15",
     "bcrypt": "^0.8.5",
     "co": "^4.6.0",

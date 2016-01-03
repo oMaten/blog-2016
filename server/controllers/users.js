@@ -60,7 +60,7 @@ module.exports.signinUser = function* signinUser(){
   }
 
   this.body = {
-    accessToken: user.token
+    accessToken: user.accessToken
   }
   this.status = 201;
 }

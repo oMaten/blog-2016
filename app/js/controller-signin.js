@@ -1,5 +1,8 @@
-angular.module('blog.controller.signin', ['blog.server'])
-	.controller('SignupCtrl', ['$scope', '$rootScope', '$window', '$state', 'Users', function($scope, $rootScope, $window, $state, Users){
+angular.module('blog.controller.signin', [
+		'blog.server',
+		'angular-storage'
+	])
+	.controller('SignupCtrl', ['$scope', '$rootScope', '$window', '$state', 'Users', 'store', function($scope, $rootScope, $window, $state, Users, store){
 		$scope.signupAccount = {};
 		$scope.signupValidate = function(){
 			if(!$scope.signupAccount.username || !$scope.signupAccount.password || !$scope.signupAccount.repassword){
@@ -12,15 +15,14 @@ angular.module('blog.controller.signin', ['blog.server'])
 				.save($scope.signupAccount)
 				.$promise
 				.then(function(response){
-					$rootScope.username = response.data.username;
-					$window.localStorage.token = response.data.accessToken;
+					store.set('accessToken', response.accessToken);
 					$state.go('home');
 				}, function(error){
 					console.log(error.data);
 				});
 		};
 	}])
-	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', '$state', function($scope, $rootScope, $window, $http, $state){
+	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', '$state', 'store', function($scope, $rootScope, $window, $http, $state, store){
 		$scope.signinAccount = {};
 		$scope.signinValidate = function(){
 			if(!$scope.signinAccount.username || !$scope.signinAccount.password){
@@ -31,8 +33,7 @@ angular.module('blog.controller.signin', ['blog.server'])
 				url: '/signin',
 				data: $scope.signinAccount
 			}).then(function(response){
-				$rootScope.username = response.data.username;
-				$window.localStorage.token = response.data.accessToken;
+				store.set('accessToken', response.accessToken);
 				$state.go('home');
 			}, function(error){
 				console.log(error.data);

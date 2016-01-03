@@ -1,4 +1,6 @@
-angular.module('blog', ['ui.router', 'blog.server', 'blog.controller.signin', 'blog.controller.user', 'blog.controller.post', 'angular-jwt'])
+angular.module('blog.router', [
+		'ui.router'
+	])
 	.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider){
 
 		$locationProvider.html5Mode(true);
@@ -65,20 +67,4 @@ angular.module('blog', ['ui.router', 'blog.server', 'blog.controller.signin', 'b
 					}
 				}
 			})
-	}])
-	.config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider){
-		$httpProvider.interceptors.push(function(){
-			return {
-				'response': function(response){
-					console.log(response);
-					return response;
-				},
-				'request': function(request){
-					if(window.localStorage.token){
-						request.headers.accessToken = window.localStorage.getItem('token');
-					}
-					return request;
-				}
-			}
-		});
 	}]);

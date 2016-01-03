@@ -1,5 +1,8 @@
-angular.module('blog.controller.post', ['blog.server'])
-  .controller('PostsListCtrl', ['$scope', '$rootScope', 'Posts', function($scope, $rootScope, Posts){
+angular.module('blog.controller.post', [
+    'blog.server',
+    'angular-storage'
+  ])
+  .controller('PostsListCtrl', ['$scope', '$rootScope', 'Posts', 'store', function($scope, $rootScope, Posts, store){
     Posts
       .list()
       .$promise
@@ -23,6 +26,7 @@ angular.module('blog.controller.post', ['blog.server'])
           });
       }
     };
+    console.log(store.get('accessToken'));
   }])
   .controller('PostCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', function($scope, $rootScope, $stateParams, Posts){
     Posts

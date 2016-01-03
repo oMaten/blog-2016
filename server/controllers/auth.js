@@ -6,7 +6,7 @@ module.exports.authFilter = function* (accessToken){
   try{
     var decoded = jwt.verify(accessToken, 'hmjmf');
   }catch(error){
-    return this.throw('token错误', 401);
+    return error;
   }
   console.log(decoded);
   return decoded;
