@@ -1,2 +1,3 @@
 
-<div class="header"><span><a ui-sref="home">Home</a></span><span><a ui-sref="css">Css</a></span><span><a ui-sref="nodejs">NodeJs</a></span><span><a ui-sref="javascript">Javascript</a></span><span><a ui-sref="signin">Signin</a></span><span><a ui-sref="signup">Signup</a></span><span><a ui-sref="users({ id: $root.username })">{{$root.username}}</a></span></div>
+<div class="header"><span><a ui-sref="home">主页</a></span><span><a ui-sref="following">关注</a></span><span><a ui-sref="followed">粉丝</a></span><span><a ui-sref="signin" ng-if="!$root.userId">登录</a></span><span><a ui-sref="signup" ng-if="!$root.userId">注册</a></span><span><a ui-sref="signout" ng-if="$root.userId">注销</a></span>
+</div>

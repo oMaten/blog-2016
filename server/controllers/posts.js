@@ -27,8 +27,10 @@ module.exports.createPost = function* createPost(){
 }
 
 module.exports.showPost = function* showPost(){
-	var post = yield model.getPost(this.params.postId);
-	this.body = post;
+	var post = yield model.getPostById(this.params.postId);
+	this.body = {
+		post: post
+	};
 }
 
 module.exports.listComments = function* listComments(){

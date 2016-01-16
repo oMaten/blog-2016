@@ -8,7 +8,6 @@ angular.module('blog.controller.post', [
       .$promise
       .then(function(data){
         $scope.posts = data.posts;
-        $rootScope.username = data.username;
       }, function(error){
         console.log(error.data);
       });
@@ -26,14 +25,14 @@ angular.module('blog.controller.post', [
           });
       }
     };
-    console.log(store.get('accessToken'));
+
   }])
   .controller('PostCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', function($scope, $rootScope, $stateParams, Posts){
     Posts
       .get({postId: $stateParams.id})
       .$promise
-      .then(function(post){
-        $scope.post = post;
+      .then(function(data){
+        $scope.post = data.post;
       }, function(error){
         console.log(error.data);
       });

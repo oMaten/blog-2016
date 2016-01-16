@@ -2,24 +2,22 @@ var jwt = require('jsonwebtoken'),
   _ = require('lodash'),
   uuid = require('node-uuid');
 
-module.exports.authFilter = function* (accessToken){
+/* 检查 JWT 的签名 */
+module.exports.authFilter = function* (next){
   try{
-    var decoded = jwt.verify(accessToken, 'hmjmf');
+    this.decoded = jwt.verify(this.header.accesstoken, 'hmjmf');
   }catch(error){
     return error;
   }
-  console.log(decoded);
-  return decoded;
 }
 
-module.exports.encryptFliter = function* (user){
-  var accessToken = jwt.sign({
+/* 生产一个新的 JWT */
+module.exports.encryptFliter = function* (next){
+  this.accessToken = jwt.sign({
     seed: Math.random(),
-    username: user.username,
-    id: user._id,
+    userId: this.user._id,
     uuid: uuid.v1()
   }, 'hmjmf', {
     expiresInMinutes: 24*60
   });
-  return accessToken;
 }

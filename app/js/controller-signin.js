@@ -33,10 +33,15 @@ angular.module('blog.controller.signin', [
 				url: '/signin',
 				data: $scope.signinAccount
 			}).then(function(response){
-				store.set('accessToken', response.accessToken);
+				store.set('accessToken', response.data.accessToken);
 				$state.go('home');
 			}, function(error){
 				console.log(error.data);
 			});
 		}
-	}]);
+	}])
+	.controller('SignoutCtrl', ['$scope', '$rootScope', '$window', '$state', 'store', function($scope, $rootScope, $window, $state, store){
+		$rootScope.userId = null;
+		store.get('accessToken') && store.remove('accessToken');
+		$state.go('signin');
+	}])

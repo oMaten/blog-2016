@@ -1,7 +1,7 @@
 var mongo = require('./mongo'),
 	ObjectID = mongo.ObjectID;
 
-module.exports.getPost = function* getPost(id){
+module.exports.getPostById = function* getPost(id){
 	var post = yield mongo.posts.findOne({_id: ObjectID(id)}, {title: 1});
 	return post;
 }

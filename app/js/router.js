@@ -16,7 +16,14 @@ angular.module('blog.router', [
 					'main': {
 						templateUrl: '../html/home.html',
 						controller: 'PostsListCtrl'
+					},
+					'user': {
+						templateUrl: '../html/user.html',
+						controller: 'UserCtrl'
 					}
+				},
+				validate: {
+					'requestSignin': true
 				}
 			})
 			.state('signin', {
@@ -40,6 +47,18 @@ angular.module('blog.router', [
 					'main': {
 						templateUrl: '../html/signup.html',
 						controller: 'SignupCtrl'
+					}
+				}
+			})
+			.state('signout', {
+				url: '/signout',
+				views: {
+					'header': {
+						templateUrl: '../html/_header.html'
+					},
+					'main': {
+						templateUrl: '../html/signout.html',
+						controller: 'SignoutCtrl'
 					}
 				}
 			})
