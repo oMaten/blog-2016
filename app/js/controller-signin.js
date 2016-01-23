@@ -2,9 +2,13 @@ angular.module('blog.controller.signin', [
 		'blog.server',
 		'angular-storage'
 	])
-	.controller('SignupCtrl', ['$scope', '$rootScope', '$window', '$state', 'Users', 'store', function($scope, $rootScope, $window, $state, Users, store){
+	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', '$state', 'store', 'Users', function($scope, $rootScope, $window, $http, $state, store, Users){
+
 		$scope.signupAccount = {};
+		$scope.signinAccount = {};
+
 		$scope.signupValidate = function(){
+			console.log($scope.signupAccount);
 			if(!$scope.signupAccount.username || !$scope.signupAccount.password || !$scope.signupAccount.repassword){
 				return false;
 			}
@@ -21,9 +25,8 @@ angular.module('blog.controller.signin', [
 					console.log(error.data);
 				});
 		};
-	}])
-	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', '$state', 'store', function($scope, $rootScope, $window, $http, $state, store){
-		$scope.signinAccount = {};
+
+
 		$scope.signinValidate = function(){
 			if(!$scope.signinAccount.username || !$scope.signinAccount.password){
 				return false;

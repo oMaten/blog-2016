@@ -1,11 +1,46 @@
 
 <div class="main-signin">
-  <h1>Hei!This is signin page.</h1>
-  <form id="form-signin" name="signinForm" ng-submit="signinValidate()">
-    <label for="form-signin--username">用户名</label>
-    <input id="form-signin--username" name="username" type="text" ng-model="signinAccount.username" required="required"/>
-    <label for="form-signin--password">密码</label>
-    <input id="form-signin--password" name="password" type="password" ng-model="signinAccount.password" required="required"/>
-    <input id="form-signin--submit" type="submit"/>
-  </form><span ng-show="signinForm.username.$error.required || signinForm.password.$error.required" class="alert-error">请填写完整!</span>
+  <div class="main-part--left">
+    <h1>欢迎使用 MANK。</h1>
+    <p>联系你的好友和更多精彩。获取你感兴趣的实时更新。并通过每个角度观看事件实时更新呈现。</p>
+  </div>
+  <div class="main-part--right">
+    <div class="form-signin--wrap form-wrap">
+      <form id="form-signin" name="signinForm" ng-submit="signinValidate()" class="form-signin">
+        <div class="form-input">
+          <input id="form-signin--username" name="username" type="text" ng-model="signinAccount.username" required="required"/>
+          <label for="form-signin--username" value="用户名" ng-class="{'selected': signinAccount.username}"></label>
+        </div>
+        <div class="form-input">
+          <input id="form-signin--password" name="password" type="password" ng-model="signinAccount.password" required="required"/>
+          <label for="form-signin--password" value="密码" ng-class="{'selected': signinAccount.password}"></label>
+        </div>
+        <div class="form-submit">
+          <input id="form-signin--submit" type="submit" value="登录"/>
+          <label for="form-signin--submit"></label>
+        </div>
+      </form>
+    </div>
+    <div class="form-signup--wrap form-wrap">
+      <p>第一次使用？<strong>立即注册</strong></p>
+      <form id="form-signup" name="signupForm" ng-submit="signupValidate()" class="form-signup">
+        <div class="form-input">
+          <input id="form-signup--username" name="username" type="text" ng-model="signupAccount.username" required="required"/>
+          <label for="form-signup--username" value="用户名" ng-class="{'selected': signupAccount.username}"></label>
+        </div>
+        <div class="form-input">
+          <input id="form-signup--password" name="password" type="password" ng-model="signupAccount.password" required="required"/>
+          <label for="form-signup--password" value="密码" ng-class="{'selected': signupAccount.password}"></label>
+        </div>
+        <div class="form-input">
+          <input id="form-signup--repassword" name="repassword" type="password" ng-model="signupAccount.repassword" required="required"/>
+          <label for="form-signup--repassword" value="确认密码" ng-class="{'selected': signupAccount.repassword}"></label>
+        </div>
+        <div class="form-submit">
+          <input id="form-signup--submit" type="submit" value="注册MANK"/>
+          <label for="form-signup--submit"></label>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
