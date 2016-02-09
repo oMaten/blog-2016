@@ -38,18 +38,6 @@ angular.module('blog.router', [
 					}
 				}
 			})
-			.state('signup', {
-				url: '/signup',
-				views: {
-					'header': {
-						templateUrl: '../html/_header.html'
-					},
-					'main': {
-						templateUrl: '../html/signup.html',
-						controller: 'SignupCtrl'
-					}
-				}
-			})
 			.state('signout', {
 				url: '/signout',
 				views: {
@@ -74,6 +62,21 @@ angular.module('blog.router', [
 					}
 				}
 			})
+			.state('allUsers', {
+				url: '/users',
+				views: {
+					'header': {
+						templateUrl: '../html/_header.html'
+					},
+					'main': {
+						templateUrl: '../html/user-list.html',
+						controller: 'UsersListCtrl'
+					}
+				},
+				validate: {
+					'requestSignin': true
+				}
+			})
 			.state('users', {
 				url: '/users/:id',
 				views: {
@@ -81,9 +84,16 @@ angular.module('blog.router', [
 						templateUrl: '../html/_header.html'
 					},
 					'main': {
+						templateUrl: '../html/post.html',
+						controller: 'PostsListCtrl'
+					},
+					'user': {
 						templateUrl: '../html/user.html',
 						controller: 'UserCtrl'
 					}
+				},
+				validate: {
+					'requestSignin': true
 				}
 			})
 	}]);

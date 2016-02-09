@@ -1,4 +1,7 @@
 .main-signin {
+  -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
   background-image: url("../img/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -167,3 +170,7 @@
         background-color: initial;
         transition-duration: .2s;
         transition-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+
+textarea {
+  width: 480px;
+  height: 63px; }

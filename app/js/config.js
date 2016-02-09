@@ -43,8 +43,9 @@ angular.module('blog', [
       若 store 中不存在 accessToken 或者 accessToken 已经过期则删除 accessToken 并且跳转登录页面,
       若 store 中存在 accessToken 并且 accessToken 合法则将 userId 存入 rootScope 中
     */
-    $rootScope.$on('$stateChangeStart', function(e, to){
-      if(to.validate && to.validate.requestSignin){
+
+    $rootScope.$on('$stateChangeStart', function(e, toState){
+      if(toState.validate && toState.validate.requestSignin){
         if(!store.get('accessToken') || jwtHelper.isTokenExpired(store.get('accessToken'))){
           store.remove('accessToken');
           e.preventDefault();
@@ -56,5 +57,8 @@ angular.module('blog', [
         }
       }
     });
+
+    $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams){
+    })
 
   }]);

@@ -75,11 +75,15 @@ hr {
   margin: 1em 0;
   padding: 0; }
 
-input, select {
+input, select, textarea {
   vertical-align: middle;
-  outline: none; }
+  outline: none;
+  resize: none; }
 
 .main-signin {
+  -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
   background-image: url("../img/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -249,6 +253,10 @@ input, select {
         transition-duration: .2s;
         transition-timing-function: cubic-bezier(0.4, 0, 1, 1); }
 
+textarea {
+  width: 480px;
+  height: 63px; }
+
 * {
   padding: 0;
   margin: 0; }
@@ -267,6 +275,17 @@ body {
   -webkit-align-items: stretch;
       -ms-flex-align: stretch;
           align-items: stretch; }
+
+main {
+  -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap; }
 
 .header {
   -webkit-flex: 0 0 auto;
@@ -291,7 +310,12 @@ body {
     margin: 0 20px; }
 
 .main {
-  -webkit-flex: 0 0 auto;
-      -ms-flex: 0 0 auto;
-          flex: 0 0 auto;
-  height: 100%; }
+  -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap; }

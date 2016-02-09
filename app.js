@@ -3,13 +3,13 @@ var koa = require('koa'),
 	server = require('koa-static'),
 	view = require('koa-views'),
 	router = require('koa-router'),
-	db = require('./server/model/mongo');
+	mongo = require('./server/model/mongo');
 
 var app = koa();
 var Router = module.exports = router();
 
 co(function* (){
-	yield db.connectDB();
+	yield mongo.connect();
 });
 
 app

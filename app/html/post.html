@@ -1,6 +1,16 @@
 
 <div class="main-post">
-  <h1>Every single post got this page.</h1>
-  <p>This post's id is: {{post._id}}</p>
-  <p>{{post.title}}</p>
+  <ul>
+    <li ng-repeat="post in posts">
+      Content: {{post.content}}
+      User: {{post.user.user_username}}
+    </li>
+  </ul>
+</div>
+<div class="wrap">
+  <form id="form-post" name="postForm" ng-submit="createPost()">
+    <label for="form-post--Content">PostContent</label>
+    <textarea id="form-post--Content" name="postContent" ng-model="newPost.content" ng-maxlength="140" required="required"></textarea>
+    <input id="form-post--submit" type="submit"/>
+  </form>
 </div>

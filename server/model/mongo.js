@@ -1,17 +1,19 @@
-var mongo = require('co-mongo');
+var mongo = require('mongodb'),
+  connect = mongo.connect;
 
 module.exports = mongo;
 
-mongo.connectDB = function* (){
-	if(mongo.db){
-		yield mongo.db.close();
-	}
+mongo.connect = function* (){
+  if(mongo.db){
+    yield mongo.db.close();
+  }
 
-	var db = mongo.db = yield mongo.connect('mongodb://127.0.0.1:27017/blog');
-	if(db){
-		console.log('mongodb has already connect...');
-	}
+  var db = mongo.db = yield connect('mongodb://127.0.0.1:27017/blog');
 
-	mongo.posts = yield db.collection('posts');
-	mongo.users = yield db.collection('users');
+  if(db){
+    console.log('mongodb has already connect...');
+  }
+
+  mongo.posts = db.collection('posts');
+  mongo.users = db.collection('users');
 }

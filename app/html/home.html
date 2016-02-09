@@ -1,14 +1,4 @@
 
 <div class="main-home">
   <h1>This is my blog home page.</h1>
-  <ul>
-    <li ng-repeat="post in posts"><a ui-sref="posts({ id: post._id })">Title: {{post.title}}</br></br></br></a></li>
-  </ul>
-  <div class="wrap">
-    <form id="form-post" name="postForm" ng-submit="createPost()">
-      <label for="form-post--Title">PostTitle</label>
-      <input id="form-post--Title" name="postTitle" type="text" ng-model="newPost.title" required="required"/>
-      <input id="form-post--submit" type="submit"/><code>{{newPost.title}}</code><code>{{postForm.postTitle.$valid}}</code><code>{{postForm.postTitle.$error}}</code>
-    </form>
-  </div>
 </div>

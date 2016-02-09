@@ -75,6 +75,7 @@ hr {
   margin: 1em 0;
   padding: 0; }
 
-input, select {
+input, select, textarea {
   vertical-align: middle;
-  outline: none; }
+  outline: none;
+  resize: none; }

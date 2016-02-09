@@ -2,34 +2,33 @@ var parse = require('co-body'),
 	model = require('../model/posts'),
 	auth = require('./auth');
 
-module.exports.listPosts = function* listPosts(){
-	var posts = yield model.listPosts();
-	if(this.request.header.accesstoken){
-		var decoded = yield auth.authFilter(this.request.header.accesstoken);
-		return this.body = {
-			posts: posts,
-			username: decoded.username
-		}
-	}
-	return this.body = {
-		posts: posts
+module.exports.listPosts = function* listPosts(next){
+
+	// 验证JWT
+	yield next;
+
+	this.body = {
+		'posts': this.posts
 	};
+	this.status = 200;
 }
 
-module.exports.createPost = function* createPost(){
-	var body = yield parse.json(this);
-	if(body){
-		var done = yield model.createPost(body);
-		if(done){
-			this.status = 200;
-		}
+module.exports.createPost = function* createPost(next){
+
+	this.info = yield parse.json(this);
+	// 验证JWT
+	yield next;
+
+	this.body = {
+		'post': this.post
 	}
+	this.status = 200;
 }
 
 module.exports.showPost = function* showPost(){
 	var post = yield model.getPostById(this.params.postId);
 	this.body = {
-		post: post
+		'post': post
 	};
 }
 
@@ -37,6 +36,5 @@ module.exports.listComments = function* listComments(){
 
 }
 
-module.exports.createComment = function* createComment(){
-
+module.exports.createComment = function* createComment(next){
 }

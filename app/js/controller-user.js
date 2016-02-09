@@ -3,13 +3,22 @@ angular.module('blog.controller.user', [
     'angular-storage',
     'angular-jwt'
   ])
-  .controller('UserCtrl', ['$scope', '$rootScope', '$window', 'Users', 'jwtHelper', 'store', function($scope, $rootScope, $window, Users, jwtHelper, store){
-
+  .controller('UserCtrl', ['$scope', '$rootScope', '$stateParams', 'Users', 'jwtHelper', 'store', function($scope, $rootScope, $stateParams, Users, jwtHelper, store){
     Users
-      .get({userId: $rootScope.userId})
+      .get({userId: $stateParams.id})
       .$promise
       .then(function(data){
         $scope.user = data.user;
+      }, function(error){
+        console.log(error);
+      });
+  }])
+  .controller('UsersListCtrl', ['$scope', '$rootScope', '$window', 'Users', 'jwtHelper', 'store', function($scope, $rootScope, $window, Users, jwtHelper, store){
+    Users
+      .list()
+      .$promise
+      .then(function(data){
+        $scope.users = data.users;
       }, function(error){
         console.log(error);
       });
