@@ -59,6 +59,6 @@ angular.module('blog', [
     });
 
     $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams){
-    })
+    });
 
   }]);

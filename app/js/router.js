@@ -11,7 +11,8 @@ angular.module('blog.router', [
 				url: '/',
 				views: {
 					'header': {
-						templateUrl: '../html/_header.html'
+						templateUrl: '../html/_header.html',
+						controller: 'MineCtrl'
 					},
 					'main': {
 						templateUrl: '../html/home.html',
@@ -29,9 +30,6 @@ angular.module('blog.router', [
 			.state('signin', {
 				url: '/signin',
 				views: {
-					'header': {
-						templateUrl: '../html/_header.html'
-					},
 					'main': {
 						templateUrl: '../html/signin.html',
 						controller: 'SigninCtrl'
@@ -41,9 +39,6 @@ angular.module('blog.router', [
 			.state('signout', {
 				url: '/signout',
 				views: {
-					'header': {
-						templateUrl: '../html/_header.html'
-					},
 					'main': {
 						templateUrl: '../html/signout.html',
 						controller: 'SignoutCtrl'
@@ -54,7 +49,8 @@ angular.module('blog.router', [
 				url: '/posts/:id',
 				views: {
 					'header': {
-						templateUrl: '../html/_header.html'
+						templateUrl: '../html/_header.html',
+						controller: 'MineCtrl'
 					},
 					'main': {
 						templateUrl: '../html/post.html',
@@ -66,7 +62,8 @@ angular.module('blog.router', [
 				url: '/users',
 				views: {
 					'header': {
-						templateUrl: '../html/_header.html'
+						templateUrl: '../html/_header.html',
+						controller: 'MineCtrl'
 					},
 					'main': {
 						templateUrl: '../html/user-list.html',
@@ -81,7 +78,8 @@ angular.module('blog.router', [
 				url: '/users/:id',
 				views: {
 					'header': {
-						templateUrl: '../html/_header.html'
+						templateUrl: '../html/_header.html',
+						controller: 'MineCtrl'
 					},
 					'main': {
 						templateUrl: '../html/post.html',

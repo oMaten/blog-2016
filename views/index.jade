@@ -8,10 +8,12 @@ html(lang="en")
 		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
 		title Blog
 		base(href='/')
-		link(rel='stylesheet' type='text/css' href='css/main.css')
+		link(rel='stylesheet' href='css/font-awesome.min.css')
+		link(rel='stylesheet' href='css/main.css')
 	body(ng-app='blog')
-		header
-			div.header(ui-view='header' ng-if='$root.userId')
+		header(ng-if='$root.userId')
+			div.header(ui-view='header')
+			div.header-bg
 		main
 			div.user(ui-view='user' ng-if='$root.userId')
 			div.main(ui-view='main')

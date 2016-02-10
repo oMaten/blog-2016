@@ -3,6 +3,16 @@ angular.module('blog.controller.user', [
     'angular-storage',
     'angular-jwt'
   ])
+  .controller('MineCtrl', ['$scope', '$rootScope', '$stateParams', 'Users', 'jwtHelper', 'store', function($scope, $rootScope, $stateParams, Users, jwtHelper, store){
+    Users
+      .get({userId: $rootScope.userId})
+      .$promise
+      .then(function(data){
+        $scope.user = data.user;
+      }, function(error){
+        console.log(error);
+      });
+  }])
   .controller('UserCtrl', ['$scope', '$rootScope', '$stateParams', 'Users', 'jwtHelper', 'store', function($scope, $rootScope, $stateParams, Users, jwtHelper, store){
     Users
       .get({userId: $stateParams.id})

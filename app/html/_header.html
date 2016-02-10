@@ -1,1 +1,4 @@
-<span><a ui-sref="home">主页</a></span><span><a ui-sref="following">关注</a></span><span><a ui-sref="followed">粉丝</a></span><span><a ui-sref="allUsers">推荐用户</a></span><span><a ui-sref="signout" ng-if="$root.userId">注销</a></span>
+<a ui-sref="home" class="backhome-btn"><i class="fa fa-home fa-lg"></i></a>
+<div class="user-face header-face"><a ui-sref="users({ id: $root.userId })" class="userface-btn"></a></div>
+<div class="user-name header-name"><a ui-sref="users({ id: $root.userId })" class="username-btn">{{ user.username }}</a></div>
+<div class="user-relation header-relation"><a ui-sref="following" class="following">关注</a><a ui-sref="follower" class="follower">粉丝</a></div><span><a ui-sref="allUsers">推荐用户</a></span><span><a ui-sref="signout" ng-if="$root.userId">注销</a></span>
