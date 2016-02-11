@@ -16,11 +16,7 @@ angular.module('blog.router', [
 					},
 					'main': {
 						templateUrl: '../html/home.html',
-						controller: 'PostsListCtrl'
-					},
-					'user': {
-						templateUrl: '../html/user.html',
-						controller: 'UserCtrl'
+						controller: 'HomeCtrl'
 					}
 				},
 				validate: {
@@ -42,19 +38,6 @@ angular.module('blog.router', [
 					'main': {
 						templateUrl: '../html/signout.html',
 						controller: 'SignoutCtrl'
-					}
-				}
-			})
-			.state('posts', {
-				url: '/posts/:id',
-				views: {
-					'header': {
-						templateUrl: '../html/_header.html',
-						controller: 'MineCtrl'
-					},
-					'main': {
-						templateUrl: '../html/post.html',
-						controller: 'PostCtrl'
 					}
 				}
 			})

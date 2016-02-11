@@ -14,14 +14,21 @@
           justify-content: flex-start;
   -webkit-align-items: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  position: relative;
+  box-shadow: 0 0 5px #050505; }
   .header .backhome-btn {
     -webkit-align-self: flex-start;
         -ms-flex-item-align: start;
             align-self: flex-start;
     display: block;
     margin-top: 20px;
-    margin-left: 20px; }
+    margin-left: 20px;
+    color: #f5f5f5; }
+  .header .tofollowing-btn {
+    color: #f5f5f5;
+    font-size: 20px;
+    margin: 10px 0; }
   .header .user-face {
     display: block;
     border-radius: 50%;
@@ -43,6 +50,22 @@
     margin: 20px 0 10px 0; }
   .header .header-name {
     margin: 10px; }
+    .header .header-name > a {
+      color: #f5f5f5;
+      font-size: 24px; }
+  .header .header-relation > a {
+    color: #f5f5f5;
+    font-size: 16px; }
+  .header .header-recommend {
+    margin: 20px 0; }
+    .header .header-recommend > a {
+      color: #f5f5f5;
+      font-size: 16px; }
+  .header .header-logout {
+    margin: 20px 0; }
+    .header .header-logout > a {
+      color: #f5f5f5;
+      font-size: 16px; }
   .header .user-relation {
     display: -webkit-flex;
     display: -ms-flexbox;

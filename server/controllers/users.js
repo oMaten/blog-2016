@@ -2,54 +2,51 @@ var parse = require('co-body'),
 	model = require('../model/users'),
   auth = require('./auth');
 
-module.exports.listUsers = function* listUsers(next){
-  yield next;
+module.exports.listUsers = function* listUsers(){
+  var users = yield model.listUsers();
 	this.body = {
-    'users': this.users
+    'users': users
   }
   this.status = 201;
 }
 
 module.exports.addUser = function* addUser(next){
-  this.info = yield parse.json(this);
-
+  var info = yield parse.json(this);
   // 检查信息是否完整
-  if(!this.info.username || !this.info.password || !this.info.repassword){
+  if(!info.username || !info.password || !info.repassword){
     return this.throw('缺少用户名或密码', 401);
   }
   // 检查两次密码输入是否相同
-  if(this.info.password !== this.info.repassword){
+  if(info.password !== info.repassword){
     return this.throw('输入的密码不相同', 401);
   }
-  delete this.info.repassword;
-  this.username = this.info.username;
-
+  delete info.repassword;
+  // 查询用户名是否已经存在
+  var user = yield model.getUserByName(info.username);
+  if(user){
+    return this.throw('用户已经存在', 401);
+  }
+  this.user = yield model.addUser(info);
   yield next;
-
   this.body = {
     accessToken: this.accessToken
   };
   this.status = 201;
-
 }
 
 module.exports.signinUser = function* signinUser(next){
-  this.info = yield parse.json(this);
-
+  var info = yield parse.json(this);
   // 检查信息是否完整
-  if(!this.info.password || !this.info.username){
+  if(!info.password || !info.username){
     return this.throw('缺少用户名或密码', 401);
   }
-
-  this.username = this.info.username;
-  this.password = this.info.password;
   // 通过用户名查询用户信息
-  yield next;
-
-  if(this.isCompare){
+  this.user = yield model.getUserByName(info.username);
+  var isCurrent = yield model.passwordCompare(info.password, this.user.password);
+  if(!isCurrent){
     return this.throw('密码错误', 401);
   }
-
+  yield next;
   this.body = {
     accessToken: this.accessToken
   }
@@ -57,15 +54,10 @@ module.exports.signinUser = function* signinUser(next){
 }
 
 module.exports.showUser = function* showUser(next){
-  this.userId = this.params.userId;
-  // 验证 JWT
-  yield next;
-
   this.body = {
-    user: this.user
+    user: this.visitUser
   }
   this.status = 200;
-
 }
 
 module.exports.updateUser = function* updateUser(){

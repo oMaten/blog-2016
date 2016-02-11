@@ -8,78 +8,69 @@ function User(){
   this.username = '';
   this.password = '';
   this.created = new Date;
+  this.followingCount = 0;
+  this.followerCount = 0;
   this.admin = false;
 }
 
 /**
  * 添加用户
- * @param {Object} this.req required
- * @return {Object} this.user
+ * @param {Object} user
  **/
 
-module.exports.addUser = function* addUser(next){
+module.exports.addUser = function* addUser(info){
   var user = new User();
-
-  // 查询用户名是否已经存在
-  if(this.user){
-    return this.throw('用户已经存在', 401);
-  }
-  user.username = this.info.username;
-  user.password = this.info.password;
+  user.username = info.username;
+  user.password = info.password;
   // 将用户的密码hash加密
   user = yield passwordSalt(user);
 
   // 往数据库中添加User
   try{
     var result = yield mongo.users.insert(user);
-    this.user = result['ops'][0];
+    return result['ops'][0];
   }catch(error){
     console.log(error);
     return false;
   }
-  // 获取 JWT
-  yield next;
 }
 
 /**
  * 通过 ID 获取用户
- * @param {String} this.userId required
- * @return {Object} this.user
+ * @param {String} id
  **/
 
-module.exports.getUserById = function* getUserById(next){
-  this.user = yield mongo.users
+module.exports.getUserById = function* getUserById(id){
+  var user = yield mongo.users
     .findOne(
       {
-        '_id': ObjectID(this.userId)
+        '_id': ObjectID(id)
       }
     );
-  yield next;
+  return user;
 }
 
 /**
  * 通过 UserName 获取用户
- * @param {String} this.username required
- * @return {Object} this.user
+ * @param {String} username
  **/
 
-module.exports.getUserByName = function* getUserByName(next){
-  this.user = yield mongo.users
+module.exports.getUserByName = function* getUserByName(username){
+  var user = yield mongo.users
     .findOne(
       {
-        username: this.username
+        'username': username
       }
     );
-  yield next;
+  return user;
 }
 
 /**
  * 获取全部用户
- * @return {Array} this.users
  **/
 
-module.exports.listUsers = function* listPosts(next){
-  this.users = yield mongo.users
+module.exports.listUsers = function* listPosts(){
+  var users = yield mongo.users
     .find(
       {},
       {},
@@ -91,31 +82,29 @@ module.exports.listUsers = function* listPosts(next){
       }
     )
     .toArray();
-  yield next;
+  return users;
 }
 
 /**
- * 通过 ID 获取用户并更新其文档中的微博文档引用
- * @param {String} this.userId required
- * @param {String} this.postId required
- * @return null
+ * 通过 ID 获取并更新用户文档
+ * @param {String} id 用户
+ * @param {String} key 文档键值
+ * @param {String} value 键值取值
  **/
 
-module.exports.updateUserPosts = function* updateUserPosts(next){
+module.exports.updateUserFollowCount = function* updateUserFollowCount(id, key, value){
+  var updateDoc = {};
+  updateDoc[key] = value;
   try{
     yield mongo.users
     .update(
       {
-        '_id': ObjectID(this.userId)
+        '_id': ObjectID(id)
       },
       {
-        $push: {
-          'posts': new DBRef('posts', ObjectID(this.postId))
-        }
+        $inc: updateDoc
       }
     );
-    // 查询用户
-    yield next;
   }catch(error){
     console.log(error);
     return false;
@@ -129,12 +118,9 @@ module.exports.updateUserPosts = function* updateUserPosts(next){
  * @return {Boolean} this.isCompare
  **/
 
-module.exports.passwordCompare = function* passwordCompare(next){
-  if(!this.user){
-    return this.throw('用户不存在', 401);
-  }
-  this.isCompare = bcrypt.compareSync(this.user.password, this.password);
-  yield next;
+module.exports.passwordCompare = function* passwordCompare(hash, password){
+  var isCurrent = bcrypt.compareSync(hash, password);
+  return isCurrent;
 }
 
 /* 辅助函数 */

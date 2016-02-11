@@ -9,9 +9,9 @@ angular.module('blog', [
   ])
   .config(['$httpProvider', 'jwtInterceptorProvider', function($httpProvider, jwtInterceptorProvider){
 
-    /*
-      在每个 request 中发送 store 中的 accessToken
-    */
+
+    // 在每个 request 中发送 store 中的 accessToken
+
     $httpProvider.interceptors.push(function(store){
       return {
         'response': function(response){
@@ -37,12 +37,11 @@ angular.module('blog', [
 
   }])
   .run(['$rootScope', '$state', 'store', 'jwtHelper', function($rootScope, $state, store, jwtHelper){
-    /*
-      在跳转路径前检查是否需要登录,
-      若需要登录则获取 store 中的 accessToken, 并且检查 accessToken 是否过期,
-      若 store 中不存在 accessToken 或者 accessToken 已经过期则删除 accessToken 并且跳转登录页面,
-      若 store 中存在 accessToken 并且 accessToken 合法则将 userId 存入 rootScope 中
-    */
+
+      // 在跳转路径前检查是否需要登录,
+      // 若需要登录则获取 store 中的 accessToken, 并且检查 accessToken 是否过期,
+      // 若 store 中不存在 accessToken 或者 accessToken 已经过期则删除 accessToken 并且跳转登录页面,
+      // 若 store 中存在 accessToken 并且 accessToken 合法则将 userId 存入 rootScope 中
 
     $rootScope.$on('$stateChangeStart', function(e, toState){
       if(toState.validate && toState.validate.requestSignin){
@@ -59,6 +58,11 @@ angular.module('blog', [
     });
 
     $rootScope.$on('$stateChangeSuccess', function(e, toState, toParams){
+      $rootScope.isUser = true;
+      if(toParams.id && toParams.id !== $rootScope.userId){
+        $rootScope.isUser = false;
+        $rootScope.userId = toParams.id;
+      }
     });
 
   }]);

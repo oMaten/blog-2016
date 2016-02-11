@@ -1,10 +1,12 @@
 var mongo = require('./mongo'),
 	ObjectID = mongo.ObjectID,
+	_ = require('lodash'),
 	DBRef = mongo.DBRef;
 
 function Post(){
 	this.content = '';
 	this.user = '';
+	this.hot = 0;
 	this.created = new Date();
 }
 
@@ -15,53 +17,44 @@ module.exports.getPostById = function* getPost(id){
 
 /**
  * 查询所有微博
- * @param {Object} this.query.userId
- * @return {Array} this.posts
+ * @param {Object} id
  **/
 
-module.exports.listPosts = function* listPosts(next){
-	if(this.query.userId){
-		this.userId = this.query.userId;
-		this.posts = yield mongo.posts
-			.find(
-				{
-					'user.user_id': ObjectID(this.userId)
-				},
-				{},
-				{
-					'limit': 15,
-					'sort': {
-						'created': -1
-					}
+module.exports.listPosts = function* listPosts(idList){
+	_.forEach(idList, function(value, key){
+		idList[key] = ObjectID(value)
+	});
+	var posts = yield mongo.posts
+		.find(
+			{
+				'user.user_id': {$in: idList}
+			},
+			{
+				'limit': 15,
+				'sort': {
+					'created': -1
 				}
-			)
-			.toArray();
-		return;
-	}
+			}
+		)
+		.toArray();
+	return posts;
 }
 
 /**
  * 创建微博
- * @param {Object} this.decoded required
- * @param {Object} this.info required
- * @return {Object} this.post
+ * @param {Object} info
  **/
 
-module.exports.createPost = function* createPost(next){
+module.exports.createPost = function* createPost(info){
 	var post = new Post();
-	this.userId = this.decoded.userId;
-	post.content = this.info.content;
-	// 查询创建微博的用户
-	yield next;
-
+	post.content = info.content;
 	post.user = {
-		'user_id': ObjectID(this.user._id),
-		'user_username': this.user.username
+		'user_id': ObjectID(info.user_id),
+		'user_username': info.user_username
 	};
-
 	try{
 		var result = yield mongo.posts.insert(post);
-		this.post = result['ops'][0];
+		return result['ops'][0];
 	}catch(error){
 		console.log(error);
 	}

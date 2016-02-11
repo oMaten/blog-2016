@@ -7,15 +7,12 @@ module.exports = function(Router){
 
 	Router
 		.get('/api/posts',
-      Controller.listPosts,
       Auth.authFilter,
-      postsModel.listPosts
+      Controller.listPosts
     )
 		.post('/api/posts',
-      Controller.createPost,
       Auth.authFilter,
-      postsModel.createPost,
-      usersModel.getUserById
+      Controller.createPost
     )
 		.get('/api/posts/:postId',
       Controller.showPost

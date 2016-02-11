@@ -1,4 +1,17 @@
 
 <div class="main-home">
-  <h1>This is my blog home page.</h1>
+  <ul class="main-home--posts posts-list">
+    <li ng-repeat="post in posts" class="posts-item">
+      <div class="posts-item--header"></div>
+      <div class="posts-item--content card"><a ui-sref="users({ id: post.user.user_id })" class="card-user">{{ post.user.user_username }}</a>
+        <div class="card-content">
+          <p>{{ post.content }}</p>
+        </div>
+        <div class="card-more">
+          <div class="card-more--created">{{ post.created }}</div>
+          <div class="card-more--link"><span><i class="fa fa-heart-o"></i><i class="fa fa-comments-o"></i><i class="fa fa-external-link"></i></span>#热度 90</div>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>

@@ -25,6 +25,7 @@ app
 require('./server/routers/index')(Router);
 require('./server/routers/posts')(Router);
 require('./server/routers/users')(Router);
+require('./server/routers/follow')(Router);
 
 app.listen(4011, function(){
 	console.log('Server is connecting...');

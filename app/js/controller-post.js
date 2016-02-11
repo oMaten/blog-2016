@@ -2,7 +2,7 @@ angular.module('blog.controller.post', [
     'blog.server',
     'angular-storage'
   ])
-  .controller('PostsListCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', 'store', function($scope, $rootScope, $stateParams, Posts, store){
+  .controller('PostsListCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', 'store', '$state', function($scope, $rootScope, $stateParams, Posts, store, $state){
     Posts
       .list({userId: $stateParams.id})
       .$promise

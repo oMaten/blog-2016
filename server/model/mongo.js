@@ -16,4 +16,5 @@ mongo.connect = function* (){
 
   mongo.posts = db.collection('posts');
   mongo.users = db.collection('users');
+  mongo.follow = db.collection('follow');
 }

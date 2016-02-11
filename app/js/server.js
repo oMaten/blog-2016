@@ -17,4 +17,14 @@ angular.module('blog.server', ['ngResource'])
         'list': {method: 'GET', isArray: false}
       }
     );
-	}]);
+	}])
+  .factory('Follow', ['$resource', function($resource){
+    return $resource('/api/follow',
+      {},
+      {
+        'list': {method: 'GET', isArray: false},
+        'follow': {method: 'POST', isArray: false},
+        'unfollow': {method: 'POST', isArray: false, url: '/api/unfollow'}
+      }
+    );
+  }])
