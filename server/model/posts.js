@@ -6,7 +6,8 @@ var mongo = require('./mongo'),
 function Post(){
 	this.content = '';
 	this.user = '';
-	this.hot = 0;
+	this.hotCount = 0;
+	this.commentCount = 0;
 	this.created = new Date();
 }
 

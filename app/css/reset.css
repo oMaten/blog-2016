@@ -17,7 +17,8 @@ time, mark, audio, video {
   background: transparent; }
 
 body {
-  line-height: 1; }
+  line-height: 1;
+  font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; }
 
 :focus {
   outline: 1; }
@@ -80,4 +81,6 @@ hr {
 input, select, textarea {
   vertical-align: middle;
   outline: none;
-  resize: none; }
+  resize: none;
+  border: none;
+  background: none; }

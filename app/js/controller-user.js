@@ -76,14 +76,62 @@ angular.module('blog.controller.user', [
         console.log(error);
       });
   }])
-  .controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', function($scope, $rootScope, $stateParams, Posts){
+  .controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', 'Comments', function($scope, $rootScope, $stateParams, Posts, Comments){
     Posts
       .get({userId: $rootScope.userId, getFollow: true})
       .$promise
       .then(function(data){
-        $scope.posts = data.posts;
-        console.log($scope.posts);
+        $scope.$broadcast('gotPosts', data.posts);
       }, function(error){
-        console.log(error.data);
+        console.log(error);
       });
+
+    $scope.$on('fetchComments', function(event, data){
+      Comments
+        .get({postId: data})
+        .$promise
+        .then(function(data){
+          $scope.$broadcast('gotComments', data.comments)
+        }, function(error){
+          console.log(error);
+        });
+    });
+    $scope.$on('createComment', function(event, data){
+      Comments
+        .save(data)
+        .$promise
+        .then(function(data){
+          $scope.$broadcast('gotCommentOne', data.comment);
+        }, function(error){
+          console.log(error);
+        });
+    });
+  }])
+  .controller('PostItemCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+    $scope.$on('gotPosts', function(event, data){
+      $scope.posts = data;
+    });
+  }])
+  .controller('CommentItemCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+
+    $scope.fetchComments = function(post){
+      $scope.$emit('fetchComments', post._id);
+      var gotComments = $scope.$on('gotComments', function(event, data){
+        post.comments = data;
+        // deregister the listener
+        gotComments();
+      });
+    }
+
+    $scope.createComment = function(post){
+      if(!$scope.newComment.content){ return }
+      $scope.newComment.postId = post._id;
+      $scope.$emit('createComment', $scope.newComment);
+      var gotCommentOne = $scope.$on('gotCommentOne', function(event, data){
+        post.comments.unshift(data);
+        // deregister the listener
+        gotCommentOne();
+      });
+      $scope.newComment = {};
+    }
   }]);

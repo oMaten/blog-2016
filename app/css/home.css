@@ -61,6 +61,86 @@
       background-color: #f5f6f8;
       border-radius: 5px;
       padding: 10px 0; }
+    .posts-list .posts-item .posts-item--comments {
+      position: relative;
+      width: 60%;
+      height: auto;
+      margin-top: 10px;
+      background-color: #f5f6f8; }
+
+.comments-list {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  padding: 5px 10px;
+  border-radius: 5px; }
+  .comments-list .comments-add {
+    display: block;
+    margin-bottom: 20px; }
+  .comments-list .comments-item {
+    -webkit-flex: 1 0 30px;
+        -ms-flex: 1 0 30px;
+            flex: 1 0 30px;
+    display: block;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(132, 169, 155, 0.3);
+    padding: 8px 0; }
+    .comments-list .comments-item:last-child {
+      border-bottom: none; }
+    .comments-list .comments-item .comments-item--info {
+      color: #a1a1a1;
+      margin-bottom: 10px;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-flow: row nowrap;
+          -ms-flex-flow: row nowrap;
+              flex-flow: row nowrap;
+      -webkit-align-items: baseline;
+          -ms-flex-align: baseline;
+              align-items: baseline;
+      -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
+              justify-content: space-between; }
+    .comments-list .comments-item .comments-item--user {
+      display: inline-block; }
+    .comments-list .comments-item .comments-item--created {
+      display: inline-block; }
+    .comments-list .comments-item .comments-item--content {
+      display: block;
+      padding-left: 50px;
+      word-break: break-all;
+      word-wrap: break-word;
+      line-height: 1.2;
+      text-align: justify; }
+
+#form-comment {
+  display: block;
+  width: 100%;
+  height: 100%; }
+  #form-comment > textarea {
+    display: inline-block;
+    position: relative;
+    width: 80%;
+    height: 100%;
+    margin-right: 2%;
+    padding: 8px 5px;
+    border-bottom: 2px solid rgba(229, 168, 109, 0.23);
+    border-left: 2px solid rgba(229, 168, 109, 0.23); }
+  #form-comment > input {
+    display: inline-block;
+    width: auto;
+    height: 100%;
+    background-color: #e5a86d;
+    padding: 8px 12px;
+    color: #f1f1f1;
+    border-radius: 2px; }
 
 .card {
   display: -webkit-flex;
@@ -102,9 +182,9 @@
     white-space: nowrap;
     color: #a1a1a1; }
   .card .card-content {
-    -webkit-flex: 1 0 130px;
-        -ms-flex: 1 0 130px;
-            flex: 1 0 130px;
+    -webkit-flex: 1 0 80px;
+        -ms-flex: 1 0 80px;
+            flex: 1 0 80px;
     display: block;
     padding: 0 30px;
     margin: 10px 0;

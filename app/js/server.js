@@ -8,7 +8,11 @@ angular.module('blog.server', ['ngResource'])
     );
 	}])
 	.factory('Comments', ['$resource', function($resource){
-		return $resource('/api/posts/:postId/comments/:commentId');
+		return $resource('/api/posts/:postId/comments/:commentId',
+      {
+        'postId': '@postId'
+      }
+    );
 	}])
 	.factory('Users', ['$resource', function($resource){
 		return $resource('/api/users/:userId',

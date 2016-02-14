@@ -38,7 +38,6 @@ module.exports.getFollow = function* getFollow(user_id, following_id){
     return this.throw('不可关注自己', 401);
   }
   var result = yield mongo.follow.findOne(findItem);
-  // console.log('followRESULT', result);
   return result;
 }
 

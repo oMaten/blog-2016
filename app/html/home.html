@@ -1,6 +1,6 @@
 
 <div class="main-home">
-  <ul class="main-home--posts posts-list">
+  <ul ng-controller="PostItemCtrl" class="main-home--posts posts-list">
     <li ng-repeat="post in posts" class="posts-item">
       <div class="posts-item--header"></div>
       <div class="posts-item--content card"><a ui-sref="users({ id: post.user.user_id })" class="card-user">{{ post.user.user_username }}</a>
@@ -9,7 +9,24 @@
         </div>
         <div class="card-more">
           <div class="card-more--created">{{ post.created }}</div>
-          <div class="card-more--link"><span><i class="fa fa-heart-o"></i><i class="fa fa-comments-o"></i><i class="fa fa-external-link"></i></span>#热度 90</div>
+          <div class="card-more--link"><span><i class="fa fa-heart-o"></i><i ng-click="post.isShowComment = !post.isShowComment" class="fa fa-comments-o"></i><i class="fa fa-external-link"></i></span>#热度 90</div>
+        </div>
+      </div>
+      <div ng-if="post.isShowComment" ng-controller="CommentItemCtrl" ng-init="fetchComments(post)" class="posts-item--comments comments-list">
+        <div class="comments-add">
+          <form id="form-comment" name="commentForm" ng-submit="createComment(post)">
+            <textarea id="form-comment--content" name="commentContent" ng-model="newComment.content" ng-maxlength="60" required="required"></textarea>
+            <input id="form-comment--submit" type="submit"/>
+          </form>
+        </div>
+        <div ng-repeat="comment in post.comments" class="comments-item">
+          <div class="comments-item--info">
+            <div class="comments-item--user">{{ comment.user.user_username }}</div>
+            <div class="comments-item--created">{{ comment.created }}</div>
+          </div>
+          <div class="comments-item--content">
+            <p>{{ comment.content }}</p>
+          </div>
         </div>
       </div>
     </li>

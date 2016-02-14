@@ -1,7 +1,5 @@
 var Controller = require('../controllers/posts'),
-  Auth = require('../controllers/auth'),
-  postsModel = require('../model/posts'),
-  usersModel = require('../model/users');
+  Auth = require('../controllers/auth');
 
 module.exports = function(Router){
 
@@ -16,11 +14,5 @@ module.exports = function(Router){
     )
 		.get('/api/posts/:postId',
       Controller.showPost
-    )
-		.get('/api/posts/:postId/comments',
-      Controller.listComments
-    )
-		.post('/api/posts/:postId/comments',
-      Controller.createComment
     );
 };
