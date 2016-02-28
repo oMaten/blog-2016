@@ -27,7 +27,7 @@ module.exports.addFollow = function* addFollow(user_id, following_id){
 /**
  * 通过用户 ID 或被关注者 ID 查询关系
  * @param {String} user_id
- * @return {String} following_id
+ * @param {String} following_id
  **/
 
 module.exports.getFollow = function* getFollow(user_id, following_id){
@@ -44,6 +44,7 @@ module.exports.getFollow = function* getFollow(user_id, following_id){
 /**
  * 通过用户 ID 获取其关注的用户的 ID
  * @param {String} user_id
+ * @param {Int} count
  **/
 
 module.exports.getFollowing = function* getFollowing(user_id, count){
@@ -52,6 +53,27 @@ module.exports.getFollowing = function* getFollowing(user_id, count){
     .aggregate([
       {$match: {'user_id': ObjectID(user_id)}},
       {$project: {'_id': '$following_id'}},
+      {$limit: 15},
+      {$skip: count}
+    ],
+    {
+      cursor: { batchSize: 15 }
+    }).toArray();
+  return cursor;
+}
+
+/**
+ * 通过用户 ID 获取其粉丝的 ID
+ * @param {String} user_id
+ * @param {Array} count
+ **/
+
+module.exports.getFollowed = function* getFollowed(user_id, count){
+  var count = count || 0;
+  var cursor = yield mongo.follow
+    .aggregate([
+      {$match: {'following_id': ObjectID(user_id)}},
+      {$project: {'_id': '$user_id'}},
       {$limit: 15},
       {$skip: count}
     ],

@@ -67,21 +67,21 @@ module.exports.getUserByName = function* getUserByName(username){
 
 /**
  * 获取全部用户
+ * @param {Array} idList
  **/
 
-module.exports.listUsers = function* listPosts(){
-  var users = yield mongo.users
-    .find(
-      {},
-      {},
-      {
-        'limit': 15,
-        'sort': {
-          '_id': -1
-        }
-      }
-    )
-    .toArray();
+module.exports.listUsers = function* listPosts(idList){
+  var queryOpt = {},
+    filterOpt = { 'password': 0 },
+    limitOpt = { 'limit': 15, 'sort': { '_id': -1 } };
+  if(idList){
+    _.forEach(idList, function(value, key){
+      idList[key] = ObjectID(value['_id']);
+    });
+    queryOpt = { '_id': { $in: idList } };
+  }
+  var users = yield mongo.users.find(queryOpt, filterOpt, limitOpt).toArray();
+
   return users;
 }
 

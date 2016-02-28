@@ -14,10 +14,10 @@
         </div>
         <div class="card-more">
           <div class="card-more--created">{{ post.created }}</div>
-          <div class="card-more--link"><span><i class="fa fa-heart-o"></i><i ng-click="post.isShowComment = !post.isShowComment" class="fa fa-comments-o"></i><i class="fa fa-external-link"></i></span>#热度 90</div>
+          <div class="card-more--link"><span><i class="fa fa-heart-o"></i><i ng-click="showTheComment(post)" class="fa fa-comments-o"></i><i class="fa fa-external-link"></i></span>#热度 90</div>
         </div>
       </div>
-      <div ng-if="post.isShowComment" ng-controller="CommentItemCtrl" ng-init="fetchComments(post)" class="posts-item--comments comments-list">
+      <div ng-if="post.isShowComment" ng-controller="CommentItemCtrl" ng-init="fetchComments(post)" ng-class="{true: 'bounceInDown', false: 'bounceOutDown'}[post.readyShowComment]" class="posts-item--comments comments-list animated">
         <div class="comments-add">
           <form id="form-comment" name="commentForm" ng-submit="createComment(post)">
             <textarea id="form-comment--content" name="commentContent" ng-model="newComment.content" ng-maxlength="60" required="required"></textarea>

@@ -78,6 +78,12 @@ angular
         Post.getAllPosts({ getFollow: true });
       }
 
+      // 用户列表
+
+      if($state.current.name == 'allUsers'){
+        User.getUsersList(toParams);
+      }
+
       if(toParams.id && toParams.id !== $rootScope.userId){
         $rootScope.isUser = false;
         $rootScope.userId = toParams.id;

@@ -1,0 +1,66 @@
+.main-userlist {
+  -webkit-flex: 1 1 100%;
+      -ms-flex: 1 1 100%;
+          flex: 1 1 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  overflow-y: scroll;
+  background-color: rgba(132, 169, 155, 0.3); }
+  .main-userlist .main-userlist--users {
+    margin: 20px 0;
+    padding: 30px;
+    -webkit-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+            flex: 1 1 100%;
+    width: 100%;
+    box-sizing: border-box; }
+
+.users-list {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap; }
+  .users-list .users-item {
+    display: block;
+    width: 320px;
+    height: 140px;
+    margin: 0 20px;
+    padding: 10px 0 10px 85px;
+    box-sizing: border-box;
+    position: relative; }
+    .users-list .users-item .users-item--header {
+      position: absolute;
+      display: block;
+      left: 30px;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      border: 8px solid #d7e3de;
+      overflow: hidden; }
+      .users-list .users-item .users-item--header > img {
+        width: 100%;
+        height: 100%; }
+    .users-list .users-item .users-item--content {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background-color: rgba(255, 255, 255, 0.75);
+      border-radius: 5px;
+      padding: 15px 5px 15px 40px;
+      box-sizing: border-box; }
+      .users-list .users-item .users-item--content > p {
+        margin-top: 10px; }
+        .users-list .users-item .users-item--content > p > span {
+          margin-right: 10px; }

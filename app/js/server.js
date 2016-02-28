@@ -19,7 +19,8 @@ angular
 		return $resource('/api/users/:userId',
       {},
       {
-        'list': {method: 'GET', isArray: false}
+        'list': {method: 'GET', isArray: false},
+        'findFollowMem': {method: 'GET', isArray: false, url: '/api/users'}
       }
     );
 	}])
@@ -34,15 +35,14 @@ angular
     );
   }])
   /**
-   *  getUser 通过 userId 来获取用户信息
-   *  addUser 将获取的用户 data 赋值给当前的 profile 对象
-   *  removeUser 清空当前 profile 对象中的值
+   *  getUser 通过 userId 来获取用户信息并添加进 list
    *  getFollowStatus 获取当前用户的关注状态
    *  unFollowCurrentUser 取消关注当前对象
    *  followCurrentUser 关注当前对象
    **/
   .service('User', ['$rootScope', 'Users', 'Follow', function($rootScope, Users, Follow){
     var service = {
+      list: [],
       profile: {},
       auth: {},
       followStatus: {
@@ -55,20 +55,24 @@ angular
           .get(formData)
           .$promise
           .then(function(data){
-            ctx.addUser(data);
+            data.user && (ctx.profile = data.user);
+            data.auth && (ctx.auth = data.auth);
+            $rootScope.$broadcast('User.fetchCurrentUser');
           }, function(error){
             console.log(error);
           });
       },
-      addUser: function(data){
-        this.removeUser();
-        this.profile = data.user;
-        this.auth = data.auth;
-        $rootScope.$broadcast('User.fetchCurrentUser');
-      },
-      removeUser: function(){
-        this.profile = {};
-        this.auth = {};
+      getUsersList: function(formData){
+        var ctx = this;
+        Users
+          .findFollowMem(formData)
+          .$promise
+          .then(function(data){
+            data.users && (ctx.list = data.users);
+            $rootScope.$broadcast('User.fetchUsersList');
+          }, function(error){
+            console.log(error);
+          });
       },
       getFollowStatus: function(){
         var ctx = this;

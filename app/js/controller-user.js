@@ -8,8 +8,10 @@ angular
   .controller('MineCtrl', ['$scope', '$rootScope', '$stateParams', '$state', 'Users', 'Follow', 'jwtHelper', 'store', 'User',function($scope, $rootScope, $stateParams, $state, Users, Follow, jwtHelper, store, User){
 
     $scope.user = User.profile;
+    $scope.auth = User.auth;
     var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(event){
       $scope.user = User.profile;
+      $scope.auth = User.auth;
       // deregister the listener
       gotCurrentUser();
     });
@@ -40,7 +42,7 @@ angular
     });
   }])
   // 获取文章列表以及添加文章
-  .controller('PostItemCtrl', ['$scope', '$rootScope', 'Post', function($scope, $rootScope, Post){
+  .controller('PostItemCtrl', ['$scope', '$rootScope', '$timeout', 'Post', function($scope, $rootScope, $timeout, Post){
     $scope.posts = Post.list;
     var gotAllPosts = $scope.$on('Post.fetchAllPosts', function(){
       $scope.posts = Post.list;
@@ -50,6 +52,14 @@ angular
       if(!newPost.content){ return }
       Post.addPost(newPost);
     };
+    $scope.showTheComment = function(post){
+      post.readyShowComment = !post.readyShowComment;
+      if(post.isShowComment){
+        $timeout(function(){ post.isShowComment = !post.isShowComment }, 1000);
+      }else{
+        post.isShowComment = !post.isShowComment;
+      }
+    }
   }])
   // 获取评论以及添加评论
   .controller('CommentItemCtrl', ['$scope', '$rootScope', 'Post', function($scope, $rootScope, Post){
@@ -62,4 +72,10 @@ angular
       Post.createNewComment(post, $scope.newComment.content);
       $scope.newComment = {};
     }
+  }])
+  .controller('UserItemCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User){
+    var gotAllUserList = $scope.$on('User.fetchUsersList', function(){
+      $scope.users = User.list;
+      gotAllUserList();
+    });
   }]);

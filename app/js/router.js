@@ -43,7 +43,7 @@ angular
 				}
 			})
 			.state('allUsers', {
-				url: '/users',
+				url: '/users?getFollowing&getFollowed&userId',
 				views: {
 					'header': {
 						templateUrl: '../html/_header.html',
@@ -51,7 +51,7 @@ angular
 					},
 					'main': {
 						templateUrl: '../html/user-list.html',
-						controller: 'UsersListCtrl'
+						controller: 'UserItemCtrl'
 					}
 				},
 				validate: {

@@ -1,9 +1,24 @@
 var parse = require('co-body'),
 	model = require('../model/users'),
-  auth = require('./auth');
+  FollowModel = require('../model/follow'),
+  auth = require('./auth'),
+  _ = require('lodash');
 
 module.exports.listUsers = function* listUsers(){
-  var users = yield model.listUsers();
+  var userListId = [];
+  if(this.query.getFollowing && this.query.userId){
+    userListId = yield FollowModel.getFollowing(this.query.userId, 0);
+  }
+  if(this.query.getFollowed && this.query.userId){
+    userListId = yield FollowModel.getFollowed(this.query.userId, 0);
+  }
+
+  if(_.isEmpty(this.query)){
+    var users = yield model.listUsers();
+  }else{
+    var users = yield model.listUsers(userListId);
+  }
+
 	this.body = {
     'users': users
   }

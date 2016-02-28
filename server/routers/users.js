@@ -7,6 +7,7 @@ module.exports = function(Router){
 
 	Router
 		.get('/api/users',
+      Auth.authFilter,
       Controller.listUsers
     )
 		.post('/api/users',
