@@ -36,6 +36,7 @@ module.exports.authFilter = function* authFilter(next){
  * @param {String} this.user
  * @return {String} this.accessToken
  **/
+
 module.exports.encryptFliter = function* encryptFliter(next){
   this.accessToken = jwt.sign({
     seed: Math.random(),

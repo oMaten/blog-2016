@@ -55,7 +55,8 @@ module.exports.signinUser = function* signinUser(next){
 
 module.exports.showUser = function* showUser(next){
   this.body = {
-    user: this.visitUser
+    user: this.visitUser,
+    auth: this.auth
   }
   this.status = 200;
 }

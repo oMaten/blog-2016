@@ -1,137 +1,65 @@
-angular.module('blog.controller.user', [
+angular
+  .module('blog.controller.user', [
     'blog.server',
     'angular-storage',
     'angular-jwt'
   ])
-  .controller('MineCtrl', ['$scope', '$rootScope', '$stateParams', '$state', 'Users', 'Follow', 'jwtHelper', 'store', function($scope, $rootScope, $stateParams, $state, Users, Follow, jwtHelper, store){
-    $scope.followStatus = {
-      'text': '关注',
-      'status': false
-    };
-    Users
-      .get({userId: $rootScope.userId})
-      .$promise
-      .then(function(data){
-        $scope.user = data.user;
-        console.log($scope.user);
-      }, function(error){
-        console.log(error);
-      });
-    Follow
-      .list({userId: $rootScope.userId})
-      .$promise
-      .then(function(data){
-        if(data.result){
-          $scope.followStatus.text = '已关注';
-          $scope.followStatus.status = true;
-        }
-      }, function(error){
-        console.log(error);
-      });
+  // 获取当前用户状态
+  .controller('MineCtrl', ['$scope', '$rootScope', '$stateParams', '$state', 'Users', 'Follow', 'jwtHelper', 'store', 'User',function($scope, $rootScope, $stateParams, $state, Users, Follow, jwtHelper, store, User){
+
+    $scope.user = User.profile;
+    var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(event){
+      $scope.user = User.profile;
+      // deregister the listener
+      gotCurrentUser();
+    });
+
+    $scope.followStatus = User.followStatus;
+    var gotCurrentFollowStatus = $scope.$on('User.fetchCurrentFollowStatus', function(event){
+      $scope.followStatus = User.followStatus;
+      // deregister the listener
+      gotCurrentFollowStatus();
+    });
 
     $scope.toFollowing = function(){
       if($scope.followStatus.status){
-        Follow
-          .unfollow({userId: $rootScope.userId})
-          .$promise
-          .then(function(data){
-            if(data.result){
-              $scope.followStatus.text = '关注';
-              $scope.followStatus.status = false;
-            }
-          });
-        return;
+        User.unFollowCurrentUser();
+      }else{
+        User.followCurrentUser();
       }
-
-      Follow
-        .follow({userId: $rootScope.userId})
-        .$promise
-        .then(function(data){
-          if(data.result){
-            $scope.followStatus.text = '已关注';
-            $scope.followStatus.status = true;
-          }
-        }, function(error){
-          console.log(error);
-        });
     }
-  }])
-  .controller('UserCtrl', ['$scope', '$rootScope', '$stateParams', 'Users', 'jwtHelper', 'store', function($scope, $rootScope, $stateParams, Users, jwtHelper, store){
-    Users
-      .get({userId: $stateParams.id})
-      .$promise
-      .then(function(data){
-        $scope.user = data.user;
-      }, function(error){
-        console.log(error);
-      });
-  }])
-  .controller('UsersListCtrl', ['$scope', '$rootScope', '$window', 'Users', 'jwtHelper', 'store', function($scope, $rootScope, $window, Users, jwtHelper, store){
-    Users
-      .list()
-      .$promise
-      .then(function(data){
-        $scope.users = data.users;
-      }, function(error){
-        console.log(error);
-      });
-  }])
-  .controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', 'Comments', function($scope, $rootScope, $stateParams, Posts, Comments){
-    Posts
-      .get({userId: $rootScope.userId, getFollow: true})
-      .$promise
-      .then(function(data){
-        $scope.$broadcast('gotPosts', data.posts);
-      }, function(error){
-        console.log(error);
-      });
 
-    $scope.$on('fetchComments', function(event, data){
-      Comments
-        .get({postId: data})
-        .$promise
-        .then(function(data){
-          $scope.$broadcast('gotComments', data.comments)
-        }, function(error){
-          console.log(error);
-        });
-    });
-    $scope.$on('createComment', function(event, data){
-      Comments
-        .save(data)
-        .$promise
-        .then(function(data){
-          $scope.$broadcast('gotCommentOne', data.comment);
-        }, function(error){
-          console.log(error);
-        });
+  }])
+  // 用户主页
+  .controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', 'Comments', '$state', 'User', function($scope, $rootScope, $stateParams, Posts, Comments, $state, User){
+    $scope.auth = User.auth;
+    $scope.current = $state.current.name;
+    var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(){
+      $scope.auth = User.auth;
+      gotCurrentUser();
     });
   }])
-  .controller('PostItemCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
-    $scope.$on('gotPosts', function(event, data){
-      $scope.posts = data;
+  // 获取文章列表以及添加文章
+  .controller('PostItemCtrl', ['$scope', '$rootScope', 'Post', function($scope, $rootScope, Post){
+    $scope.posts = Post.list;
+    var gotAllPosts = $scope.$on('Post.fetchAllPosts', function(){
+      $scope.posts = Post.list;
+      gotAllPosts();
     });
+    $scope.createNewPost = function(newPost){
+      if(!newPost.content){ return }
+      Post.addPost(newPost);
+    };
   }])
-  .controller('CommentItemCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+  // 获取评论以及添加评论
+  .controller('CommentItemCtrl', ['$scope', '$rootScope', 'Post', function($scope, $rootScope, Post){
 
     $scope.fetchComments = function(post){
-      $scope.$emit('fetchComments', post._id);
-      var gotComments = $scope.$on('gotComments', function(event, data){
-        post.comments = data;
-        // deregister the listener
-        gotComments();
-      });
+      Post.getPostAllComments(post);
     }
-
     $scope.createComment = function(post){
       if(!$scope.newComment.content){ return }
-      $scope.newComment.postId = post._id;
-      $scope.$emit('createComment', $scope.newComment);
-      var gotCommentOne = $scope.$on('gotCommentOne', function(event, data){
-        post.comments.unshift(data);
-        // deregister the listener
-        gotCommentOne();
-      });
+      Post.createNewComment(post, $scope.newComment.content);
       $scope.newComment = {};
     }
   }]);

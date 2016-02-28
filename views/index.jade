@@ -6,15 +6,14 @@ html(lang="en")
 		meta(content="yes" name="apple-touch-fullscreen")
 		meta(content="telephone=no,email=no" name="format-detection")
 		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
-		title Blog
+		title MANK Weibo
 		base(href='/')
 		link(rel='stylesheet' href='css/font-awesome.min.css')
 		link(rel='stylesheet' href='css/main.css')
 	body(ng-app='blog')
-		header(ng-if='$root.userId')
+		header
 			div.header(ui-view='header')
 		main
-			//- div.user(ui-view='user' ng-if='$root.userId')
 			div.main(ui-view='main')
 		script(src='js/angular.js')
 		script(src='js/angular-storage.js')

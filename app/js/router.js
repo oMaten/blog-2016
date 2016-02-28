@@ -1,4 +1,5 @@
-angular.module('blog.router', [
+angular
+	.module('blog.router', [
 		'ui.router'
 	])
 	.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider){
@@ -65,12 +66,8 @@ angular.module('blog.router', [
 						controller: 'MineCtrl'
 					},
 					'main': {
-						templateUrl: '../html/post.html',
-						controller: 'PostsListCtrl'
-					},
-					'user': {
-						templateUrl: '../html/user.html',
-						controller: 'UserCtrl'
+						templateUrl: '../html/home.html',
+						controller: 'HomeCtrl'
 					}
 				},
 				validate: {

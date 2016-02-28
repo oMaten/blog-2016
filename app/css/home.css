@@ -120,6 +120,30 @@
       line-height: 1.2;
       text-align: justify; }
 
+#form-post {
+  position: relative;
+  margin-left: 25px; }
+  #form-post > label {
+    display: block;
+    margin-bottom: 10px; }
+  #form-post > textarea {
+    display: inline-block;
+    width: 520px;
+    height: 80px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 10px 20px 1px rgba(0, 0, 0, 0.19); }
+  #form-post > input {
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+    margin-top: 10px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 8px 15px;
+    background-color: rgba(22, 54, 62, 0.65); }
+
 #form-comment {
   display: block;
   width: 100%;

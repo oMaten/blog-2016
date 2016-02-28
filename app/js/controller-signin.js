@@ -1,4 +1,5 @@
-angular.module('blog.controller.signin', [
+angular
+	.module('blog.controller.signin', [
 		'blog.server',
 		'angular-storage'
 	])

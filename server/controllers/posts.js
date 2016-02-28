@@ -6,10 +6,12 @@ var parse = require('co-body'),
 	auth = require('./auth');
 
 module.exports.listPosts = function* listPosts(next){
-	var userIdList = [];
-	userIdList.push(this.query.userId);
+	var userIdList = [],
+		currentUserId;
+	this.query.userId ? currentUserId = this.query.userId : currentUserId = this.loginUser._id;
+	userIdList.push(currentUserId);
 	if(this.query.getFollow){
-		var userList = yield FollowModel.getFollowing(this.query.userId, 0);
+		var userList = yield FollowModel.getFollowing(currentUserId, 0);
 		_.forEach(userList, function(value, key){
 			userIdList.push(value['_id']);
 		});
