@@ -17,15 +17,18 @@ angular
 	}])
 	.factory('Users', ['$resource', function($resource){
 		return $resource('/api/users/:userId',
-      {},
+      {
+        'userId': '@_id'
+      },
       {
         'list': {method: 'GET', isArray: false},
-        'findFollowMem': {method: 'GET', isArray: false, url: '/api/users'}
+        'findFollowMem': {method: 'GET', isArray: false, url: '/api/users'},
+        'update': {method: 'POST', isArray: false}
       }
     );
 	}])
   .factory('Follow', ['$resource', function($resource){
-    return $resource('/api/follow',
+    return $resource('/api/follow/:userId',
       {},
       {
         'list': {method: 'GET', isArray: false},
@@ -55,9 +58,24 @@ angular
           .get(formData)
           .$promise
           .then(function(data){
-            data.user && (ctx.profile = data.user);
-            data.auth && (ctx.auth = data.auth);
+            if(data.user){
+              ctx.profile = data.user;
+              ctx.profile.profile.dob = new Date(ctx.profile.profile.dob);
+            };
+            if(data.auth){ ctx.auth = data.auth };
             $rootScope.$broadcast('User.fetchCurrentUser');
+          }, function(error){
+            console.log(error);
+          });
+      },
+      updateUser: function(){
+        var ctx = this;
+        Users
+          .update(ctx.profile)
+          .$promise
+          .then(function(data){
+            if(!data.result){ alert('更新失败，请稍后再试~') };
+            if(data.result){ $rootScope.$broadcast('User.changeProfileSuccess') };
           }, function(error){
             console.log(error);
           });
@@ -74,10 +92,11 @@ angular
             console.log(error);
           });
       },
-      getFollowStatus: function(){
+      getFollowStatus: function(formData){
         var ctx = this;
+        if(formData.userId == this.profile._id){ return }
         Follow
-          .list()
+          .list(formData)
           .$promise
           .then(function(data){
             if(data.result){
@@ -92,7 +111,7 @@ angular
       unFollowCurrentUser: function(){
         var ctx = this;
         Follow
-          .unfollow({userId: ctx.profile._id})
+          .unfollow({userId: $})
           .$promise
           .then(function(data){
             if(data.result){

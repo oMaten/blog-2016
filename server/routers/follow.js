@@ -11,6 +11,10 @@ module.exports = function(Router){
       Auth.authFilter,
       Controller.getFollow
     )
+    .get('/api/follow/:userId',
+      Auth.authFilter,
+      Controller.getFollowOne
+    )
     .post('/api/follow',
       Auth.authFilter,
       Controller.addFollow

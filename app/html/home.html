@@ -1,14 +1,14 @@
 
 <div class="main-home">
   <ul ng-controller="PostItemCtrl" class="main-home--posts posts-list">
-    <form id="form-post" name="postForm" ng-submit="createNewPost(newPost)" ng-if="auth.isAdmin &amp;&amp; current == &quot;users&quot;">
+    <form id="form-post" name="postForm" ng-submit="createNewPost(newPost)" ng-if="auth.isAdmin &amp;&amp; current == &quot;user&quot;">
       <label for="form-post--Content">有什么新鲜事？</label>
       <textarea id="form-post--Content" name="postContent" ng-model="newPost.content" ng-maxlength="140" required="required"></textarea>
       <input id="form-post--submit" type="submit" value="发布"/>
     </form>
     <li ng-repeat="post in posts" class="posts-item">
       <div class="posts-item--header"></div>
-      <div class="posts-item--content card"><a ui-sref="users({ id: post.user.user_id })" class="card-user">{{ post.user.user_username }}</a>
+      <div class="posts-item--content card"><a ui-sref="user.home({ id: post.user.user_id })" class="card-user">{{ post.user.user_username }}</a>
         <div class="card-content">
           <p>{{ post.content }}</p>
         </div>

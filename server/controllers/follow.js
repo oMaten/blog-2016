@@ -14,6 +14,19 @@ module.exports.addFollow = function* addFollow(next){
   this.status = 201;
 }
 
+module.exports.getFollowOne = function* getFollowOne(next){
+  var follow_id = this.params.userId;
+  var result = true;
+  var follow = yield FollowModel.getFollow(this.loginUser._id, follow_id);
+  if(!follow){
+    result = false;
+  }
+  this.body = {
+    'result': result
+  }
+  this.status = 200;
+}
+
 module.exports.getFollow = function* getFollow(next){
   var follow_id = this.query.userId;
   var result = true;

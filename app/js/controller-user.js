@@ -63,7 +63,6 @@ angular
   }])
   // 获取评论以及添加评论
   .controller('CommentItemCtrl', ['$scope', '$rootScope', 'Post', function($scope, $rootScope, Post){
-
     $scope.fetchComments = function(post){
       Post.getPostAllComments(post);
     }
@@ -73,9 +72,25 @@ angular
       $scope.newComment = {};
     }
   }])
+  // 获取用户列表
   .controller('UserItemCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User){
     var gotAllUserList = $scope.$on('User.fetchUsersList', function(){
       $scope.users = User.list;
       gotAllUserList();
     });
+  }])
+  // 获取用户个人信息
+  .controller('InfoCtrl', ['$scope', '$rootScope', 'User', '$state', function($scope, $rootScope, User, $state){
+    $scope.profile = User.profile;
+    var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(){
+      $scope.profile = User.profile;
+      gotCurrentUser();
+    });
+
+    $scope.updateUserProfile = function(){
+      User.updateUser();
+      $scope.$on('User.changeProfileSuccess', function(){
+        $state.go('home');
+      });
+    }
   }]);

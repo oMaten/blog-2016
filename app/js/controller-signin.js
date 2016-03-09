@@ -1,9 +1,10 @@
 angular
 	.module('blog.controller.signin', [
 		'blog.server',
-		'angular-storage'
+		'angular-storage',
+		'angular-jwt'
 	])
-	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', '$state', 'store', 'Users', function($scope, $rootScope, $window, $http, $state, store, Users){
+	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', '$state', 'store', 'Users', 'jwtHelper', function($scope, $rootScope, $window, $http, $state, store, Users, jwtHelper){
 
 		$scope.signupAccount = {};
 		$scope.signinAccount = {};
@@ -21,7 +22,8 @@ angular
 				.$promise
 				.then(function(response){
 					store.set('accessToken', response.accessToken);
-					$state.go('home');
+					var tokenPayload = jwtHelper.decodeToken(store.get('accessToken'));
+					$state.go('info', { 'id': tokenPayload.userId });
 				}, function(error){
 					console.log(error.data);
 				});
@@ -38,6 +40,7 @@ angular
 				data: $scope.signinAccount
 			}).then(function(response){
 				store.set('accessToken', response.data.accessToken);
+				var tokenPayload = jwtHelper.decodeToken(store.get('accessToken'));
 				$state.go('home');
 			}, function(error){
 				console.log(error.data);

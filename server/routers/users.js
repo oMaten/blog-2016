@@ -19,6 +19,7 @@ module.exports = function(Router){
       Controller.showUser
     )
 		.post('/api/users/:userId',
+      Auth.authFilter,
       Controller.updateUser
     )
     .post('/signin',

@@ -2,6 +2,7 @@ var parse = require('co-body'),
 	model = require('../model/users'),
   FollowModel = require('../model/follow'),
   auth = require('./auth'),
+  moment = require('moment'),
   _ = require('lodash');
 
 module.exports.listUsers = function* listUsers(){
@@ -69,6 +70,7 @@ module.exports.signinUser = function* signinUser(next){
 }
 
 module.exports.showUser = function* showUser(next){
+  // this.visitUser.profile.dob = moment(this.visitUser.profile.dob).format('YYYY-MM-DD');
   this.body = {
     user: this.visitUser,
     auth: this.auth
@@ -76,6 +78,13 @@ module.exports.showUser = function* showUser(next){
   this.status = 200;
 }
 
-module.exports.updateUser = function* updateUser(){
-
+module.exports.updateUser = function* updateUser(next){
+  var info = yield parse.json(this);
+  if(info._id != this.loginUser._id){ return this.throw('没有权限', 401) };
+  delete info._id;
+  var result = yield model.updateUserProfile(this.loginUser._id, info);
+  this.body = {
+    'result': result ? true : false
+  }
+  this.status = 201;
 }

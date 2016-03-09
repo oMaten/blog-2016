@@ -1,0 +1,42 @@
+
+<div class="main-home">
+  <ul ng-controller="InfoCtrl" class="main-home--info info-list">
+    <p>完善一下你的个人资料吧</p>
+    <form id="form-info" name="infoForm" ng-submit="updateUserProfile()">
+      <div class="info-item item-face">
+        <label for="info-input--face">头像</label>
+        <input id="info-input--face" type="url" ng-model="profile.profile.face" class="face-input"/>
+      </div>
+      <div class="info-item item-name">
+        <label for="info-input--nickname">昵称</label>
+        <input id="info-input--nickname" type="string" ng-model="profile.profile.nickname" required="required" class="name-input"/>
+      </div>
+      <div class="info-item item-password">
+        <label for="info-input--password">密码</label>
+        <input id="info-input--password" type="string" ng-model="profile.password" required="required" class="password-input"/>
+      </div>
+      <div class="info-item item-age">
+        <label for="info-input--age">年龄</label>
+        <input id="info-input--age" type="number" ng-model="profile.profile.age" min="0" max="120" required="required" class="age-input"/>
+      </div>
+      <div class="info-item item-dob">
+        <label for="info-input--dob">生日</label>
+        <input id="info-input--dob" type="date" ng-model="profile.profile.dob" placeholder="yyyy-MM-dd" required="required" class="dob-input"/>
+      </div>
+      <div class="info-item item-sex">
+        <label for="info-input--sex">性别</label>
+        <select id="info-input--sex" ng-model="profile.profile.sex" class="sex-input">
+          <option ng-selected="profile.profile.sex == 0" value="0">男</option>
+          <option ng-selected="profile.profile.sex == 1" value="1">女</option>
+        </select>
+      </div>
+      <div class="info-item item-highline">
+        <label for="info-input--highline">签名</label>
+        <input id="info-input--highline" type="string" ng-model="profile.profile.highline" class="highline-input"/>
+      </div>
+      <div class="info-item item-submit">
+        <input id="form-info--submit" type="submit" value="提交"/>
+      </div>
+    </form>
+  </ul>
+</div>

@@ -69,7 +69,7 @@ angular
 
       if($state.current.name == 'users'){
         Post.getAllPosts({ userId: toParams.id });
-        User.getFollowStatus();
+        User.getFollowStatus({ userId: toParams.id });
       }
 
       // 主页

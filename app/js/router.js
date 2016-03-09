@@ -58,8 +58,8 @@ angular
 					'requestSignin': true
 				}
 			})
-			.state('users', {
-				url: '/users/:id',
+			.state('user', {
+				url: '/user/:id/home',
 				views: {
 					'header': {
 						templateUrl: '../html/_header.html',
@@ -74,4 +74,16 @@ angular
 					'requestSignin': true
 				}
 			})
+			.state('info', {
+				url: '/user/:id/info',
+				views: {
+					'main': {
+						templateUrl: '../html/info.html',
+						controller: 'HomeCtrl'
+					}
+				},
+				validate: {
+					'requestSignin': true
+				}
+			});
 	}]);

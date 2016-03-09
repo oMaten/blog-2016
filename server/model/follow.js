@@ -32,11 +32,17 @@ module.exports.addFollow = function* addFollow(user_id, following_id){
 
 module.exports.getFollow = function* getFollow(user_id, following_id){
   var findItem = {};
-  user_id && (findItem['user_id'] = ObjectID(user_id));
-  following_id && (findItem['following_id'] = ObjectID(following_id));
-  if(user_id === following_id){
-    return this.throw('不可关注自己', 401);
+
+  if(!user_id || !following_id){
+    return this.throw('Missing Params', 401);
   }
+  if(user_id == following_id){
+    return this.throw('user_id can not equal following_id', 401);
+  }
+
+  findItem['user_id'] = ObjectID(user_id);
+  findItem['following_id'] = ObjectID(following_id);
+
   var result = yield mongo.follow.findOne(findItem);
   return result;
 }

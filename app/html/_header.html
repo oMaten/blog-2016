@@ -1,6 +1,6 @@
 <a ui-sref="home" class="backhome-btn"><i class="fa fa-home fa-lg"></i></a>
-<div class="user-face header-face"><a ui-sref="users({ id: user._id })" class="userface-btn"></a></div>
-<div class="user-name header-name"><a ui-sref="users({ id: user._id })" class="username-btn">{{ user.username }}</a></div>
+<div class="user-face header-face"><a ui-sref="user({ id: user._id })" class="userface-btn"></a></div>
+<div class="user-name header-name"><a ui-sref="info({ id: user._id })" class="username-btn">{{ user.username }}</a></div>
 <div class="user-relation header-relation"><a ui-sref="allUsers({getFollowing: true, userId: user._id})" ui-sref-opts="{reload: true, inherit: false}" class="following">关注 {{ user.followingCount }}</a><a ui-sref="allUsers({getFollowed: true, userId: user._id})" ui-sref-opts="{reload: true, inherit: false}" class="follower">粉丝 {{ user.followerCount }}</a></div><a href="javascript:;" ng-click="toFollowing()" ng-if="!auth.isAdmin" class="tofollowing-btn">{{ followStatus.text }}</a>
 <div class="user-recommend header-recommend"><a ui-sref="allUsers({})" ui-sref-opts="{reload: true, inherit: false}">推荐用户</a></div>
 <div class="user-logout header-logout"><a ui-sref="signout" ng-if="$root.userId">注销</a></div>

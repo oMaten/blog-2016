@@ -7,6 +7,14 @@ var mongo = require('./mongo'),
 function User(){
   this.username = '';
   this.password = '';
+  this.profile = {
+    'nickname': String(null),
+    'face': String(null),
+    'highline': String(null),
+    'dob': new Date,
+    'sex': Number(null),
+    'age': Number(null)
+  };
   this.created = new Date;
   this.followingCount = 0;
   this.followerCount = 0;
@@ -109,6 +117,16 @@ module.exports.updateUserFollowCount = function* updateUserFollowCount(id, key, 
     console.log(error);
     return false;
   }
+}
+/**
+ * 更新用户信息
+ * @param {Int} id 用户
+ * @param {Object} profile 更新信息
+ **/
+
+module.exports.updateUserProfile = function* updateUserProfile(id, profile){
+  var result = yield mongo.users.update({ "_id": ObjectID(id) }, profile);
+  return result['result']['ok'];
 }
 
 /**
