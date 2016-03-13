@@ -11,17 +11,13 @@
         <label for="info-input--nickname">昵称</label>
         <input id="info-input--nickname" type="string" ng-model="profile.profile.nickname" required="required" class="name-input"/>
       </div>
-      <div class="info-item item-password">
-        <label for="info-input--password">密码</label>
-        <input id="info-input--password" type="string" ng-model="profile.password" required="required" class="password-input"/>
-      </div>
       <div class="info-item item-age">
         <label for="info-input--age">年龄</label>
         <input id="info-input--age" type="number" ng-model="profile.profile.age" min="0" max="120" required="required" class="age-input"/>
       </div>
       <div class="info-item item-dob">
         <label for="info-input--dob">生日</label>
-        <input id="info-input--dob" type="date" ng-model="profile.profile.dob" placeholder="yyyy-MM-dd" required="required" class="dob-input"/>
+        <input id="info-input--dob" type="date" ng-model="profile.profile.dob" ng-value="profile.profile.dob" required="required" class="dob-input"/>
       </div>
       <div class="info-item item-sex">
         <label for="info-input--sex">性别</label>

@@ -17,7 +17,11 @@ module.exports.listUsers = function* listUsers(){
   if(_.isEmpty(this.query)){
     var users = yield model.listUsers();
   }else{
-    var users = yield model.listUsers(userListId);
+    if(this.query.q_username){
+      var users = yield model.searchUserByName(this.query.q_username);
+    }else{
+      var users = yield model.listUsers(userListId);
+    }
   }
 
 	this.body = {
@@ -70,7 +74,7 @@ module.exports.signinUser = function* signinUser(next){
 }
 
 module.exports.showUser = function* showUser(next){
-  // this.visitUser.profile.dob = moment(this.visitUser.profile.dob).format('YYYY-MM-DD');
+  this.visitUser.profile.dob = moment(this.visitUser.profile.dob).format('YYYY-MM-DD');
   this.body = {
     user: this.visitUser,
     auth: this.auth

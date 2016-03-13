@@ -49,12 +49,7 @@ module.exports.addUser = function* addUser(info){
  **/
 
 module.exports.getUserById = function* getUserById(id){
-  var user = yield mongo.users
-    .findOne(
-      {
-        '_id': ObjectID(id)
-      }
-    );
+  var user = yield mongo.users.findOne({ '_id': ObjectID(id) });
   return user;
 }
 
@@ -64,12 +59,18 @@ module.exports.getUserById = function* getUserById(id){
  **/
 
 module.exports.getUserByName = function* getUserByName(username){
-  var user = yield mongo.users
-    .findOne(
-      {
-        'username': username
-      }
-    );
+  var user = yield mongo.users.findOne({ 'username': username });
+  return user;
+}
+
+/**
+ * 通过 UserName 查询用户
+ * @param {String} username
+ **/
+
+module.exports.searchUserByName = function* getUserByName(username){
+  var REG_EXP = new RegExp(username);
+  var user = yield mongo.users.find({ 'username': REG_EXP }).toArray();
   return user;
 }
 

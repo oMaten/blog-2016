@@ -58,9 +58,9 @@ angular
           .get(formData)
           .$promise
           .then(function(data){
+            console.log(data.user);
             if(data.user){
               ctx.profile = data.user;
-              ctx.profile.profile.dob = new Date(ctx.profile.profile.dob);
             };
             if(data.auth){ ctx.auth = data.auth };
             $rootScope.$broadcast('User.fetchCurrentUser');
@@ -168,6 +168,7 @@ angular
           .save(formData)
           .$promise
           .then(function(res){
+            console.log(res);
             ctx.list.unshift(res.post);
           }, function(error){
             console.log(error.data);

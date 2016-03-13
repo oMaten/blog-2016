@@ -67,7 +67,7 @@ angular
 
       // 用户页面
 
-      if($state.current.name == 'users'){
+      if($state.current.name == 'user'){
         Post.getAllPosts({ userId: toParams.id });
         User.getFollowStatus({ userId: toParams.id });
       }
@@ -75,7 +75,7 @@ angular
       // 主页
 
       if($state.current.name == 'home'){
-        Post.getAllPosts({ getFollow: true });
+        Post.getAllPosts(toParams);
       }
 
       // 用户列表

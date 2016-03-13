@@ -3,7 +3,7 @@
   <ul class="main-userlist--users users-list">
     <li ng-repeat="user in users" class="users-item">
       <div class="users-item--header"><img src="../img/face-01.jpg"/></div>
-      <div class="users-item--content"><a ui-sref="users({ id: user._id })">{{user.username}}</a>
+      <div class="users-item--content"><a ui-sref="user({ id: user._id })">{{user.username}}</a>
         <p><span>关注 {{user.followingCount}}</span><span>粉丝 {{user.followerCount}}</span></p>
       </div>
     </li>

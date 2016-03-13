@@ -6,6 +6,7 @@ var mongo = require('./mongo'),
 function Post(){
 	this.content = '';
 	this.user = '';
+	this.images = [];
 	this.hotCount = 0;
 	this.commentCount = 0;
 	this.created = new Date();
@@ -25,19 +26,22 @@ module.exports.listPosts = function* listPosts(idList){
 	_.forEach(idList, function(value, key){
 		idList[key] = ObjectID(value)
 	});
-	var posts = yield mongo.posts
-		.find(
-			{
-				'user.user_id': {$in: idList}
-			},
-			{
-				'limit': 15,
-				'sort': {
-					'created': -1
-				}
-			}
-		)
-		.toArray();
+	var queryOpt = { 'user.user_id': { '$in': idList } };
+	var limitOpt = { 'limit': 15, 'sort': { 'created': -1 } };
+	var posts = yield mongo.posts.find(queryOpt, limitOpt).toArray();
+	return posts;
+}
+
+/**
+ * 通过内容搜索微博
+ * @param {String} post
+ **/
+
+module.exports.searchPosts = function* searchPosts(post){
+	var REG_EXP = new RegExp(post);
+	var queryOpt = { 'content': REG_EXP };
+	var limitOpt = { 'limit': 15, 'sort': { 'created': -1 } };
+	var posts = yield mongo.posts.find(queryOpt, limitOpt).toArray();
 	return posts;
 }
 
@@ -53,6 +57,7 @@ module.exports.createPost = function* createPost(info){
 		'user_id': ObjectID(info.user_id),
 		'user_username': info.user_username
 	};
+	post.images = info.images;
 	try{
 		var result = yield mongo.posts.insert(post);
 		return result['ops'][0];

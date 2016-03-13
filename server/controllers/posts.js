@@ -6,23 +6,33 @@ var parse = require('co-body'),
 	auth = require('./auth');
 
 module.exports.listPosts = function* listPosts(next){
-	var userIdList = [],
-		currentUserId;
+	var userIdList = [];
+	var currentUserId;
+
 	this.query.userId ? currentUserId = this.query.userId : currentUserId = this.loginUser._id;
 	userIdList.push(currentUserId);
+
 	if(this.query.getFollow){
 		var userList = yield FollowModel.getFollowing(currentUserId, 0);
 		_.forEach(userList, function(value, key){
 			userIdList.push(value['_id']);
 		});
-	}
-	var posts = yield PostModel.listPosts(userIdList);
+	};
+
+	if(this.query.q_post){
+		var posts = yield PostModel.searchPosts(this.query.q_post);
+	}else{
+		var posts = yield PostModel.listPosts(userIdList);
+	};
+
 	_.forEach(posts, function(value, key){
 		value['created'] = moment(value['created']).format('YYYY-MM-DD LT');
 	});
+
 	this.body = {
 		'posts': posts
 	};
+
 	this.status = 200;
 }
 
@@ -38,11 +48,4 @@ module.exports.createPost = function* createPost(next){
 }
 
 module.exports.showPost = function* showPost(){
-}
-
-module.exports.listComments = function* listComments(){
-
-}
-
-module.exports.createComment = function* createComment(next){
 }

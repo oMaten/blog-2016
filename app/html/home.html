@@ -2,15 +2,26 @@
 <div class="main-home">
   <ul ng-controller="PostItemCtrl" class="main-home--posts posts-list">
     <form id="form-post" name="postForm" ng-submit="createNewPost(newPost)" ng-if="auth.isAdmin &amp;&amp; current == &quot;user&quot;">
-      <label for="form-post--Content">有什么新鲜事？</label>
-      <textarea id="form-post--Content" name="postContent" ng-model="newPost.content" ng-maxlength="140" required="required"></textarea>
-      <input id="form-post--submit" type="submit" value="发布"/>
+      <label for="form-post--content">有什么新鲜事？</label>
+      <textarea id="form-post--content" name="postContent" ng-model="newPost.content" ng-maxlength="140" required="required"></textarea>
+      <div class="form-line"><a id="form-image--btn" href="javascript:;" ng-click="newPost.upload = !newPost.upload"><i class="fa fa-picture-o fa-2x"></i></a>
+        <input id="form-post--submit" type="submit" value="发布"/>
+      </div>
+      <div ng-if="newPost.upload" class="form-block">
+        <input id="image-upload" type="file" name="files[]" fileread="newPost.images" value="" multiple="multiple"/>
+        <output id="upload-list"><img ng-repeat="image in newPost.images" src="{{image}}"/></output>
+      </div>
     </form>
     <li ng-repeat="post in posts" class="posts-item">
       <div class="posts-item--header"></div>
       <div class="posts-item--content card"><a ui-sref="user.home({ id: post.user.user_id })" class="card-user">{{ post.user.user_username }}</a>
         <div class="card-content">
           <p>{{ post.content }}</p>
+        </div>
+        <div ng-if="post.images" class="card-images">
+          <ul class="images-preview">
+            <li ng-repeat="image in post.images" class="image-item"><img src="{{image}}"/></li>
+          </ul>
         </div>
         <div class="card-more">
           <div class="card-more--created">{{ post.created }}</div>

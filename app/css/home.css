@@ -122,7 +122,8 @@
 
 #form-post {
   position: relative;
-  margin-left: 25px; }
+  margin-left: 25px;
+  width: 540px; }
   #form-post > label {
     display: block;
     margin-bottom: 10px; }
@@ -134,15 +135,54 @@
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.65);
     box-shadow: 0 10px 20px 1px rgba(0, 0, 0, 0.19); }
-  #form-post > input {
-    display: block;
-    margin-left: auto;
-    margin-right: 0;
+  #form-post .form-line {
     margin-top: 10px;
-    color: #fff;
-    border-radius: 5px;
-    padding: 8px 15px;
-    background-color: rgba(22, 54, 62, 0.65); }
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    #form-post .form-line > #form-image--btn {
+      color: #e5a896; }
+    #form-post .form-line > #form-post--submit {
+      display: inline-block;
+      color: #fff;
+      border-radius: 5px;
+      padding: 8px 15px;
+      background-color: rgba(22, 54, 62, 0.65); }
+  #form-post .form-block {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.78);
+    border-radius: 10px;
+    border: 5px solid #e5a896;
+    box-sizing: border-box;
+    margin-top: 40px;
+    text-align: center;
+    padding-top: 10px; }
+    #form-post .form-block > output {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-flow: row wrap;
+          -ms-flex-flow: row wrap;
+              flex-flow: row wrap;
+      padding: 5px 5px; }
+      #form-post .form-block > output > img {
+        -webkit-flex: 0 0 auto;
+            -ms-flex: 0 0 auto;
+                flex: 0 0 auto;
+        height: 120px;
+        width: 120px;
+        border: 1px solid #000;
+        box-sizing: border-box;
+        margin: 5px; }
 
 #form-comment {
   display: block;
@@ -206,9 +246,9 @@
     white-space: nowrap;
     color: #a1a1a1; }
   .card .card-content {
-    -webkit-flex: 1 0 80px;
-        -ms-flex: 1 0 80px;
-            flex: 1 0 80px;
+    -webkit-flex: 1 0 60px;
+        -ms-flex: 1 0 60px;
+            flex: 1 0 60px;
     display: block;
     padding: 0 30px;
     margin: 10px 0;
@@ -216,6 +256,20 @@
     .card .card-content > p {
       text-align: justify;
       vertical-align: baseline; }
+  .card .card-images {
+    display: block;
+    padding: 0 20px; }
+    .card .card-images .images-preview {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-flow: row wrap;
+          -ms-flex-flow: row wrap;
+              flex-flow: row wrap;
+      width: 330px; }
+      .card .card-images .images-preview > li > img {
+        width: 100px;
+        margin: 5px; }
   .card .card-more {
     -webkit-flex: 0 0 60px;
         -ms-flex: 0 0 60px;
