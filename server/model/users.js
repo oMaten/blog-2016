@@ -18,6 +18,7 @@ function User(){
   this.created = new Date;
   this.followingCount = 0;
   this.followerCount = 0;
+  this.postCount = 0;
   this.admin = false;
 }
 
@@ -101,23 +102,10 @@ module.exports.listUsers = function* listPosts(idList){
  * @param {String} value 键值取值
  **/
 
-module.exports.updateUserFollowCount = function* updateUserFollowCount(id, key, value){
+module.exports.updateUserItem = function* updateUserItem(id, key, value){
   var updateDoc = {};
   updateDoc[key] = value;
-  try{
-    yield mongo.users
-    .update(
-      {
-        '_id': ObjectID(id)
-      },
-      {
-        $inc: updateDoc
-      }
-    );
-  }catch(error){
-    console.log(error);
-    return false;
-  }
+  yield mongo.users.update({ '_id': ObjectID(id) }, { $inc: updateDoc });
 }
 /**
  * 更新用户信息
@@ -126,7 +114,11 @@ module.exports.updateUserFollowCount = function* updateUserFollowCount(id, key, 
  **/
 
 module.exports.updateUserProfile = function* updateUserProfile(id, profile){
-  var result = yield mongo.users.update({ "_id": ObjectID(id) }, profile);
+  _.forEach(profile, function(value, key){
+    profile['profile.' + key] = value;
+    delete profile[key];
+  });
+  var result = yield mongo.users.update({ "_id": ObjectID(id) }, { "$set": profile });
   return result['result']['ok'];
 }
 

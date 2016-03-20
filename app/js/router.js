@@ -85,5 +85,18 @@ angular
 				validate: {
 					'requestSignin': true
 				}
+			})
+			.state('backend', {
+				url: '/backend',
+				views: {
+					'main': {
+						templateUrl: '../html/backend.html',
+						controller: 'BackendCtrl'
+					}
+				},
+				validate: {
+					'requestSignin': true,
+					'requestAdmin': true
+				}
 			});
 	}]);

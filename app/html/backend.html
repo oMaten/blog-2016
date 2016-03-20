@@ -1,0 +1,24 @@
+
+<div class="backend-wrap">
+  <div class="backend-search">
+    <form id="backend-search" ng-submit="searchSubmit()">
+      <label for="search-user">用户</label>
+      <input id="search-user" ng-model="search.user" placeholder="输入用户名" class="search-user"/>
+      <label for="search-post">微博</label>
+      <input id="search-post" ng-model="search.post" placeholder="输入微博内容" class="search-post"/>
+      <label for="search-comment">评论</label>
+      <input id="search-comment" ng-model="search.comment" placeholder="输入评论内容" class="search-comment"/>
+      <input type="submit" value="提交" class="search-submit"/>
+    </form>
+  </div>
+  <div class="backend-list">
+    <ul class="list">
+      <li ng-repeat="item in list" class="item">
+        <div class="item-info"><span><b class="id">Id:</b><span>{{ item._id }}</span></span><span><b class="username">用户名:</b><span>{{ item.username }}</span></span><span><b class="created">创建日期:</b><span>{{ item.created }}</span></span></div>
+        <div class="item-profile"><span><img src="{{ item.profile.face }}"/></span><span><b class="nickname">昵称:</b><span>{{ item.profile.nickname }}</span></span><span><b class="age">年龄:</b><span>{{ item.profile.age }}</span></span><span><b class="dob">生日:</b><span>{{ item.profile.dob }}</span></span><span><b class="sex">性别:</b><span>{{ item.profile.sex }}</span></span><span><b class="highline">签名:</b><span>{{ item.profile.highline }}</span></span></div>
+        <div class="item-status"><span><b class="follower">粉丝数:</b><span>{{ item.followerCount }}</span></span><span><b class="following">关注数:</b><span>{{ item.followingCount }}</span></span><span><b class="post">微博数:</b><span>{{ item.postCount }}</span></span></div>
+        <div class="item-ctrl"><a href="javascript:;" ng-click="" class="btn-forbid">禁言</a><a href="javascript:;" ng-click="" class="btn-delete">删除</a></div>
+      </li>
+    </ul>
+  </div>
+</div>

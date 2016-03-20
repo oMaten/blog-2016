@@ -1,6 +1,7 @@
 var parse = require('co-body'),
 	PostModel = require('../model/posts'),
 	FollowModel = require('../model/follow'),
+	UserModel = require('../model/users'),
 	moment = require('moment');
 	_ = require('lodash'),
 	auth = require('./auth');
@@ -41,6 +42,7 @@ module.exports.createPost = function* createPost(next){
 	info.user_id = this.loginUser._id;
 	info.user_username = this.loginUser.username;
 	var post = yield PostModel.createPost(info);
+	yield UserModel.updateUserItem(this.loginUser._id, 'postCount', 1);
 	this.body = {
 		'post': post
 	}

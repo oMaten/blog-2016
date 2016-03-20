@@ -52,3 +52,28 @@ angular
 		store.get('accessToken') && store.remove('accessToken');
 		$state.go('signin');
 	}])
+	.controller('BackendCtrl', ['$scope', '$rootScope', '$window', '$state', 'store', 'User', function($scope, $rootScope, $window, $state, store, User){
+		$scope.search = {};
+		$scope.searchSubmit = function(){
+			$scope.list = [];
+			if($scope.search.comment){
+				$scope.search = {};
+				return
+			}
+			if($scope.search.post){
+				$scope.search = {};
+				return
+			}
+			if($scope.search.user){
+				User.getUsersList({'q_username': $scope.search.user});
+				$scope.search = {};
+				return
+			}
+
+		}
+		var gotAllUserList = $scope.$on('User.fetchUsersList', function(){
+      $scope.list = User.list;
+      console.log($scope.list);
+      // gotAllUserList();
+    });
+	}]);

@@ -23,6 +23,10 @@ module.exports.listUsers = function* listUsers(){
       var users = yield model.listUsers(userListId);
     }
   }
+  _.forEach(users, function(value, key){
+    value['created'] = moment(value['created']).format('YYYY-MM-DD');
+    value['profile']['dob'] = moment(value['profile']['dob']).format('YYYY-MM-DD');
+  });
 
 	this.body = {
     'users': users
@@ -85,8 +89,7 @@ module.exports.showUser = function* showUser(next){
 module.exports.updateUser = function* updateUser(next){
   var info = yield parse.json(this);
   if(info._id != this.loginUser._id){ return this.throw('没有权限', 401) };
-  delete info._id;
-  var result = yield model.updateUserProfile(this.loginUser._id, info);
+  var result = yield model.updateUserProfile(this.loginUser._id, info.profile);
   this.body = {
     'result': result ? true : false
   }
