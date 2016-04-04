@@ -22,6 +22,10 @@ module.exports = function(Router){
       Auth.authFilter,
       Controller.updateUser
     )
+    .delete('/api/users',
+      Auth.authFilter,
+      Controller.deleteUser
+    )
     .post('/signin',
       Controller.signinUser,
       Auth.encryptFliter

@@ -20,6 +20,7 @@ function User(){
   this.followerCount = 0;
   this.postCount = 0;
   this.admin = false;
+  this.canPost = true;
 }
 
 /**
@@ -96,17 +97,32 @@ module.exports.listUsers = function* listPosts(idList){
 }
 
 /**
+ * 通过 ID 获取并增加用户文档
+ * @param {String} id 用户
+ * @param {String} key 文档键值
+ * @param {String} value 键值取值
+ **/
+
+module.exports.incUserItem = function* incUserItem(id, key, value){
+  var updateDoc = {};
+  updateDoc[key] = value;
+  yield mongo.users.update({ "_id": ObjectID(id) }, { "$inc": updateDoc });
+}
+
+/**
  * 通过 ID 获取并更新用户文档
  * @param {String} id 用户
  * @param {String} key 文档键值
  * @param {String} value 键值取值
  **/
 
-module.exports.updateUserItem = function* updateUserItem(id, key, value){
+module.exports.setUserItem = function* setUserItem(id, key, value){
   var updateDoc = {};
   updateDoc[key] = value;
-  yield mongo.users.update({ '_id': ObjectID(id) }, { $inc: updateDoc });
+  var result = yield mongo.users.update({ "_id": ObjectID(id) }, { "$set": updateDoc });
+  return result['result']['ok'];
 }
+
 /**
  * 更新用户信息
  * @param {Int} id 用户
@@ -114,11 +130,21 @@ module.exports.updateUserItem = function* updateUserItem(id, key, value){
  **/
 
 module.exports.updateUserProfile = function* updateUserProfile(id, profile){
+  var updateDoc = {};
   _.forEach(profile, function(value, key){
-    profile['profile.' + key] = value;
-    delete profile[key];
+    updateDoc['profile.' + key] = value;
   });
-  var result = yield mongo.users.update({ "_id": ObjectID(id) }, { "$set": profile });
+  var result = yield mongo.users.update({ "_id": ObjectID(id) }, { "$set": updateDoc });
+  return result['result']['ok'];
+}
+
+/**
+ * 删除用户
+ * @param {Int} id 用户
+ */
+
+module.exports.deleteUser = function* deleteUser(id){
+  var result = yield mongo.users.remove({ "_id": ObjectID(id) });
   return result['result']['ok'];
 }
 

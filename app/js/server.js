@@ -4,7 +4,8 @@ angular
 		return $resource('/api/posts/:postId',
       {},
       {
-        'list': {method: 'GET', isArray: false}
+        'list': {method: 'GET', isArray: false},
+        'delete': {method: 'DELETE'}
       }
     );
 	}])
@@ -12,6 +13,10 @@ angular
 		return $resource('/api/posts/:postId/comments/:commentId',
       {
         'postId': '@postId'
+      },
+      {
+        'search': {method: 'GET', isArray: false, url: '/api/comments'},
+        'delete': {method: 'DELETE', url: '/api/comments'}
       }
     );
 	}])
@@ -23,7 +28,8 @@ angular
       {
         'list': {method: 'GET', isArray: false},
         'findFollowMem': {method: 'GET', isArray: false, url: '/api/users'},
-        'update': {method: 'POST', isArray: false}
+        'update': {method: 'POST', isArray: false},
+        'delete': {method: 'DELETE'}
       }
     );
 	}])
@@ -80,6 +86,17 @@ angular
             console.log(error);
           });
       },
+      forbindUser: function(id){
+        var ctx = this;
+        Users
+          .update({'_id': id, 'forbind': true})
+          .$promise
+          .then(function(data){
+            console.log(data);
+          }, function(error){
+            console.log(error);
+          });
+      },
       getUsersList: function(formData){
         var ctx = this;
         Users
@@ -132,6 +149,17 @@ angular
               ctx.followStatus.text = '已关注';
               ctx.followStatus.status = true;
             }
+          }, function(error){
+            console.log(error);
+          });
+      },
+      deleteUser: function(id){
+        var ctx = this;
+        Users
+          .delete({'id': id})
+          .$promise
+          .then(function(data){
+            console.log(data);
           }, function(error){
             console.log(error);
           });
@@ -194,6 +222,46 @@ angular
           .$promise
           .then(function(data){
             post.comments.unshift(data.comment);
+          }, function(error){
+            console.log(error);
+          });
+      },
+      deletePost: function(id){
+        var ctx = this;
+        Posts
+          .delete({'id': id})
+          .$promise
+          .then(function(data){
+            console.log(data);
+          }, function(error){
+            console.log(error);
+          });
+      }
+    }
+    return service;
+  }])
+  .service('Comment', ['$rootScope', 'Comments', function($rootScope, Comments){
+    var service = {
+      list: [],
+      getAllComments: function(formData){
+        var ctx = this;
+        Comments
+          .search(formData)
+          .$promise
+          .then(function(data){
+            ctx.list = data.comments;
+            $rootScope.$broadcast('Comments.fetchAllComments');
+          }, function(error){
+            console.log(error);
+          });
+      },
+      deleteComment: function(id){
+        var ctx = this;
+        Comments
+          .delete({'id': id})
+          .$promise
+          .then(function(data){
+            console.log(data);
           }, function(error){
             console.log(error);
           });

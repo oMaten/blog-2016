@@ -37,7 +37,9 @@
   border-radius: 5px;
   position: relative;
   margin: 10px 0; }
-  .list .item .item-info, .list .item .item-profile, .list .item .item-status {
+  .list .item > div:nth-last-child(2) {
+    border-bottom: none; }
+  .list .item .item-info, .list .item .item-profile, .list .item .item-status, .list .item .item-content {
     color: #AFAFAF;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -45,14 +47,21 @@
     -webkit-flex-flow: row nowrap;
         -ms-flex-flow: row nowrap;
             flex-flow: row nowrap;
-    padding: 15px 0; }
-    .list .item .item-info > span, .list .item .item-profile > span, .list .item .item-status > span {
+    padding: 15px 0;
+    -webkit-align-items: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
+    border-bottom: 1px solid #DFDFDF; }
+    .list .item .item-info > span, .list .item .item-profile > span, .list .item .item-status > span, .list .item .item-content > span {
       margin-right: 20px; }
-      .list .item .item-info > span > img, .list .item .item-profile > span > img, .list .item .item-status > span > img {
+      .list .item .item-info > span > img, .list .item .item-profile > span > img, .list .item .item-status > span > img, .list .item .item-content > span > img {
         height: 16px; }
-      .list .item .item-info > span > b, .list .item .item-profile > span > b, .list .item .item-status > span > b {
+      .list .item .item-info > span > b, .list .item .item-profile > span > b, .list .item .item-status > span > b, .list .item .item-content > span > b {
         margin-right: 10px;
-        color: #3DBF91; }
+        color: #3DBF91;
+        display: inline-block; }
+      .list .item .item-info > span > span, .list .item .item-profile > span > span, .list .item .item-status > span > span, .list .item .item-content > span > span {
+        display: inline-block; }
   .list .item .item-ctrl {
     position: absolute;
     display: -webkit-flex;
@@ -68,10 +77,6 @@
     margin: 0 10px; }
     .list .item .item-ctrl > a {
       margin: 10px 0; }
-  .list .item .item-info {
-    border-bottom: 1px solid #DFDFDF; }
-  .list .item .item-profile {
-    border-bottom: 1px solid #DFDFDF; }
 
 #backend-search {
   display: -webkit-flex;

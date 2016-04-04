@@ -9,8 +9,12 @@ function Post(){
 	this.images = [];
 	this.hotCount = 0;
 	this.commentCount = 0;
-	this.created = new Date();
+	this.created = new Date;
 }
+/**
+ * 通过 Id 查询微博
+ * @param {Object} id
+ **/
 
 module.exports.getPostById = function* getPost(id){
 	var post = yield mongo.posts.findOne({_id: ObjectID(id)}, {content: 1});
@@ -37,9 +41,10 @@ module.exports.listPosts = function* listPosts(idList){
  * @param {String} post
  **/
 
-module.exports.searchPosts = function* searchPosts(post){
-	var REG_EXP = new RegExp(post);
-	var queryOpt = { 'content': REG_EXP };
+module.exports.searchPosts = function* searchPosts(queryOpt){
+	_.forEach(queryOpt, function(value, key){
+		queryOpt[key] = new RegExp(value);
+	});
 	var limitOpt = { 'limit': 15, 'sort': { 'created': -1 } };
 	var posts = yield mongo.posts.find(queryOpt, limitOpt).toArray();
 	return posts;
@@ -64,4 +69,14 @@ module.exports.createPost = function* createPost(info){
 	}catch(error){
 		console.log(error);
 	}
+}
+
+/**
+ * 删除微博
+ * @param {Int} id
+ **/
+
+module.exports.deletePost = function* deletePost(id){
+	var result = yield mongo.posts.remove({ "_id": ObjectID(id) });
+  return result['result']['ok'];
 }

@@ -1,6 +1,7 @@
 var mongo = require('./mongo'),
   ObjectID = mongo.ObjectID,
-  DBRef = mongo.DBRef;
+  DBRef = mongo.DBRef,
+  _ = require('lodash');
 
 function Comment(){
   this.user = {};
@@ -35,18 +36,35 @@ module.exports.createComment = function* createComment(post_id, user, content){
  **/
 
 module.exports.listComments = function* listComments(post_id){
-  var comments = yield mongo.comments
-    .find(
-      {
-        'post_id': ObjectID(post_id)
-      },
-      {
-        'limit': 15,
-        'sort': {
-          'created': -1
-        }
-      }
-    )
-    .toArray();
+  var queryOpt = { 'post_id': ObjectID(post_id) };
+  var limitOpt = { 'limit': 15, 'sort': { 'created': -1 } };
+  var comments = yield mongo.comments.find(queryOpt, limitOpt).toArray();
   return comments;
 }
+
+/**
+ * 通过内容搜索评论
+ * @param {String} comment
+ **/
+
+module.exports.searchComments = function* searchComments(queryOpt){
+
+  _.forEach(queryOpt, function(value, key){
+    queryOpt[key] = new RegExp(value);
+  });
+
+  var limitOpt = { 'limit': 15, 'sort': { 'created': -1 } };
+  var comments = yield mongo.comments.find(queryOpt, limitOpt).toArray();
+  return comments;
+}
+
+/**
+ * 删除评论
+ * @param {Int} id
+ **/
+
+module.exports.deleteComment = function* deleteComment(id){
+  var result = yield mongo.comments.remove({ "_id": ObjectID(id) });
+  return result['result']['ok'];
+}
+

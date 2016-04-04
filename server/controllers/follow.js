@@ -6,8 +6,8 @@ var parse = require('co-body'),
 module.exports.addFollow = function* addFollow(next){
   var info = yield parse.json(this);
   yield FollowModel.addFollow(this.loginUser._id, info.userId);
-  yield UserModel.updateUserItem(this.loginUser._id, 'followingCount', 1);
-  yield UserModel.updateUserItem(info.userId, 'followerCount', 1);
+  yield UserModel.incUserItem(this.loginUser._id, 'followingCount', 1);
+  yield UserModel.incUserItem(info.userId, 'followerCount', 1);
   this.body = {
     'result': true
   }
@@ -43,8 +43,8 @@ module.exports.getFollow = function* getFollow(next){
 module.exports.removeFollow = function* removeFollow(next){
   var info = yield parse.json(this);
   yield FollowModel.removeFollow(this.loginUser._id, info.userId);
-  yield UserModel.updateUserItem(this.loginUser._id, 'followingCount', -1);
-  yield UserModel.updateUserItem(info.userId, 'followerCount', -1);
+  yield UserModel.incUserItem(this.loginUser._id, 'followingCount', -1);
+  yield UserModel.incUserItem(info.userId, 'followerCount', -1);
   this.body = {
     'result': true
   }

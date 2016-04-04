@@ -11,5 +11,13 @@ module.exports = function(Router){
     .post('/api/posts/:postId/comments',
       Auth.authFilter,
       Controller.createComment
+    )
+    .get('/api/comments',
+      Auth.authFilter,
+      Controller.searchComments
+    )
+    .delete('/api/comments',
+      Auth.authFilter,
+      Controller.deleteComment
     );
 };

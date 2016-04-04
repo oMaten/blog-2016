@@ -52,15 +52,22 @@ angular
 		store.get('accessToken') && store.remove('accessToken');
 		$state.go('signin');
 	}])
-	.controller('BackendCtrl', ['$scope', '$rootScope', '$window', '$state', 'store', 'User', function($scope, $rootScope, $window, $state, store, User){
+	.controller('BackendCtrl', ['$scope', '$rootScope', '$window', '$state', 'store', 'User', 'Post', 'Comment', function($scope, $rootScope, $window, $state, store, User, Post, Comment){
 		$scope.search = {};
 		$scope.searchSubmit = function(){
-			$scope.list = [];
 			if($scope.search.comment){
+				Comment.getAllComments({
+					'q_comment': $scope.search.comment,
+					'q_username': $scope.search.user
+				});
 				$scope.search = {};
 				return
 			}
 			if($scope.search.post){
+				Post.getAllPosts({
+					'q_post': $scope.search.post,
+					'q_username': $scope.search.user
+				});
 				$scope.search = {};
 				return
 			}
@@ -69,11 +76,36 @@ angular
 				$scope.search = {};
 				return
 			}
+		};
 
-		}
+		$scope.forbindPost = function(id){
+			User.forbindUser(id);
+		};
+
+		$scope.deleteUser = function(id){
+			if($scope.listType == 'users'){
+				return User.deleteUser(id);
+			}
+			if($scope.listType == 'posts'){
+				return Post.deletePost(id);
+			}
+			if($scope.listType == 'comments'){
+				return Comment.deleteComment(id);
+			}
+		};
+
+		var gotAllCommentList = $scope.$on('Comments.fetchAllComments', function(){
+			$scope.list = Comment.list;
+			$scope.listType = 'comments';
+		});
+
+		var gotAllPostList = $scope.$on('Post.fetchAllPosts', function(){
+			$scope.list = Post.list;
+			$scope.listType = 'posts';
+		});
+
 		var gotAllUserList = $scope.$on('User.fetchUsersList', function(){
-      $scope.list = User.list;
-      console.log($scope.list);
-      // gotAllUserList();
+      $scope.list = User.list
+      $scope.listType = 'users';
     });
 	}]);

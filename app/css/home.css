@@ -33,9 +33,9 @@
       -ms-flex-align: center;
           align-items: center; }
   .posts-list .posts-item {
-    -webkit-flex: 1 0 320px;
-        -ms-flex: 1 0 320px;
-            flex: 1 0 320px;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
     width: 640px;
     display: block;
     padding-left: 100px;

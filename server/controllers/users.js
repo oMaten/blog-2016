@@ -88,8 +88,22 @@ module.exports.showUser = function* showUser(next){
 
 module.exports.updateUser = function* updateUser(next){
   var info = yield parse.json(this);
-  if(info._id != this.loginUser._id){ return this.throw('没有权限', 401) };
-  var result = yield model.updateUserProfile(this.loginUser._id, info.profile);
+  if(!this.loginUser.admin && info._id != this.loginUser._id){ return this.throw('没有权限', 401) };
+  if(info.forbind){
+    var result = yield model.setUserItem(info._id, 'canPost', false);
+  }else{
+    var result = yield model.updateUserProfile(this.loginUser._id, info.profile);
+  }
+  this.body = {
+    'result': result ? true : false
+  }
+  this.status = 201;
+}
+
+module.exports.deleteUser = function* deleteUser(next){
+  if(!this.loginUser.admin){ return this.throw('没有权限', 401) };
+  if(this.query.id == this.loginUser._id){ return this.throw('不可删除自己', 401) };
+  var result = yield model.deleteUser(this.query.id);
   this.body = {
     'result': result ? true : false
   }

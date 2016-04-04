@@ -12,7 +12,8 @@ module.exports = function(Router){
       Auth.authFilter,
       Controller.createPost
     )
-		.get('/api/posts/:postId',
-      Controller.showPost
+    .delete('/api/posts',
+      Auth.authFilter,
+      Controller.deletePost
     );
 };
