@@ -41,10 +41,18 @@ module.exports.listPosts = function* listPosts(next){
 }
 
 module.exports.createPost = function* createPost(next){
-	var info = yield parse.json(this);
+	var info = JSON.parse(this.request.body.fields.post_content);
+  var img = this.request.body.files.post_with_images || [];
+  if(img.length){
+  	for(var i=0,l=img.length; i<l; i++){
+  		info.images[i] = img[i].path.replace(/\D+blog\-2016\/app/i, '');
+  	}
+  }
+
 	info.user_id = this.loginUser._id;
 	info.user_username = this.loginUser.username;
-	if(!info.canPost){
+
+	if(!this.loginUser.canPost){
 		return this.throw('已被禁止发布微博，请联系管理员', 401);
 	}
 	var post = yield PostModel.createPost(info);

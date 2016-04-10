@@ -1,7 +1,9 @@
 var Controller = require('../controllers/users'),
   Auth = require('../controllers/auth'),
-  postsModel = require('../model/posts'),
-  usersModel = require('../model/users');
+  path = require('path'),
+  koaBody = require('koa-better-body');
+
+var srcPath = path.normalize(__dirname + '../../../app/img');
 
 module.exports = function(Router){
 
@@ -19,6 +21,12 @@ module.exports = function(Router){
       Controller.showUser
     )
 		.post('/api/users/:userId',
+      koaBody({
+        multipart: true,
+        formidable: {
+          uploadDir: srcPath
+        }
+      }),
       Auth.authFilter,
       Controller.updateUser
     )

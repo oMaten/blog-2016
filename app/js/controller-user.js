@@ -109,21 +109,26 @@ angular
     $scope.updateUserProfile = function(){
       User.updateUser();
       $scope.$on('User.changeProfileSuccess', function(){
-        $state.go('home');
+        // $state.go('home');
       });
     }
   }])
   // 图片上传
-  .directive("fileread", [function () {
+  .directive("fileread", ['$parse', function($parse){
     return {
       scope: {
-        fileread: "="
+        fileread: "=",
+        fileload: "="
       },
       link: function (scope, element, attributes) {
-        scope.fileread = [];
         element.bind("change", function (changeEvent) {
+          scope.fileread = [];
+          scope.fileload = [];
           var files = changeEvent.target.files;
           for(var i=0; i<files.length; i++){
+            scope.$apply(function(){
+              scope.fileload.push(files[i]);
+            });
             var reader = new FileReader();
             reader.onload = function (e){
               scope.$apply(function(){

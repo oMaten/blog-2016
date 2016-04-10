@@ -87,7 +87,12 @@ module.exports.showUser = function* showUser(next){
 }
 
 module.exports.updateUser = function* updateUser(next){
-  var info = yield parse.json(this);
+
+  var info = JSON.parse(this.request.body.fields.user_profile);
+  var face = this.request.body.files.user_profile_face;
+
+  info.profile.face[0] = face.path.replace(/\D+blog\-2016\/app/i, '');
+
   if(!this.loginUser.admin && info._id != this.loginUser._id){ return this.throw('没有权限', 401) };
   if(info.forbind){
     var result = yield model.setUserItem(info._id, 'canPost', false);

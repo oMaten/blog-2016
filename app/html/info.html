@@ -5,7 +5,9 @@
     <form id="form-info" name="infoForm" ng-submit="updateUserProfile()">
       <div class="info-item item-face">
         <label for="info-input--face">头像</label>
-        <input id="info-input--face" type="string" ng-model="profile.profile.face" class="face-input"/>
+        <label for="image-upload">选择头像</label>
+        <input id="image-upload" type="file" fileread="face" fileload="profile.profile.face" value=""/>
+        <image ng-if="profile.profile.face[0] || face" src="{{face[0]}}" ng-src="{{profile.profile.face[0]}}"></image>
       </div>
       <div class="info-item item-name">
         <label for="info-input--nickname">昵称</label>
@@ -30,9 +32,7 @@
         <label for="info-input--highline">签名</label>
         <input id="info-input--highline" type="string" ng-model="profile.profile.highline" class="highline-input"/>
       </div>
-      <div class="info-item item-submit">
-        <input id="form-info--submit" type="submit" value="提交"/>
-      </div>
+      <input id="form-info--submit" type="submit" value="提交"/>
     </form>
   </ul>
 </div>

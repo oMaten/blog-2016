@@ -8,8 +8,8 @@
         <input id="form-post--submit" type="submit" value="发布"/>
       </div>
       <div ng-if="newPost.upload" class="form-block">
-        <input id="image-upload" type="file" name="files[]" fileread="newPost.images" value="" multiple="multiple"/>
-        <output id="upload-list"><img ng-repeat="image in newPost.images" src="{{image}}"/></output>
+        <input id="image-upload" type="file" fileload="newPost.images" fileread="images" value="" multiple="multiple"/>
+        <output id="upload-list"><img ng-repeat="image in images" src="{{image}}"/></output>
       </div>
     </form>
     <li ng-repeat="post in posts" class="posts-item">

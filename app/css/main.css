@@ -792,7 +792,15 @@ input, select, textarea {
           flex: 1 1 100%;
   width: 100%;
   box-sizing: border-box;
-  display: block; }
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
   .info-list > p {
     display: block;
     position: relative;
@@ -812,6 +820,7 @@ input, select, textarea {
       -ms-flex-align: center;
           align-items: center; }
   #form-info .info-item {
+    position: relative;
     -webkit-flex: 0 0 75px;
         -ms-flex: 0 0 75px;
             flex: 0 0 75px;
@@ -825,9 +834,17 @@ input, select, textarea {
     #form-info .info-item > input, #form-info .info-item select {
       display: block; }
     #form-info .info-item > label {
-      display: inline-block;
+      display: block;
       font-size: 14px;
       color: #757575; }
+      #form-info .info-item > label[for="image-upload"] {
+        display: inline-block;
+        font-size: 14px;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 3px;
+        margin-top: 10px;
+        background-color: #e5a86d; }
     #form-info .info-item > input, #form-info .info-item select {
       margin: 0 auto;
       border: 2px solid rgba(229, 168, 109, 0.45);
@@ -836,6 +853,27 @@ input, select, textarea {
       width: 100%;
       margin-top: 10px;
       box-sizing: border-box; }
+      #form-info .info-item > input[type="file"], #form-info .info-item select[type="file"] {
+        display: none; }
+    #form-info .info-item > img {
+      position: absolute;
+      height: 85%;
+      right: 10px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      border-radius: 7px; }
+  #form-info input[type="submit"] {
+    background-color: #e5a86d;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.13);
+    color: #fff;
+    padding: 8px 22px;
+    font-size: 14px;
+    border-radius: 5px;
+    -webkit-align-self: flex-end;
+        -ms-flex-item-align: end;
+            align-self: flex-end;
+    margin-top: 18px; }
 
 .main-userlist {
   -webkit-flex: 1 1 100%;

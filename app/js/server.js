@@ -4,6 +4,15 @@ angular
 		return $resource('/api/posts/:postId',
       {},
       {
+        'add': {method: 'POST', isArray: false, headers: {'Content-Type': undefined}, transformRequest: function(data, headersGetter){
+          var formData = new FormData();
+          formData.append('post_content', JSON.stringify(data));
+          if(!data.images){ return formData };
+          for(var i=0,l=data.images.length; i<l; i++){
+            formData.append('post_with_images', data.images[i], data.images[i]['name']);
+          }
+          return formData;
+        }},
         'list': {method: 'GET', isArray: false},
         'delete': {method: 'DELETE'}
       }
@@ -28,7 +37,12 @@ angular
       {
         'list': {method: 'GET', isArray: false},
         'findFollowMem': {method: 'GET', isArray: false, url: '/api/users'},
-        'update': {method: 'POST', isArray: false},
+        'update': {method: 'POST', isArray: false, headers: {'Content-Type': undefined}, transformRequest: function(data, headersGetter){
+          var formData = new FormData();
+          formData.append('user_profile_face', data.profile.face[0], data.profile.face[0]['name']);
+          formData.append('user_profile', JSON.stringify(data));
+          return formData;
+        }},
         'delete': {method: 'DELETE'}
       }
     );
@@ -193,7 +207,7 @@ angular
       addPost: function(formData){
         var ctx = this;
         Posts
-          .save(formData)
+          .add(formData)
           .$promise
           .then(function(res){
             console.log(res);
