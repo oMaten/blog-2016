@@ -56,6 +56,14 @@ angular
   .controller('PostItemCtrl', ['$scope', '$rootScope', '$timeout', 'Post', function($scope, $rootScope, $timeout, Post){
     $scope.posts = Post.list;
     $scope.newPost = {};
+    $scope.newPost.check = function(){
+      if(this.content && this.content.match(/^\#/)){
+        if(this.content.match(/^\#(\w|\W|\s)+\#/)){
+          return { 'isUseTopic': false }
+        }
+        return { 'isUseTopic': true }
+      }
+    }
     // 获取文章
     var gotAllPosts = $scope.$on('Post.fetchAllPosts', function(){
       $scope.posts = Post.list;
@@ -63,7 +71,12 @@ angular
     });
     // 创建新文章
     $scope.createNewPost = function(newPost){
-      if(!newPost.content){ return }
+      if(!newPost.content){ return };
+      newPost.topic = '#日常#';
+      if(newPost.content.match(/^\#(\w|\W|\s)+\#/)){
+        newPost.topic = newPost.content.match(/^\#((\w|\W|\s)+)\#/)[0];
+        newPost.content = newPost.content.replace(/^\#(\w|\W|\s)+\#(\s*)/, '');
+      }
       Post.addPost(newPost);
       $scope.newPost = {};
     };

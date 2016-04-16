@@ -3,11 +3,15 @@
   <ul ng-controller="PostItemCtrl" class="main-home--posts posts-list">
     <form id="form-post" name="postForm" ng-submit="createNewPost(newPost)" ng-if="auth.isAdmin &amp;&amp; current == &quot;user&quot;">
       <label for="form-post--content">有什么新鲜事？</label>
-      <textarea id="form-post--content" name="postContent" ng-model="newPost.content" ng-maxlength="140" required="required"></textarea>
+      <textarea id="form-post--content" name="postContent" ng-model="newPost.content" ng-change="newPost.check()" ng-maxlength="140" required="required"></textarea>
+      <div ng-show="newPost.check().isUseTopic" class="alert-wrap">
+        <p class="alert-topic-text">想用什么话题呢？</p>
+      </div>
       <div class="form-line"><a id="form-image--btn" href="javascript:;" ng-click="newPost.upload = !newPost.upload"><i class="fa fa-picture-o fa-2x"></i></a>
         <input id="form-post--submit" type="submit" value="发布"/>
       </div>
       <div ng-if="newPost.upload" class="form-block">
+        <label for="image-upload" class="image-upload--btn">选取图片</label>
         <input id="image-upload" type="file" fileload="newPost.images" fileread="images" value="" multiple="multiple"/>
         <output id="upload-list"><img ng-repeat="image in images" src="{{image}}"/></output>
       </div>
@@ -16,7 +20,7 @@
       <div class="posts-item--header"></div>
       <div class="posts-item--content card"><a ui-sref="user.home({ id: post.user.user_id })" class="card-user">{{ post.user.user_username }}</a>
         <div class="card-content">
-          <p>{{ post.content }}</p>
+          <p><span>{{post.topic}}</span>{{ post.content }}</p>
         </div>
         <div ng-if="post.images" class="card-images">
           <ul class="images-preview">

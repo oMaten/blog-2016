@@ -20,9 +20,10 @@ module.exports.listPosts = function* listPosts(next){
 		});
 	};
 
-	if(this.query.q_post){
+	if(this.query.q_post || this.query.q_topic){
 		var queryItems = {};
-		queryItems['content'] = this.query.q_post;
+		this.query.q_post && (queryItems['content'] = this.query.q_post);
+		this.query.q_topic && (queryItems['topic'] = this.query.q_topic);
 		this.query.q_username && (queryItems['user.user_username'] = this.query.q_username);
 		var posts = yield PostModel.searchPosts(queryItems);
 	}else{
@@ -42,11 +43,14 @@ module.exports.listPosts = function* listPosts(next){
 
 module.exports.createPost = function* createPost(next){
 	var info = JSON.parse(this.request.body.fields.post_content);
-  var img = this.request.body.files.post_with_images || [];
-  if(img.length){
+  var img = this.request.body.files.post_with_images;
+  if(_.isArray(img)){
   	for(var i=0,l=img.length; i<l; i++){
   		info.images[i] = img[i].path.replace(/\D+blog\-2016\/app/i, '');
   	}
+  }
+  if(img && img.path){
+  	info.images[0] = img.path.replace(/\D+blog\-2016\/app/i, '');
   }
 
 	info.user_id = this.loginUser._id;

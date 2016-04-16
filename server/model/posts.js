@@ -4,6 +4,7 @@ var mongo = require('./mongo'),
 	DBRef = mongo.DBRef;
 
 function Post(){
+	this.topic = '';
 	this.content = '';
 	this.user = '';
 	this.images = [];
@@ -58,6 +59,7 @@ module.exports.searchPosts = function* searchPosts(queryOpt){
 module.exports.createPost = function* createPost(info){
 	var post = new Post();
 	post.content = info.content;
+	post.topic = info.topic;
 	post.user = {
 		'user_id': ObjectID(info.user_id),
 		'user_username': info.user_username

@@ -94,7 +94,7 @@
   #backend-search > label {
     font-size: 16px;
     color: #fff; }
-  #backend-search .search-user, #backend-search .search-post, #backend-search .search-comment {
+  #backend-search .search-user, #backend-search .search-post, #backend-search .search-comment, #backend-search .search-topic {
     background-color: #fff;
     -webkit-flex: 1 0 0;
         -ms-flex: 1 0 0;

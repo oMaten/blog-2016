@@ -1,0 +1,18 @@
+
+<div ng-if="post.isShowComment" ng-controller="CommentItemCtrl" ng-init="fetchComments(post)" ng-class="{true: 'bounceInDown', false: 'bounceOutDown'}[post.readyShowComment]" class="posts-item--comments comments-list animated">
+  <div class="comments-add">
+    <form id="form-comment" name="commentForm" ng-submit="createComment(post)">
+      <textarea id="form-comment--content" name="commentContent" ng-model="newComment.content" ng-maxlength="60" required="required"></textarea>
+      <input id="form-comment--submit" type="submit"/>
+    </form>
+  </div>
+  <div ng-repeat="comment in post.comments" class="comments-item">
+    <div class="comments-item--info">
+      <div class="comments-item--user">{{ comment.user.user_username }}</div>
+      <div class="comments-item--created">{{ comment.created }}</div>
+    </div>
+    <div class="comments-item--content">
+      <p>{{ comment.content }}</p>
+    </div>
+  </div>
+</div>

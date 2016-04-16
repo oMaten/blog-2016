@@ -63,6 +63,15 @@ angular
 				$scope.search = {};
 				return
 			}
+			if($scope.search.topic){
+				Post.getAllPosts({
+					'q_topic': $scope.search.topic,
+					'q_post': $scope.search.post,
+					'q_username': $scope.search.user
+				});
+				$scope.search = {};
+				return;
+			}
 			if($scope.search.post){
 				Post.getAllPosts({
 					'q_post': $scope.search.post,

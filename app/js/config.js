@@ -4,7 +4,6 @@ angular
     'blog.server',
     'blog.controller.signin',
     'blog.controller.user',
-    'blog.controller.post',
     'angular-jwt',
     'angular-storage'
   ])

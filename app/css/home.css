@@ -135,6 +135,16 @@
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.65);
     box-shadow: 0 10px 20px 1px rgba(0, 0, 0, 0.19); }
+  #form-post .alert-wrap {
+    position: absolute;
+    top: 60px;
+    left: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.19);
+    padding: 4px; }
+    #form-post .alert-wrap .alert-topic-text {
+      font-size: 12px;
+      color: #575757; }
   #form-post .form-line {
     margin-top: 10px;
     display: -webkit-flex;
@@ -156,7 +166,8 @@
       color: #fff;
       border-radius: 5px;
       padding: 8px 15px;
-      background-color: rgba(22, 54, 62, 0.65); }
+      background-color: rgba(22, 54, 62, 0.65);
+      font-size: 14px; }
   #form-post .form-block {
     display: block;
     background-color: rgba(255, 255, 255, 0.78);
@@ -166,6 +177,15 @@
     margin-top: 40px;
     text-align: center;
     padding-top: 10px; }
+    #form-post .form-block > input {
+      display: none; }
+    #form-post .form-block .image-upload--btn {
+      display: inline-block;
+      padding: 8px 12px;
+      background-color: #c29343;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 3px; }
     #form-post .form-block > output {
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -256,6 +276,8 @@
     .card .card-content > p {
       text-align: justify;
       vertical-align: baseline; }
+      .card .card-content > p > span {
+        color: #b48177; }
   .card .card-images {
     display: block;
     padding: 0 20px; }
