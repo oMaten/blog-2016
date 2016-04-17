@@ -52,6 +52,19 @@ module.exports.searchPosts = function* searchPosts(queryOpt){
 }
 
 /**
+ * 通过 ID 获取并增加微博文档
+ * @param {String} id 微博
+ * @param {String} key 文档键值
+ * @param {String} value 键值取值
+ **/
+
+module.exports.incPostItem = function* incPostItem(id, key, value){
+	var updateDoc = {};
+  updateDoc[key] = value;
+  yield mongo.posts.update({ "_id": ObjectID(id) }, { "$inc": updateDoc });
+}
+
+/**
  * 创建微博
  * @param {Object} info
  **/

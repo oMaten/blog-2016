@@ -15,6 +15,7 @@ function User(){
     'sex': Number(null),
     'age': Number(null)
   };
+  this.hotTo = [];
   this.created = new Date;
   this.followingCount = 0;
   this.followerCount = 0;

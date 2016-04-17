@@ -155,6 +155,22 @@ input, select, textarea {
     -webkit-transform: translate3d(0, 2000px, 0);
             transform: translate3d(0, 2000px, 0); } }
 
+@-webkit-keyframes heartBurst {
+  0% {
+    background-position: left; }
+  100% {
+    background-position: right; } }
+
+@keyframes heartBurst {
+  0% {
+    background-position: left; }
+  100% {
+    background-position: right; } }
+
+.heartBurst:after {
+  -webkit-animation: heartBurst steps(28) 0.8s 1 both;
+          animation: heartBurst steps(28) 0.8s 1 both; }
+
 .bounceInDown {
   -webkit-animation-name: bounceInDown;
           animation-name: bounceInDown; }
@@ -487,6 +503,17 @@ input, select, textarea {
   #form-search #form-search--submit {
     visibility: hidden; }
 
+.user-profile {
+  margin: 20px 0;
+  color: #fff;
+  line-height: 1.4;
+  font-size: 14px;
+  width: 130px; }
+  .user-profile > p > i {
+    width: 20px;
+    text-align: center;
+    margin-right: 10px; }
+
 .main-home {
   -webkit-flex: 1 1 100%;
       -ms-flex: 1 1 100%;
@@ -801,10 +828,33 @@ input, select, textarea {
       text-align: left; }
       .card .card-more .card-more--link > span {
         font-size: 22px;
-        margin-right: 350px; }
+        margin-right: 350px;
+        position: relative;
+        display: inline-block; }
+        .card .card-more .card-more--link > span .like-i {
+          display: inline-block;
+          position: relative;
+          width: 25px;
+          height: 25px;
+          margin-right: 20px; }
+          .card .card-more .card-more--link > span .like-i:after {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: -16px;
+            background: url("../img/heart.png") 0 0 no-repeat;
+            background-size: 2900%;
+            width: 65px;
+            height: 65px; }
+          .card .card-more .card-more--link > span .like-i.hoted:after {
+            background-position: 100% 0; }
         .card .card-more .card-more--link > span > i {
+          display: inline-block;
+          position: relative;
+          width: 25px;
+          height: 25px;
           color: #a1a1a1;
-          margin: 0 8px; }
+          margin-right: 20px; }
 
 .info-list {
   margin: 20px 0;

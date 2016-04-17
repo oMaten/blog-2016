@@ -1,0 +1,15 @@
+
+<form id="form-signin" name="signinForm" ng-submit="signinValidate()" class="form-signin">
+  <div class="form-input">
+    <input id="form-signin--username" name="username" type="text" ng-model="signinAccount.username" required="required"/>
+    <label for="form-signin--username" value="用户名" ng-class="{'selected': signinAccount.username}"></label>
+  </div>
+  <div class="form-input">
+    <input id="form-signin--password" name="password" type="password" ng-model="signinAccount.password" required="required"/>
+    <label for="form-signin--password" value="密码" ng-class="{'selected': signinAccount.password}"></label>
+  </div>
+  <div class="form-submit">
+    <input id="form-signin--submit" type="submit" value="登录"/>
+    <label for="form-signin--submit"></label>
+  </div>
+</form>

@@ -1,0 +1,12 @@
+
+<form id="backend-search" ng-submit="searchSubmit()">
+  <label for="search-user">用户</label>
+  <input id="search-user" ng-model="search.user" placeholder="输入用户名" class="search-user"/>
+  <label for="search-post">微博</label>
+  <input id="search-post" ng-model="search.post" placeholder="输入微博内容" class="search-post"/>
+  <label for="search-topic">话题</label>
+  <input id="search-topic" ng-model="search.topic" placeholder="输入微博话题" class="search-topic"/>
+  <label for="search-comment">评论</label>
+  <input id="search-comment" ng-model="search.comment" placeholder="输入评论内容" class="search-comment"/>
+  <input type="submit" value="提交" class="search-submit"/>
+</form>

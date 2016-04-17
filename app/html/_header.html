@@ -5,6 +5,11 @@
 <ul class="header-profile">
   <li class="profile-age"></li>
 </ul><a href="javascript:;" ng-click="toFollowing()" ng-if="!auth.isAdmin" class="tofollowing-btn">{{ followStatus.text }}</a>
+<div class="user-profile">
+  <p><i aria-hidden="true" class="fa fa-bookmark"></i>{{ user.profile.highline }}</p>
+  <p><i aria-hidden="true" class="fa fa-venus-mars"></i>{{ user.profile.sex }}</p>
+  <p><i aria-hidden="true" class="fa fa-birthday-cake"></i>{{ user.profile.dob }}</p>
+</div>
 <div class="user-recommend header-recommend"><a ui-sref="allUsers({})" ui-sref-opts="{reload: true, inherit: false}">推荐用户</a></div>
 <div class="header-search">
   <form id="form-search" ng-submit="goSearch()">

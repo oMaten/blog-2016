@@ -43,7 +43,9 @@ angular
           formData.append('user_profile', JSON.stringify(data));
           return formData;
         }},
-        'delete': {method: 'DELETE'}
+        'delete': {method: 'DELETE'},
+        'addLike': {method: 'POST', isArray: false, url: '/api/like'},
+        'forbind': {method: 'POST', isArray: false, url: '/api/users/:userId/forbind'}
       }
     );
 	}])
@@ -81,6 +83,8 @@ angular
             console.log(data.user);
             if(data.user){
               ctx.profile = data.user;
+              if(ctx.profile.profile.sex == 1){ ctx.profile.profile.sex = '女' };
+              if(ctx.profile.profile.sex == 0){ ctx.profile.profile.sex = '男' };
             };
             if(data.auth){ ctx.auth = data.auth };
             $rootScope.$broadcast('User.fetchCurrentUser');
@@ -100,10 +104,10 @@ angular
             console.log(error);
           });
       },
-      forbindUser: function(id){
+      forbindUser: function(id, isForbind){
         var ctx = this;
         Users
-          .update({'_id': id, 'forbind': true})
+          .forbind({'_id': id, 'forbind': isForbind})
           .$promise
           .then(function(data){
             console.log(data);
@@ -142,7 +146,7 @@ angular
       unFollowCurrentUser: function(){
         var ctx = this;
         Follow
-          .unfollow({userId: $})
+          .unfollow({userId: ctx.profile._id})
           .$promise
           .then(function(data){
             if(data.result){
@@ -171,6 +175,17 @@ angular
         var ctx = this;
         Users
           .delete({'id': id})
+          .$promise
+          .then(function(data){
+            console.log(data);
+          }, function(error){
+            console.log(error);
+          });
+      },
+      addLike: function(id){
+        var ctx = this;
+        Users
+          .addLike({'userId': ctx.profile._id, 'postId': id})
           .$promise
           .then(function(data){
             console.log(data);

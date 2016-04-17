@@ -12,6 +12,7 @@ angular
     $scope.search = {};
     // 获取当前用户
     var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(event){
+
       $scope.user = User.profile;
       $scope.auth = User.auth;
       // deregister the listener
@@ -46,14 +47,16 @@ angular
   // 用户主页
   .controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', 'Comments', '$state', 'User', function($scope, $rootScope, $stateParams, Posts, Comments, $state, User){
     $scope.auth = User.auth;
+    $scope.user = User.profile;
     $scope.current = $state.current.name;
     var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(){
       $scope.auth = User.auth;
+      $scope.user = User.profile;
       gotCurrentUser();
     });
   }])
   // 获取文章列表以及添加文章
-  .controller('PostItemCtrl', ['$scope', '$rootScope', '$timeout', 'Post', function($scope, $rootScope, $timeout, Post){
+  .controller('PostItemCtrl', ['$scope', '$rootScope', '$timeout', 'Post', 'User', function($scope, $rootScope, $timeout, Post, User){
     $scope.posts = Post.list;
     $scope.newPost = {};
     $scope.newPost.check = function(){
@@ -80,6 +83,13 @@ angular
       Post.addPost(newPost);
       $scope.newPost = {};
     };
+
+    $scope.addHot = function(post){
+      if(post.isHoted){ return };
+      User.addLike(post._id);
+      post.hotCount++;
+      post.hoted = true;
+    }
     // 展示评论
     $scope.showTheComment = function(post){
       post.readyShowComment = !post.readyShowComment;

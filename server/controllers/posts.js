@@ -2,7 +2,8 @@ var parse = require('co-body'),
 	PostModel = require('../model/posts'),
 	FollowModel = require('../model/follow'),
 	UserModel = require('../model/users'),
-	moment = require('moment');
+  LikeModel = require('../model/like'),
+	moment = require('moment'),
 	_ = require('lodash'),
 	auth = require('./auth');
 
@@ -30,9 +31,14 @@ module.exports.listPosts = function* listPosts(next){
 		var posts = yield PostModel.listPosts(userIdList);
 	};
 
-	_.forEach(posts, function(value, key){
-		value['created'] = moment(value['created']).format('YYYY-MM-DD LT');
-	});
+  for(var i=0,l=posts.length; i<l; i++){
+    var isHoted = yield LikeModel.getLike(currentUserId, posts[i]['_id']);
+    // console.log(currentUserId, posts);
+    if(isHoted){
+      posts[i]['isHoted'] = true;
+    };
+    posts[i]['created'] = moment(posts[i]['created']).format('YYYY-MM-DD LT');
+  }
 
 	this.body = {
 		'posts': posts

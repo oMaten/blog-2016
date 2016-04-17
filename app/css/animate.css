@@ -68,6 +68,22 @@
     -webkit-transform: translate3d(0, 2000px, 0);
             transform: translate3d(0, 2000px, 0); } }
 
+@-webkit-keyframes heartBurst {
+  0% {
+    background-position: left; }
+  100% {
+    background-position: right; } }
+
+@keyframes heartBurst {
+  0% {
+    background-position: left; }
+  100% {
+    background-position: right; } }
+
+.heartBurst:after {
+  -webkit-animation: heartBurst steps(28) 0.8s 1 both;
+          animation: heartBurst steps(28) 0.8s 1 both; }
+
 .bounceInDown {
   -webkit-animation-name: bounceInDown;
           animation-name: bounceInDown; }

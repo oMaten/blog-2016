@@ -142,3 +142,14 @@
     border-radius: 3px; }
   #form-search #form-search--submit {
     visibility: hidden; }
+
+.user-profile {
+  margin: 20px 0;
+  color: #fff;
+  line-height: 1.4;
+  font-size: 14px;
+  width: 130px; }
+  .user-profile > p > i {
+    width: 20px;
+    text-align: center;
+    margin-right: 10px; }

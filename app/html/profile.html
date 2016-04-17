@@ -6,7 +6,7 @@
       <div class="info-item item-face">
         <label for="info-input--face">头像</label>
         <label for="image-upload">选择头像</label>
-        <input id="image-upload" type="file" fileread="face" fileload="profile.profile.face" value=""/>
+        <input id="image-upload" type="file" fileread="face" fileload="profile.profile.face" value="" required="required"/>
         <image ng-if="profile.profile.face[0] || face" src="{{face[0]}}" ng-src="{{profile.profile.face[0]}}"></image>
       </div>
       <div class="info-item item-name">

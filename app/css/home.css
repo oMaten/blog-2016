@@ -312,7 +312,30 @@
       text-align: left; }
       .card .card-more .card-more--link > span {
         font-size: 22px;
-        margin-right: 350px; }
+        margin-right: 350px;
+        position: relative;
+        display: inline-block; }
+        .card .card-more .card-more--link > span .like-i {
+          display: inline-block;
+          position: relative;
+          width: 25px;
+          height: 25px;
+          margin-right: 20px; }
+          .card .card-more .card-more--link > span .like-i:after {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: -16px;
+            background: url("../img/heart.png") 0 0 no-repeat;
+            background-size: 2900%;
+            width: 65px;
+            height: 65px; }
+          .card .card-more .card-more--link > span .like-i.hoted:after {
+            background-position: 100% 0; }
         .card .card-more .card-more--link > span > i {
+          display: inline-block;
+          position: relative;
+          width: 25px;
+          height: 25px;
           color: #a1a1a1;
-          margin: 0 8px; }
+          margin-right: 20px; }

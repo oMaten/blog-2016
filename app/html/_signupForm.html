@@ -1,0 +1,19 @@
+
+<form id="form-signup" name="signupForm" ng-submit="signupValidate()" class="form-signup">
+  <div class="form-input">
+    <input id="form-signup--username" name="username" type="text" ng-model="signupAccount.username" required="required"/>
+    <label for="form-signup--username" value="用户名" ng-class="{'selected': signupAccount.username}"></label>
+  </div>
+  <div class="form-input">
+    <input id="form-signup--password" name="password" type="password" ng-model="signupAccount.password" required="required"/>
+    <label for="form-signup--password" value="密码" ng-class="{'selected': signupAccount.password}"></label>
+  </div>
+  <div class="form-input">
+    <input id="form-signup--repassword" name="repassword" type="password" ng-model="signupAccount.repassword" required="required"/>
+    <label for="form-signup--repassword" value="确认密码" ng-class="{'selected': signupAccount.repassword}"></label>
+  </div>
+  <div class="form-submit">
+    <input id="form-signup--submit" type="submit" value="注册MANK"/>
+    <label for="form-signup--submit"></label>
+  </div>
+</form>

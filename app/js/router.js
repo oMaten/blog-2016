@@ -78,7 +78,7 @@ angular
 				url: '/user/:id/info',
 				views: {
 					'main': {
-						templateUrl: '../html/info.html',
+						templateUrl: '../html/profile.html',
 						controller: 'HomeCtrl'
 					}
 				},
