@@ -75,7 +75,8 @@ module.exports.createPost = function* createPost(info){
 	post.topic = info.topic;
 	post.user = {
 		'user_id': ObjectID(info.user_id),
-		'user_username': info.user_username
+		'user_nickname': info.user_nickname,
+		'user_face': info.user_face
 	};
 	post.images = info.images;
 	try{

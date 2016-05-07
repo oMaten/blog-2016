@@ -30,6 +30,7 @@ angular
         },
         'responseError': function(response){
           console.log(response.data);
+          alert(response.data);
           return response;
         }
       }

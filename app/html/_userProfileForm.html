@@ -1,5 +1,5 @@
 
-<form id="form-info" name="infoForm" ng-submit="updateUserProfile()">
+<form id="form-info" name="infoForm" ng-submit="updateUserProfile()" novalidate="novalidate">
   <div class="info-item item-face">
     <label for="info-input--face">头像</label>
     <label for="image-upload">选择头像</label>
@@ -8,15 +8,15 @@
   </div>
   <div class="info-item item-name">
     <label for="info-input--nickname">昵称</label>
-    <input id="info-input--nickname" type="string" ng-model="profile.profile.nickname" required="required" class="name-input"/>
+    <input id="info-input--nickname" type="string" ng-model="profile.profile.nickname" placeholder="请输入你的昵称" required="required" class="name-input"/>
   </div>
   <div class="info-item item-age">
-    <label for="info-input--age">年龄</label>
-    <input id="info-input--age" type="number" ng-model="profile.profile.age" min="0" max="120" required="required" class="age-input"/>
+    <label for="info-input--location">城市</label>
+    <input id="info-input--location" type="string" ng-model="profile.profile.location" placeholder="请输入你所在的城市" required="required" class="age-input"/>
   </div>
   <div class="info-item item-dob">
     <label for="info-input--dob">生日</label>
-    <input id="info-input--dob" type="date" ng-model="profile.profile.dob" ng-value="profile.profile.dob" required="required" class="dob-input"/>
+    <input id="info-input--dob" type="date" ng-model="profile.profile.dob" ng-value="profile.profile.dob" placeholder="请输入你的生日" required="required" class="dob-input"/>
   </div>
   <div class="info-item item-sex">
     <label for="info-input--sex">性别</label>
@@ -27,7 +27,7 @@
   </div>
   <div class="info-item item-highline">
     <label for="info-input--highline">签名</label>
-    <input id="info-input--highline" type="string" ng-model="profile.profile.highline" class="highline-input"/>
+    <input id="info-input--highline" type="string" ng-model="profile.profile.highline" placeholder="请输入你的签名" class="highline-input"/>
   </div>
   <input id="form-info--submit" type="submit" value="提交"/>
 </form>

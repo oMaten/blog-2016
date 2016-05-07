@@ -8,14 +8,13 @@ function User(){
   this.username = '';
   this.password = '';
   this.profile = {
-    'nickname': String(null),
-    'face': String(null),
-    'highline': String(null),
+    'nickname': String(''),
+    'face': String(''),
+    'highline': String(''),
     'dob': new Date,
-    'sex': Number(null),
-    'age': Number(null)
+    'sex': 0,
+    'location': String('')
   };
-  this.hotTo = [];
   this.created = new Date;
   this.followingCount = 0;
   this.followerCount = 0;

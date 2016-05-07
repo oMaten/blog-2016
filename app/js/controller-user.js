@@ -132,7 +132,7 @@ angular
     $scope.updateUserProfile = function(){
       User.updateUser();
       $scope.$on('User.changeProfileSuccess', function(){
-        // $state.go('home');
+        $state.go('user', {"id":$scope.profile._id});
       });
     }
   }])

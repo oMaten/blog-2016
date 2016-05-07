@@ -66,6 +66,9 @@ module.exports.signinUser = function* signinUser(next){
   }
   // 通过用户名查询用户信息
   this.user = yield model.getUserByName(info.username);
+  if(!this.user){
+    return this.throw('账号错误', 401);
+  }
   var isCurrent = yield model.passwordCompare(info.password, this.user.password);
   if(!isCurrent){
     return this.throw('密码错误', 401);
@@ -90,7 +93,9 @@ module.exports.updateUser = function* updateUser(next){
 
   var info = JSON.parse(this.request.body.fields.user_profile);
   var face = this.request.body.files.user_profile_face;
-  info.profile.face[0] = face.path.replace(/\D+blog\-2016\/app/i, '');
+  if(face){
+    info.profile.face[0] = face.path.replace(/\D+blog\-2016\/app/i, '');
+  }
 
   if(!this.loginUser.admin && info._id != this.loginUser._id){ return this.throw('没有权限', 401) };
 

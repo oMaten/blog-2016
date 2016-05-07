@@ -1,6 +1,6 @@
 
-<div class="posts-item--header"></div>
-<div class="posts-item--content card"><a ui-sref="user.home({ id: post.user.user_id })" class="card-user">{{ post.user.user_username }}</a>
+<div style="background-image: url({{ post.user.user_face }})" class="posts-item--header"></div>
+<div class="posts-item--content card"><a ui-sref="user.home({ id: post.user.user_id })" class="card-user">{{ post.user.user_nickname }}</a>
   <div class="card-content">
     <p><span>{{post.topic}}</span>{{ post.content }}</p>
   </div>

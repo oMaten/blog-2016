@@ -60,7 +60,8 @@ module.exports.createPost = function* createPost(next){
   }
 
 	info.user_id = this.loginUser._id;
-	info.user_username = this.loginUser.username;
+	info.user_nickname = this.loginUser.profile.nickname;
+  info.user_face = this.loginUser.profile.face[0];
 
 	if(!this.loginUser.canPost){
 		return this.throw('已被禁止发布微博，请联系管理员', 401);

@@ -83,8 +83,6 @@ angular
             console.log(data.user);
             if(data.user){
               ctx.profile = data.user;
-              if(ctx.profile.profile.sex == 1){ ctx.profile.profile.sex = '女' };
-              if(ctx.profile.profile.sex == 0){ ctx.profile.profile.sex = '男' };
             };
             if(data.auth){ ctx.auth = data.auth };
             $rootScope.$broadcast('User.fetchCurrentUser');
