@@ -77,6 +77,18 @@ module.exports.searchUserByName = function* getUserByName(username){
 }
 
 /**
+ * 通过 nickname 查询用户
+ * @param {String} nickname
+ **/
+
+module.exports.searchUserByNickName = function* getUserByName(nickname){
+  var REG_EXP = new RegExp(nickname);
+  var user = yield mongo.users.find({ 'profile.nickname': REG_EXP }).toArray();
+  return user;
+}
+
+
+/**
  * 获取全部用户
  * @param {Array} idList
  **/

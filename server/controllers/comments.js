@@ -7,6 +7,9 @@ var parse = require('co-body'),
 
 module.exports.listComments = function* listComments(next){
   var comments = yield CommentModel.listComments(this.params.postId);
+  for(var i = 0, l = comments.length; i < l; i++){
+    comments[i].created = moment(comments.created).format('YYYY-MM-DD LT');
+  }
   this.body = {
     'comments': comments
   };

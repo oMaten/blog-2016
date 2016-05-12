@@ -28,7 +28,10 @@
   .header .tofollowing-btn {
     color: #f5f5f5;
     font-size: 20px;
-    margin: 10px 0; }
+    margin: 20px 0;
+    padding: 8px 26px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 8px -2px #a9b1a6; }
   .header .user-face {
     display: block;
     border-radius: 50%;
@@ -46,7 +49,10 @@
   .header .header-face {
     width: 90px;
     height: 90px;
-    margin: 20px 0 10px 0; }
+    margin: 20px 0 10px 0;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto; }
   .header .header-name {
     margin: 10px;
     width: 250px;
@@ -60,28 +66,14 @@
           color: #74c6f9; }
         .header .header-name > a > i.fa-venus {
           color: #f98eaa; }
-  .header .color-mars {
-    color: #74c6f9; }
-  .header .color-venus {
-    color: #fbc8b8; }
   .header .header-relation > a {
     color: #f5f5f5;
     font-size: 16px; }
-  .header .header-recommend {
-    margin: 20px 0; }
-    .header .header-recommend > a {
-      color: #f5f5f5;
-      font-size: 16px; }
   .header .header-search {
     display: block; }
-  .header .header-logout {
-    margin: 20px 0; }
-    .header .header-logout > a {
-      color: #f5f5f5;
-      font-size: 16px; }
-  .header .header-backend {
-    margin: 20px 0; }
-    .header .header-backend > a {
+  .header .header-logout, .header .header-backend, .header .user-info, .header .header-recommend {
+    margin: 10px 0; }
+    .header .header-logout > a, .header .header-backend > a, .header .user-info > a, .header .header-recommend > a {
       color: #f5f5f5;
       font-size: 16px; }
   .header .user-relation {
@@ -158,10 +150,33 @@
   color: #fff;
   line-height: 1.4;
   font-size: 14px;
-  width: 130px; }
+  width: 180px; }
   .user-profile > p {
     line-height: 1.8; }
     .user-profile > p > i {
       width: 20px;
       text-align: center;
       margin-right: 10px; }
+
+.fa-mars {
+  color: #74c6f9;
+  vertical-align: text-top; }
+
+.fa-venus {
+  color: #f98eaa;
+  vertical-align: text-top; }
+
+.color-mars {
+  color: #74c6f9; }
+
+.color-venus {
+  color: #fbc8b8; }
+
+.bg-venus {
+  background-color: #fbc8b8; }
+
+.bg-normal {
+  background-color: rgba(255, 255, 255, 0.65); }
+
+.bg-mars {
+  background-color: #74c6f9; }

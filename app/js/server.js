@@ -127,7 +127,7 @@ angular
       },
       getFollowStatus: function(formData){
         var ctx = this;
-        if(formData.userId == this.profile._id){ return }
+        if(formData.userId == $rootScope.userId){ return }
         Follow
           .list(formData)
           .$promise
@@ -135,8 +135,11 @@ angular
             if(data.result){
               ctx.followStatus.text = '已关注';
               ctx.followStatus.status = true;
-              $rootScope.$broadcast('User.fetchCurrentFollowStatus');
+            }else{
+              ctx.followStatus.text = '关注';
+              ctx.followStatus.status = false;
             }
+            $rootScope.$broadcast('User.fetchCurrentFollowStatus');
           }, function(error){
             console.log(error);
           });
@@ -183,7 +186,7 @@ angular
       addLike: function(id){
         var ctx = this;
         Users
-          .addLike({'userId': ctx.profile._id, 'postId': id})
+          .addLike({'postId': id})
           .$promise
           .then(function(data){
             console.log(data);
@@ -213,6 +216,20 @@ angular
           .then(function(data){
             ctx.list = data.posts;
             $rootScope.$broadcast('Post.fetchAllPosts');
+          }, function(error){
+            console.log(error);
+          });
+      },
+      getMorePosts: function(formData){
+        var ctx = this;
+        Posts
+          .get(formData)
+          .$promise
+          .then(function(data){
+            if(data.posts.length != 0){
+              ctx.list = ctx.list.concat(data.posts);
+            }
+            $rootScope.$broadcast('Post.fetchMorePosts', data.posts);
           }, function(error){
             console.log(error);
           });

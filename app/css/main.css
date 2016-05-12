@@ -388,7 +388,10 @@ input, select, textarea {
   .header .tofollowing-btn {
     color: #f5f5f5;
     font-size: 20px;
-    margin: 10px 0; }
+    margin: 20px 0;
+    padding: 8px 26px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 8px -2px #a9b1a6; }
   .header .user-face {
     display: block;
     border-radius: 50%;
@@ -406,7 +409,10 @@ input, select, textarea {
   .header .header-face {
     width: 90px;
     height: 90px;
-    margin: 20px 0 10px 0; }
+    margin: 20px 0 10px 0;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto; }
   .header .header-name {
     margin: 10px;
     width: 250px;
@@ -420,28 +426,14 @@ input, select, textarea {
           color: #74c6f9; }
         .header .header-name > a > i.fa-venus {
           color: #f98eaa; }
-  .header .color-mars {
-    color: #74c6f9; }
-  .header .color-venus {
-    color: #fbc8b8; }
   .header .header-relation > a {
     color: #f5f5f5;
     font-size: 16px; }
-  .header .header-recommend {
-    margin: 20px 0; }
-    .header .header-recommend > a {
-      color: #f5f5f5;
-      font-size: 16px; }
   .header .header-search {
     display: block; }
-  .header .header-logout {
-    margin: 20px 0; }
-    .header .header-logout > a {
-      color: #f5f5f5;
-      font-size: 16px; }
-  .header .header-backend {
-    margin: 20px 0; }
-    .header .header-backend > a {
+  .header .header-logout, .header .header-backend, .header .user-info, .header .header-recommend {
+    margin: 10px 0; }
+    .header .header-logout > a, .header .header-backend > a, .header .user-info > a, .header .header-recommend > a {
       color: #f5f5f5;
       font-size: 16px; }
   .header .user-relation {
@@ -518,13 +510,36 @@ input, select, textarea {
   color: #fff;
   line-height: 1.4;
   font-size: 14px;
-  width: 130px; }
+  width: 180px; }
   .user-profile > p {
     line-height: 1.8; }
     .user-profile > p > i {
       width: 20px;
       text-align: center;
       margin-right: 10px; }
+
+.fa-mars {
+  color: #74c6f9;
+  vertical-align: text-top; }
+
+.fa-venus {
+  color: #f98eaa;
+  vertical-align: text-top; }
+
+.color-mars {
+  color: #74c6f9; }
+
+.color-venus {
+  color: #fbc8b8; }
+
+.bg-venus {
+  background-color: #fbc8b8; }
+
+.bg-normal {
+  background-color: rgba(255, 255, 255, 0.65); }
+
+.bg-mars {
+  background-color: #74c6f9; }
 
 .main-home {
   -webkit-flex: 1 1 100%;
@@ -948,6 +963,9 @@ input, select, textarea {
       margin: auto;
       border-radius: 7px; }
   #form-info input[type="submit"] {
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
     background-color: #e5a86d;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.13);
     color: #fff;
@@ -957,7 +975,7 @@ input, select, textarea {
     -webkit-align-self: flex-end;
         -ms-flex-item-align: end;
             align-self: flex-end;
-    margin-top: 18px; }
+    margin: 18px 0; }
 
 .main-userlist {
   -webkit-flex: 1 1 100%;
@@ -987,15 +1005,21 @@ input, select, textarea {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row wrap;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
-  -webkit-align-content: flex-start;
-      -ms-flex-line-pack: start;
-          align-content: flex-start; }
+  -webkit-flex-flow: column nowrap;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start; }
   .users-list .users-item {
     display: block;
-    width: 320px;
+    -webkit-flex: 0 0 140px;
+        -ms-flex: 0 0 140px;
+            flex: 0 0 140px;
+    width: 80%;
     height: 140px;
     margin: 0 20px;
     padding: 10px 0 10px 85px;
@@ -1017,17 +1041,25 @@ input, select, textarea {
         width: 100%;
         height: 100%; }
     .users-list .users-item .users-item--content {
-      width: 100%;
-      height: 100%;
-      display: block;
-      background-color: rgba(255, 255, 255, 0.75);
-      border-radius: 5px;
-      padding: 15px 5px 15px 40px;
-      box-sizing: border-box; }
-      .users-list .users-item .users-item--content > p {
-        margin-top: 10px; }
-        .users-list .users-item .users-item--content > p > span {
-          margin-right: 10px; }
+      width: 640px;
+      height: 100%; }
+
+.users-item--content {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 5px;
+  padding: 15px 5px 15px 60px;
+  box-sizing: border-box; }
+  .users-item--content > p {
+    margin-top: 10px;
+    font-size: 14px; }
+    .users-item--content > p > span {
+      margin-right: 10px; }
+  .users-item--content > a {
+    display: inline-block;
+    font-size: 16px; }
+    .users-item--content > a > i {
+      margin-left: 10px; }
 
 .backend-wrap {
   background-color: rgba(132, 169, 155, 0.3);

@@ -24,16 +24,19 @@ module.exports.getPostById = function* getPost(id){
 
 /**
  * 查询所有微博
- * @param {Object} id
+ * @param {Array} idList
+ * @param {Int} page
  **/
 
-module.exports.listPosts = function* listPosts(idList){
+module.exports.listPosts = function* listPosts(idList, page){
 	_.forEach(idList, function(value, key){
 		idList[key] = ObjectID(value)
 	});
 	var queryOpt = { 'user.user_id': { '$in': idList } };
-	var limitOpt = { 'limit': 15, 'sort': { 'created': -1 } };
-	var posts = yield mongo.posts.find(queryOpt, limitOpt).toArray();
+	var sortOpt = { 'created': -1 };
+	var skipOpt = ( page - 1 ) * 10;
+
+	var posts = yield mongo.posts.find(queryOpt).sort(sortOpt).skip(skipOpt).limit(10).toArray();
 	return posts;
 }
 

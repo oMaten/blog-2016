@@ -22,7 +22,7 @@ module.exports.createComment = function* createComment(post_id, user, content){
   comment.post_id = ObjectID(post_id);
   comment.user = {
     'user_id': ObjectID(user._id),
-    'user_username': user.username
+    'user_nickname': user.profile.nickname
   }
   comment.content = content;
 

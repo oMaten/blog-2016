@@ -9,6 +9,7 @@ angular
 
     $scope.user = User.profile;
     $scope.auth = User.auth;
+    $scope.followStatus = User.followStatus;
     $scope.search = {};
     // 获取当前用户
     var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(event){
@@ -19,7 +20,6 @@ angular
       gotCurrentUser();
     });
     // 获取当前用户的关系状态
-    $scope.followStatus = User.followStatus;
     var gotCurrentFollowStatus = $scope.$on('User.fetchCurrentFollowStatus', function(event){
       $scope.followStatus = User.followStatus;
       // deregister the listener
@@ -45,20 +45,37 @@ angular
 
   }])
   // 用户主页
-  .controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', 'Posts', 'Comments', '$state', 'User', function($scope, $rootScope, $stateParams, Posts, Comments, $state, User){
+  .controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', '$timeout', 'Posts', 'Comments', '$state', 'User', 'Post', function($scope, $rootScope, $stateParams, $timeout, Posts, Comments, $state, User, Post){
     $scope.auth = User.auth;
     $scope.user = User.profile;
     $scope.current = $state.current.name;
+    $scope.pageLocked = false;
     var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(){
       $scope.auth = User.auth;
       $scope.user = User.profile;
       gotCurrentUser();
     });
+    // 翻页
+    $scope.getNextPage = function(){
+      if($scope.pageLocked){ return };
+      $scope.pageLocked = true;
+
+      var currentPage = Math.ceil(Post.list.length / 10) + 1;
+      var unLocked = $scope.$on('Post.fetchMorePosts', function(e, posts){
+        if(posts.length != 0){
+          $scope.pageLocked = false;
+        }
+        unLocked();
+      });
+
+      Post.getMorePosts({'getFollow':true, 'p': currentPage });
+    };
   }])
   // 获取文章列表以及添加文章
   .controller('PostItemCtrl', ['$scope', '$rootScope', '$timeout', 'Post', 'User', function($scope, $rootScope, $timeout, Post, User){
     $scope.posts = Post.list;
     $scope.newPost = {};
+    $scope.loading = true;
     $scope.newPost.check = function(){
       if(this.content && this.content.match(/^\#/)){
         if(this.content.match(/^\#(\w|\W|\s)+\#/)){
@@ -72,6 +89,16 @@ angular
       $scope.posts = Post.list;
       gotAllPosts();
     });
+
+    // 加载文章
+    var gotMorePosts = $scope.$on('Post.fetchMorePosts', function(e, posts){
+      if(posts.length == 0){
+        $scope.loading = false;
+      }else{
+        $scope.posts = $scope.posts.concat(posts);
+      }
+    });
+
     // 创建新文章
     $scope.createNewPost = function(newPost){
       if(!newPost.content){ return };
@@ -83,12 +110,13 @@ angular
       Post.addPost(newPost);
       $scope.newPost = {};
     };
-
+    // 点赞
     $scope.addHot = function(post){
       if(post.isHoted){ return };
       User.addLike(post._id);
       post.hotCount++;
       post.hoted = true;
+      post.isHoted = true;
     }
     // 展示评论
     $scope.showTheComment = function(post){
@@ -163,4 +191,16 @@ angular
         });
       }
     }
-  }]);
+  }])
+  // 监听滑动翻页
+  .directive("whenscrolled", function(){
+    return {
+      link: function(scope, element, attributes){
+        element.bind('scroll', function (scrollEvent) {
+          if(element[0].scrollTop + element[0].offsetHeight >= element[0].scrollHeight){
+            scope.$apply(attributes.whenscrolled);
+          }
+        });
+      }
+    }
+  });

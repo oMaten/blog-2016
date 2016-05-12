@@ -1,5 +1,5 @@
 
-<div class="main-home">
+<div whenscrolled="getNextPage()" class="main-home">
   <ul ng-controller="PostItemCtrl" class="main-home--posts posts-list">
     <form id="form-post" name="postForm" ng-submit="createNewPost(newPost)" ng-if="auth.isAdmin &amp;&amp; current == &quot;user&quot;">
       <label for="form-post--content">有什么新鲜事？</label>
@@ -18,7 +18,7 @@
     </form>
     <li ng-repeat="post in posts" class="posts-item">
       <div style="background-image: url({{ post.user.user_face }})" class="posts-item--header"></div>
-      <div class="posts-item--content card"><a ui-sref="user.home({ id: post.user.user_id })" class="card-user">{{ post.user.user_nickname }}</a>
+      <div class="posts-item--content card"><a href="javascript:;" ui-sref="user({ id: post.user.user_id })" class="card-user">{{ post.user.user_nickname }}</a>
         <div class="card-content">
           <p><span>{{post.topic}}</span>{{ post.content }}</p>
         </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="card-more">
           <div class="card-more--created">{{ post.created }}</div>
-          <div class="card-more--link"><span><a ng-click="addHot(post)" ng-class="{hoted: post.isHoted, heartBurst: post.hoted}" class="like-i"></a><i ng-click="showTheComment(post)" class="fa fa-comments-o"></i><i class="fa fa-external-link"></i></span>#热度 {{ post.hotCount }}</div>
+          <div class="card-more--link"><span><a ng-click="addHot(post)" ng-class="{hoted: post.isHoted, heartBurst: post.hoted}" class="like-i"></a><i ng-click="showTheComment(post)" class="fa fa-comments-o"></i></span>#热度 {{ post.hotCount }}</div>
         </div>
       </div>
       <div ng-if="post.isShowComment" ng-controller="CommentItemCtrl" ng-init="fetchComments(post)" ng-class="{true: 'bounceInDown', false: 'bounceOutDown'}[post.readyShowComment]" class="posts-item--comments comments-list animated">
@@ -41,7 +41,7 @@
         </div>
         <div ng-repeat="comment in post.comments" class="comments-item">
           <div class="comments-item--info">
-            <div class="comments-item--user">{{ comment.user.user_username }}</div>
+            <div class="comments-item--user">{{ comment.user.user_nickname }}</div>
             <div class="comments-item--created">{{ comment.created }}</div>
           </div>
           <div class="comments-item--content">
@@ -50,5 +50,6 @@
         </div>
       </div>
     </li>
+    <div ng-if="loading" class="main-home--navigation"><img src="./img/loading-spinning-bubbles.svg" width="54"/></div>
   </ul>
 </div>

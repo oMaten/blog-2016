@@ -28,11 +28,11 @@ module.exports.listPosts = function* listPosts(next){
 		this.query.q_username && (queryItems['user.user_username'] = this.query.q_username);
 		var posts = yield PostModel.searchPosts(queryItems);
 	}else{
-		var posts = yield PostModel.listPosts(userIdList);
+		var posts = yield PostModel.listPosts(userIdList, this.query.p);
 	};
 
   for(var i=0,l=posts.length; i<l; i++){
-    var isHoted = yield LikeModel.getLike(currentUserId, posts[i]['_id']);
+    var isHoted = yield LikeModel.getLike(this.loginUser._id, posts[i]['_id']);
     // console.log(currentUserId, posts);
     if(isHoted){
       posts[i]['isHoted'] = true;
@@ -68,6 +68,8 @@ module.exports.createPost = function* createPost(next){
 	}
 	var post = yield PostModel.createPost(info);
 	yield UserModel.incUserItem(this.loginUser._id, 'postCount', 1);
+
+  post['created'] = moment(post['created']).format('YYYY-MM-DD LT');
 	this.body = {
 		'post': post
 	}

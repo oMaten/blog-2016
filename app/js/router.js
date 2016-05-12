@@ -9,7 +9,7 @@ angular
 
 		$stateProvider
 			.state('home', {
-				url: '/?getFollow&q_post',
+				url: '/?getFollow&q_post&p',
 				views: {
 					'header': {
 						templateUrl: '../html/_header.html',

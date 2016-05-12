@@ -1,0 +1,6 @@
+
+<div class="users-item--header"><img src="{{user.profile.face[0]}}"/></div>
+<div class="users-item--content"><a ui-sref="user({ id: user._id })">{{user.profile.nickname}}<i aria-hidden="true" ng-class="{'fa-venus': user.profile.sex, 'fa-mars': !user.profile.sex}" class="fa"></i></a>
+  <p>{{user.profile.highline}}</p>
+  <p><span>关注 {{user.followingCount}}</span><span>粉丝 {{user.followerCount}}</span><span>微博 {{user.postCount}}</span></p>
+</div>

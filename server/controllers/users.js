@@ -18,7 +18,7 @@ module.exports.listUsers = function* listUsers(){
     var users = yield model.listUsers();
   }else{
     if(this.query.q_username){
-      var users = yield model.searchUserByName(this.query.q_username);
+      var users = yield model.searchUserByNickName(this.query.q_username);
     }else{
       var users = yield model.listUsers(userListId);
     }
