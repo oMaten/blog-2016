@@ -45,7 +45,8 @@ angular
         }},
         'delete': {method: 'DELETE'},
         'addLike': {method: 'POST', isArray: false, url: '/api/like'},
-        'forbind': {method: 'POST', isArray: false, url: '/api/users/:userId/forbind'}
+        'forbind': {method: 'POST', isArray: false, url: '/api/users/:userId/forbind'},
+        'changePassword': {method: 'POST', isArray: false, url: '/api/users/:userId/password'}
       }
     );
 	}])
@@ -80,7 +81,6 @@ angular
           .get(formData)
           .$promise
           .then(function(data){
-            console.log(data.user);
             if(data.user){
               ctx.profile = data.user;
             };
@@ -98,6 +98,18 @@ angular
           .then(function(data){
             if(!data.result){ alert('更新失败，请稍后再试~') };
             if(data.result){ $rootScope.$broadcast('User.changeProfileSuccess') };
+          }, function(error){
+            console.log(error);
+          });
+      },
+      changePassword: function(){
+        var ctx = this;
+        Users
+          .changePassword(ctx.profile)
+          .$promise
+          .then(function(data){
+            if(!data.result){ alert('修改密码失败，请稍后再试~') };
+            if(data.result){ $rootScope.$broadcast('User.changePasswordSuccess') };
           }, function(error){
             console.log(error);
           });
@@ -240,7 +252,7 @@ angular
           .add(formData)
           .$promise
           .then(function(res){
-            console.log(res);
+            if(!res.post){ return null };
             ctx.list.unshift(res.post);
           }, function(error){
             console.log(error.data);

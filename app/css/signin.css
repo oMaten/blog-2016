@@ -2,10 +2,6 @@
   -webkit-flex: 1 0 auto;
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
-  background-image: url("../img/bg.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -19,8 +15,24 @@
       -ms-flex-pack: center;
           justify-content: center;
   height: 100%;
-  color: #fff; }
+  color: #fff;
+  position: relative; }
+  .main-signin .main-preload {
+    display: none; }
+  .main-signin .main-signin--bg {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-image: url("../img/bg-1.jpg");
+    will-change: auto; }
   .main-signin .main-part--left {
+    z-index: 10;
     -webkit-flex: 0 1 500px;
         -ms-flex: 0 1 500px;
             flex: 0 1 500px;
@@ -32,6 +44,7 @@
       font-size: 18px;
       line-height: 1.6; }
   .main-signin .main-part--right {
+    z-index: 10;
     -webkit-flex: 0 0 320px;
         -ms-flex: 0 0 320px;
             flex: 0 0 320px;

@@ -71,9 +71,9 @@
     font-size: 16px; }
   .header .header-search {
     display: block; }
-  .header .header-logout, .header .header-backend, .header .user-info, .header .header-recommend {
+  .header .user-password, .header .header-logout, .header .header-backend, .header .user-info, .header .header-recommend {
     margin: 10px 0; }
-    .header .header-logout > a, .header .header-backend > a, .header .user-info > a, .header .header-recommend > a {
+    .header .user-password > a, .header .header-logout > a, .header .header-backend > a, .header .user-info > a, .header .header-recommend > a {
       color: #f5f5f5;
       font-size: 16px; }
   .header .user-relation {

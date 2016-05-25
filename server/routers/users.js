@@ -34,6 +34,10 @@ module.exports = function(Router){
       Auth.authFilter,
       Controller.forbindUser
     )
+    .post('/api/users/:userId/password',
+      Auth.authFilter,
+      Controller.passwordChange
+    )
     .delete('/api/users',
       Auth.authFilter,
       Controller.deleteUser

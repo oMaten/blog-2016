@@ -26,7 +26,7 @@ module.exports.listPosts = function* listPosts(next){
 		this.query.q_post && (queryItems['content'] = this.query.q_post);
 		this.query.q_topic && (queryItems['topic'] = this.query.q_topic);
 		this.query.q_username && (queryItems['user.user_username'] = this.query.q_username);
-		var posts = yield PostModel.searchPosts(queryItems);
+		var posts = yield PostModel.searchPosts(queryItems, this.query.p);
 	}else{
 		var posts = yield PostModel.listPosts(userIdList, this.query.p);
 	};

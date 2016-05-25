@@ -120,6 +120,24 @@ module.exports.forbindUser = function* forbindUser(next){
   this.status = 201;
 }
 
+module.exports.passwordChange = function* passwordChange(next){
+  var info = yield parse.json(this);
+  if(info._id != this.loginUser._id){ return this.throw('没有权限', 401) };
+
+  if(info.password != info.repassword){ return this.throw('输入的密码不相同', 401) };
+  var isCurrent = yield model.passwordCompare(info.password, this.loginUser.password);
+  if(isCurrent){
+    return this.throw('旧密码不能与新密码', 401);
+  }
+
+  var result = yield model.changePassword(info);
+
+  this.body = {
+    'result': result ? true : false
+  }
+  this.status = 201;
+}
+
 module.exports.deleteUser = function* deleteUser(next){
   if(!this.loginUser.admin){ return this.throw('没有权限', 401) };
   if(this.query.id == this.loginUser._id){ return this.throw('不可删除自己', 401) };

@@ -80,6 +80,54 @@
   100% {
     background-position: right; } }
 
+@-webkit-keyframes transBackground-1 {
+  0% {
+    background-image: url("../img/bg-1.jpg"); }
+  100% {
+    background-image: url("../img/bg-2.jpg"); } }
+
+@keyframes transBackground-1 {
+  0% {
+    background-image: url("../img/bg-1.jpg"); }
+  100% {
+    background-image: url("../img/bg-2.jpg"); } }
+
+@-webkit-keyframes transBackground-2 {
+  0% {
+    background-image: url("../img/bg-2.jpg"); }
+  100% {
+    background-image: url("../img/bg-3.jpg"); } }
+
+@keyframes transBackground-2 {
+  0% {
+    background-image: url("../img/bg-2.jpg"); }
+  100% {
+    background-image: url("../img/bg-3.jpg"); } }
+
+@-webkit-keyframes transBackground-3 {
+  0% {
+    background-image: url("../img/bg-3.jpg"); }
+  100% {
+    background-image: url("../img/bg-4.jpg"); } }
+
+@keyframes transBackground-3 {
+  0% {
+    background-image: url("../img/bg-3.jpg"); }
+  100% {
+    background-image: url("../img/bg-4.jpg"); } }
+
+@-webkit-keyframes transBackground-4 {
+  0% {
+    background-image: url("../img/bg-4.jpg"); }
+  100% {
+    background-image: url("../img/bg-1.jpg"); } }
+
+@keyframes transBackground-4 {
+  0% {
+    background-image: url("../img/bg-4.jpg"); }
+  100% {
+    background-image: url("../img/bg-1.jpg"); } }
+
 .heartBurst:after {
   -webkit-animation: heartBurst steps(28) 0.8s 1 both;
           animation: heartBurst steps(28) 0.8s 1 both; }
@@ -91,6 +139,22 @@
 .bounceOutDown {
   -webkit-animation-name: bounceOutDown;
           animation-name: bounceOutDown; }
+
+.transBackground-1 {
+  -webkit-animation-name: transBackground-1;
+          animation-name: transBackground-1; }
+
+.transBackground-2 {
+  -webkit-animation-name: transBackground-2;
+          animation-name: transBackground-2; }
+
+.transBackground-3 {
+  -webkit-animation-name: transBackground-3;
+          animation-name: transBackground-3; }
+
+.transBackground-4 {
+  -webkit-animation-name: transBackground-4;
+          animation-name: transBackground-4; }
 
 .animated {
   -webkit-animation-duration: 1s;

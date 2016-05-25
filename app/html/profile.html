@@ -1,6 +1,6 @@
 
 <div class="main-home">
-  <ul ng-controller="InfoCtrl" class="main-home--info info-list">
+  <ul ng-if="!param.password" ng-controller="InfoCtrl" class="main-home--info info-list">
     <p>完善一下你的个人资料吧</p>
     <form id="form-info" name="infoForm" ng-submit="updateUserProfile()" novalidate="novalidate">
       <div class="info-item item-face">
@@ -31,6 +31,20 @@
       <div class="info-item item-highline">
         <label for="info-input--highline">签名</label>
         <input id="info-input--highline" type="string" ng-model="profile.profile.highline" placeholder="请输入你的签名" class="highline-input"/>
+      </div>
+      <input id="form-info--submit" type="submit" value="提交"/>
+    </form>
+  </ul>
+  <ul ng-if="param.password" ng-controller="PasswordCtrl" class="main-home--info info-list">
+    <p>修改密码</p>
+    <form id="form-info" name="passwordForm" ng-submit="updateUserPassword()" ng-init="profile.password = '';" novalidate="novalidate">
+      <div class="info-item item-password">
+        <label for="info-input--nickname">新密码</label>
+        <input id="info-input--nickname" type="password" ng-model="profile.password" placeholder="请输入你的密码" required="required" class="name-input"/>
+      </div>
+      <div class="info-item item-password">
+        <label for="info-input--nickname">再次输入新密码</label>
+        <input id="info-input--nickname" type="password" ng-model="profile.repassword" placeholder="请再次输入你的密码" required="required" class="name-input"/>
       </div>
       <input id="form-info--submit" type="submit" value="提交"/>
     </form>

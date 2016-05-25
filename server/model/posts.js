@@ -43,14 +43,16 @@ module.exports.listPosts = function* listPosts(idList, page){
 /**
  * 通过内容搜索微博
  * @param {String} post
+ * @param {Int} page
  **/
 
-module.exports.searchPosts = function* searchPosts(queryOpt){
+module.exports.searchPosts = function* searchPosts(queryOpt, page){
 	_.forEach(queryOpt, function(value, key){
 		queryOpt[key] = new RegExp(value);
 	});
-	var limitOpt = { 'limit': 15, 'sort': { 'created': -1 } };
-	var posts = yield mongo.posts.find(queryOpt, limitOpt).toArray();
+	var sortOpt = { 'created': -1 };
+	var skipOpt = ( page - 1 ) * 10;
+	var posts = yield mongo.posts.find(queryOpt).sort(sortOpt).skip(skipOpt).limit(10).toArray();
 	return posts;
 }
 

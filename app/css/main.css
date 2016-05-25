@@ -167,6 +167,54 @@ input, select, textarea {
   100% {
     background-position: right; } }
 
+@-webkit-keyframes transBackground-1 {
+  0% {
+    background-image: url("../img/bg-1.jpg"); }
+  100% {
+    background-image: url("../img/bg-2.jpg"); } }
+
+@keyframes transBackground-1 {
+  0% {
+    background-image: url("../img/bg-1.jpg"); }
+  100% {
+    background-image: url("../img/bg-2.jpg"); } }
+
+@-webkit-keyframes transBackground-2 {
+  0% {
+    background-image: url("../img/bg-2.jpg"); }
+  100% {
+    background-image: url("../img/bg-3.jpg"); } }
+
+@keyframes transBackground-2 {
+  0% {
+    background-image: url("../img/bg-2.jpg"); }
+  100% {
+    background-image: url("../img/bg-3.jpg"); } }
+
+@-webkit-keyframes transBackground-3 {
+  0% {
+    background-image: url("../img/bg-3.jpg"); }
+  100% {
+    background-image: url("../img/bg-4.jpg"); } }
+
+@keyframes transBackground-3 {
+  0% {
+    background-image: url("../img/bg-3.jpg"); }
+  100% {
+    background-image: url("../img/bg-4.jpg"); } }
+
+@-webkit-keyframes transBackground-4 {
+  0% {
+    background-image: url("../img/bg-4.jpg"); }
+  100% {
+    background-image: url("../img/bg-1.jpg"); } }
+
+@keyframes transBackground-4 {
+  0% {
+    background-image: url("../img/bg-4.jpg"); }
+  100% {
+    background-image: url("../img/bg-1.jpg"); } }
+
 .heartBurst:after {
   -webkit-animation: heartBurst steps(28) 0.8s 1 both;
           animation: heartBurst steps(28) 0.8s 1 both; }
@@ -179,6 +227,22 @@ input, select, textarea {
   -webkit-animation-name: bounceOutDown;
           animation-name: bounceOutDown; }
 
+.transBackground-1 {
+  -webkit-animation-name: transBackground-1;
+          animation-name: transBackground-1; }
+
+.transBackground-2 {
+  -webkit-animation-name: transBackground-2;
+          animation-name: transBackground-2; }
+
+.transBackground-3 {
+  -webkit-animation-name: transBackground-3;
+          animation-name: transBackground-3; }
+
+.transBackground-4 {
+  -webkit-animation-name: transBackground-4;
+          animation-name: transBackground-4; }
+
 .animated {
   -webkit-animation-duration: 1s;
           animation-duration: 1s;
@@ -189,10 +253,6 @@ input, select, textarea {
   -webkit-flex: 1 0 auto;
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
-  background-image: url("../img/bg.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -206,8 +266,24 @@ input, select, textarea {
       -ms-flex-pack: center;
           justify-content: center;
   height: 100%;
-  color: #fff; }
+  color: #fff;
+  position: relative; }
+  .main-signin .main-preload {
+    display: none; }
+  .main-signin .main-signin--bg {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-image: url("../img/bg-1.jpg");
+    will-change: auto; }
   .main-signin .main-part--left {
+    z-index: 10;
     -webkit-flex: 0 1 500px;
         -ms-flex: 0 1 500px;
             flex: 0 1 500px;
@@ -219,6 +295,7 @@ input, select, textarea {
       font-size: 18px;
       line-height: 1.6; }
   .main-signin .main-part--right {
+    z-index: 10;
     -webkit-flex: 0 0 320px;
         -ms-flex: 0 0 320px;
             flex: 0 0 320px;
@@ -431,9 +508,9 @@ input, select, textarea {
     font-size: 16px; }
   .header .header-search {
     display: block; }
-  .header .header-logout, .header .header-backend, .header .user-info, .header .header-recommend {
+  .header .user-password, .header .header-logout, .header .header-backend, .header .user-info, .header .header-recommend {
     margin: 10px 0; }
-    .header .header-logout > a, .header .header-backend > a, .header .user-info > a, .header .header-recommend > a {
+    .header .user-password > a, .header .header-logout > a, .header .header-backend > a, .header .user-info > a, .header .header-recommend > a {
       color: #f5f5f5;
       font-size: 16px; }
   .header .user-relation {
@@ -592,7 +669,6 @@ input, select, textarea {
       width: 65px;
       height: 65px;
       background-color: #84a99b;
-      background-image: url("../img/face-01.jpg");
       background-size: contain;
       background-position: center center;
       background-repeat: no-repeat;
@@ -821,6 +897,8 @@ input, select, textarea {
       vertical-align: baseline; }
       .card .card-content > p > span {
         color: #b48177; }
+        .card .card-content > p > span > a {
+          color: #b48177; }
   .card .card-images {
     display: block;
     padding: 0 20px; }
@@ -1076,9 +1154,9 @@ input, select, textarea {
       -ms-flex-align: stretch;
           align-items: stretch; }
   .backend-wrap .backend-search {
-    -webkit-flex: 0 1 60px;
-        -ms-flex: 0 1 60px;
-            flex: 0 1 60px;
+    -webkit-flex: 0 0 60px;
+        -ms-flex: 0 0 60px;
+            flex: 0 0 60px;
     background-color: rgba(0, 40, 50, 0.9);
     padding: 5px 10%;
     box-sizing: border-box;
@@ -1092,7 +1170,8 @@ input, select, textarea {
     -webkit-flex: 1 1 auto;
         -ms-flex: 1 1 auto;
             flex: 1 1 auto;
-    padding: 20px 80px 5px 80px; }
+    padding: 20px 80px 5px 80px;
+    background-color: #84a99b; }
 
 .list .item {
   background-color: #fff;

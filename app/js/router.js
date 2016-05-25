@@ -9,7 +9,7 @@ angular
 
 		$stateProvider
 			.state('home', {
-				url: '/?getFollow&q_post&p',
+				url: '/?getFollow&q_post&p&q_topic',
 				views: {
 					'header': {
 						templateUrl: '../html/_header.html',
@@ -75,7 +75,7 @@ angular
 				}
 			})
 			.state('info', {
-				url: '/user/:id/info',
+				url: '/user/:id/info?password',
 				views: {
 					'main': {
 						templateUrl: '../html/profile.html',

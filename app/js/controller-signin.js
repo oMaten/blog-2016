@@ -4,10 +4,15 @@ angular
 		'angular-storage',
 		'angular-jwt'
 	])
-	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', '$state', 'store', 'Users', 'jwtHelper', function($scope, $rootScope, $window, $http, $state, store, Users, jwtHelper){
+	.controller('SigninCtrl', ['$scope', '$rootScope', '$window', '$http', '$state', '$interval', 'store', 'Users', 'jwtHelper', function($scope, $rootScope, $window, $http, $state, $interval, store, Users, jwtHelper){
 
 		$scope.signupAccount = {};
 		$scope.signinAccount = {};
+		$scope.time =	0;
+
+		$interval(function(){
+			$scope.time = ($scope.time + 1) % 4;
+		}, 10000);
 
 		$scope.signupValidate = function(){
 			console.log($scope.signupAccount);
@@ -41,7 +46,7 @@ angular
 			}).then(function(response){
 				store.set('accessToken', response.data.accessToken);
 				var tokenPayload = jwtHelper.decodeToken(store.get('accessToken'));
-				$state.go('home');
+				$state.go('home', { 'getFollow': 'true', 'p': '1' });
 			}, function(error){
 				console.log(error.data);
 			});
@@ -67,7 +72,8 @@ angular
 				Post.getAllPosts({
 					'q_topic': $scope.search.topic,
 					'q_post': $scope.search.post,
-					'q_username': $scope.search.user
+					'q_username': $scope.search.user,
+					'p': 1
 				});
 				$scope.search = {};
 				return;
@@ -75,7 +81,8 @@ angular
 			if($scope.search.post){
 				Post.getAllPosts({
 					'q_post': $scope.search.post,
-					'q_username': $scope.search.user
+					'q_username': $scope.search.user,
+					'p': 1
 				});
 				$scope.search = {};
 				return

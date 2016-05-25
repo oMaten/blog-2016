@@ -161,6 +161,18 @@ module.exports.deleteUser = function* deleteUser(id){
 }
 
 /**
+ * 更改用户密码
+ * @param {Object} user 用户
+ **/
+module.exports.changePassword = function* changePassword(user){
+  // 将用户的密码hash加密
+  user = yield passwordSalt(user);
+  var updateDoc = {'password': user.password};
+  var result = yield mongo.users.update({ "_id": ObjectID(user._id) }, { "$set": updateDoc });
+  return result['result']['ok'];
+}
+
+/**
  * 验证用户密码是否匹配
  * @param {String} this.password required
  * @param {Object} this.user required

@@ -9,6 +9,7 @@ angular
 
     $scope.user = User.profile;
     $scope.auth = User.auth;
+
     $scope.followStatus = User.followStatus;
     $scope.search = {};
     // 获取当前用户
@@ -38,7 +39,7 @@ angular
         $state.go('allUsers', { 'q_username': $scope.search.user }, {reload: true, inherit: false});
       }
       if($scope.search.post){
-        $state.go('home', { 'q_post': $scope.search.post }, {reload: true, inherit: false});
+        $state.go('home', { 'q_post': $scope.search.post, 'p': 1 }, {reload: true, inherit: false});
       }
       $scope.search = {};
     }
@@ -49,14 +50,19 @@ angular
     $scope.auth = User.auth;
     $scope.user = User.profile;
     $scope.current = $state.current.name;
+    $scope.param = $state.params;
+    // console.log($state);
     $scope.pageLocked = false;
+
     var gotCurrentUser = $scope.$on('User.fetchCurrentUser', function(){
       $scope.auth = User.auth;
       $scope.user = User.profile;
       gotCurrentUser();
     });
+
     // 翻页
-    $scope.getNextPage = function(){
+    $scope.getNextPage = function(state){
+
       if($scope.pageLocked){ return };
       $scope.pageLocked = true;
 
@@ -68,7 +74,14 @@ angular
         unLocked();
       });
 
-      Post.getMorePosts({'getFollow':true, 'p': currentPage });
+      $timeout(function(){
+        var nextparams = { 'p': currentPage };
+        nextparams = angular.extend($scope.param, nextparams);
+
+        Post.getMorePosts(nextparams);
+
+      }, 1000);
+
     };
   }])
   // 获取文章列表以及添加文章
@@ -76,6 +89,8 @@ angular
     $scope.posts = Post.list;
     $scope.newPost = {};
     $scope.loading = true;
+
+    // 检查话题格式
     $scope.newPost.check = function(){
       if(this.content && this.content.match(/^\#/)){
         if(this.content.match(/^\#(\w|\W|\s)+\#/)){
@@ -83,7 +98,7 @@ angular
         }
         return { 'isUseTopic': true }
       }
-    }
+    };
     // 获取文章
     var gotAllPosts = $scope.$on('Post.fetchAllPosts', function(){
       $scope.posts = Post.list;
@@ -117,7 +132,7 @@ angular
       post.hotCount++;
       post.hoted = true;
       post.isHoted = true;
-    }
+    };
     // 展示评论
     $scope.showTheComment = function(post){
       post.readyShowComment = !post.readyShowComment;
@@ -126,7 +141,7 @@ angular
       }else{
         post.isShowComment = !post.isShowComment;
       }
-    }
+    };
   }])
   // 获取评论以及添加评论
   .controller('CommentItemCtrl', ['$scope', '$rootScope', 'Post', function($scope, $rootScope, Post){
@@ -136,7 +151,7 @@ angular
     }
     // 创建新评论
     $scope.createComment = function(post){
-      if(!$scope.newComment.content){ return }
+      if(!$scope.newComment.content){ return };
       Post.createNewComment(post, $scope.newComment.content);
       $scope.newComment = {};
     }
@@ -160,8 +175,30 @@ angular
     $scope.updateUserProfile = function(){
       User.updateUser();
       $scope.$on('User.changeProfileSuccess', function(){
-        $state.go('user', {"id":$scope.profile._id});
+        $state.go('user', { "id": $scope.profile._id });
       });
+    };
+  }])
+  // 修改密码
+  .controller('PasswordCtrl', ['$scope', '$rootScope', '$state', 'User', 'store', function($scope, $rootScope, $state, User, store){
+    $scope.profile = User.profile;
+    // 修改密码
+    $scope.updateUserPassword = function(){
+
+      if($scope.profile.password != $scope.profile.repassword){
+        $scope.profile.password = '';
+        $scope.profile.repassword = '';
+        alert('两次输入的密码不同！请再次输入');
+        return;
+      };
+
+      User.changePassword();
+      $scope.$on('User.changePasswordSuccess', function(){
+        $rootScope.userId = null;
+        store.get('accessToken') && store.remove('accessToken');
+        $state.go('signin');
+      });
+
     }
   }])
   // 图片上传

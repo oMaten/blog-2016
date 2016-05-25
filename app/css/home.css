@@ -49,7 +49,6 @@
       width: 65px;
       height: 65px;
       background-color: #84a99b;
-      background-image: url("../img/face-01.jpg");
       background-size: contain;
       background-position: center center;
       background-repeat: no-repeat;
@@ -278,6 +277,8 @@
       vertical-align: baseline; }
       .card .card-content > p > span {
         color: #b48177; }
+        .card .card-content > p > span > a {
+          color: #b48177; }
   .card .card-images {
     display: block;
     padding: 0 20px; }

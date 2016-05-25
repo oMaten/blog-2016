@@ -21,7 +21,6 @@ angular
           return response;
         },
         'request': function(request){
-          // console.log(request);
           request.headers = request.headers || {};
           if(store.get('accessToken')){
             request.headers.accessToken = store.get('accessToken');

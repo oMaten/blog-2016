@@ -1,5 +1,6 @@
 
 <div class="main-signin">
+  <div class="main-preload"><img src="../img/bg-1.jpg"/><img src="../img/bg-2.jpg"/><img src="../img/bg-3.jpg"/><img src="../img/bg-4.jpg"/></div>
   <div class="main-part--left">
     <h1>欢迎使用 MANK。</h1>
     <p>联系你的好友和更多精彩。获取你感兴趣的实时更新。并通过每个角度观看事件实时更新呈现。</p>
@@ -43,4 +44,5 @@
       </form>
     </div>
   </div>
+  <div ng-class="{'transBackground-1': time == 1, 'transBackground-2': time == 2, 'transBackground-3': time == 3, 'transBackground-4': time == 0}" class="main-signin--bg animated"></div>
 </div>

@@ -1,5 +1,5 @@
 
-<div whenscrolled="getNextPage()" class="main-home">
+<div whenscrolled="getNextPage(current)" class="main-home">
   <ul ng-controller="PostItemCtrl" class="main-home--posts posts-list">
     <form id="form-post" name="postForm" ng-submit="createNewPost(newPost)" ng-if="auth.isAdmin &amp;&amp; current == &quot;user&quot;">
       <label for="form-post--content">有什么新鲜事？</label>
@@ -20,7 +20,7 @@
       <div style="background-image: url({{ post.user.user_face }})" class="posts-item--header"></div>
       <div class="posts-item--content card"><a href="javascript:;" ui-sref="user({ id: post.user.user_id })" class="card-user">{{ post.user.user_nickname }}</a>
         <div class="card-content">
-          <p><span>{{post.topic}}</span>{{ post.content }}</p>
+          <p><span><a href="javascript:;" ui-sref="home({ q_topic: post.topic, p: 1 })" ui-sref-opts="{reload: true, inherit: false}">{{post.topic}}</a></span>{{ post.content }}</p>
         </div>
         <div ng-if="post.images" class="card-images">
           <ul class="images-preview">
@@ -50,6 +50,6 @@
         </div>
       </div>
     </li>
-    <div ng-if="loading" class="main-home--navigation"><img src="./img/loading-spinning-bubbles.svg" width="54"/></div>
+    <div ng-if="loading &amp;&amp; posts.length &gt; 10" class="main-home--navigation"><img src="../img/loading-spinning-bubbles.svg" width="54"/></div>
   </ul>
 </div>
